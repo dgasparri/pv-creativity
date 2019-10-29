@@ -1,0 +1,10 @@
+﻿  draw.cpp
+  form.cpp
+  Frame.cpp
+  Main.cpp
+  pv_output.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 43 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  pv-creativity.vcxproj -> C:\Users\dmg\C++\repos\pv-creativity\bin\Win32\Release\pv-creativity.exe
