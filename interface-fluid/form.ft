@@ -1,0 +1,45 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0305
+header_name {.h}
+code_name {.cxx}
+Function {make_window()} {open
+} {
+  Fl_Window {} {
+    label {Photovoltaic Creativity} open selected
+    xywh {666 179 917 1169} type Double labeltype NORMAL_LABEL visible
+  } {
+    Fl_Group {} {
+      label {Input Values} open
+      xywh {670 40 200 600} box THIN_UP_BOX
+    } {
+      Fl_Value_Input {} {
+        label Latitude
+        xywh {760 60 95 23} maximum 360 value 35
+      }
+      Fl_Value_Input {} {
+        label {Beta (Tilt)}
+        xywh {760 90 95 23} maximum 90 value 30
+      }
+      Fl_Value_Input {} {
+        label delta
+        xywh {760 120 95 23} maximum 90 value 23.09
+      }
+      Fl_Value_Input {} {
+        label G_B
+        xywh {760 150 95 23} maximum 90 value 23.09
+      }
+      Fl_Button {} {
+        label Compute
+        xywh {685 590 170 35}
+      }
+    }
+    Fl_Box {} {
+      label Pannello
+      xywh {25 25 600 600} box EMBOSSED_BOX
+    }
+    Fl_Text_Display {} {
+      label Results
+      xywh {25 645 600 400}
+    }
+  }
+}

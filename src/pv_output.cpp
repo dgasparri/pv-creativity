@@ -6,7 +6,13 @@
 #define PI 3.14159265
 
 
-void compute_absorbed_radiation_S() {
+void compute_absorbed_radiation_S(
+	double L = 35, //Latitute degrees
+	double beta = 30, //tilt/slope paneldegrees
+	double delta = 23.09, //Degrees sole
+	double G_B = 715 // W/m^2
+
+) {
 	double L = 35; //Latitute degrees
 	double beta = 30; //tilt/slope paneldegrees
 	double delta = 23.09; //Degrees sole

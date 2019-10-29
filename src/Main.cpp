@@ -13,13 +13,11 @@ void idle_cb(void*)
 }
 //-------------------------------------------------------------------------------------------------
 int main(int argc, char **argv) {
-
 	compute_absorbed_radiation_S();
-
-
-  CreateMyWindow();
-  Fl::add_idle(idle_cb, 0);
-  Fl::run();
-  return 0;
+	
+	make_window();
+	Fl::add_idle(idle_cb, 0);
+	Fl::run();
+	return 0;
 }
 //-------------------------------------------------------------------------------------------------
