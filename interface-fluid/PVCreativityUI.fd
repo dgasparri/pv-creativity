@@ -2,13 +2,15 @@
 version 1.0305
 header_name {.h}
 code_name {.cpp}
-class PVCreativityUI {open
+class PVCreativityUI {open selected
 } {
   Function {PVCreativityUI()} {open
   } {
     Fl_Window window {
       label {Photovoltaic Creativity} open
-      protected xywh {2372 233 917 1169} type Double visible
+      protected xywh {2372 233 917 1169} type Double
+      code0 {\#include <Windows.h>}
+      code1 {\#include <iostream>} visible
     } {
       Fl_Group {} {
         label {Input Values} open
@@ -32,7 +34,17 @@ class PVCreativityUI {open
         }
         Fl_Button compute {
           label Compute
-          callback {compute_absorbed_radiation_S(this->L, this->beta, this->delta, this->G_B);} selected
+          callback {Fl_Button* btn = static_cast<Fl_Button*>(o);
+ std::cout << "Premuto bottone" << std::endl;
+    //sStruct* s = static_cast<sStruct*>(data);
+
+    //char* strUserData = static_cast<char*>(btn->user_data());
+
+    //if (btn != NULL && s != NULL) {
+    //    std::cout << "UserData: " << strUserData << std::endl;
+    //}
+    
+    //((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);}
           protected xywh {685 590 170 35}
           code0 {\#include "pv_output.h"}
         }

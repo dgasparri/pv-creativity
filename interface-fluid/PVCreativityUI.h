@@ -4,6 +4,8 @@
 #define PVCreativityUI_h
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
+#include <Windows.h>
+#include <iostream>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Button.H>

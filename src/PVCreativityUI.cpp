@@ -2,11 +2,55 @@
 
 #include "PVCreativityUI.h"
 
+void PVCreativityUI::cb_compute_i(Fl_Button* o, void* v) {
+  //Fl_Button* btn = static_cast<Fl_Button*>(o);
+	//std::cout << "Premuto bottone" << this->L->value()<< std::endl;
+	double L = (double)this->L->value();
+	double beta = (double)this->beta->value();
+	double delta = (double)this->delta->value();
+	double G_B = (double)this->G_B->value();
+	std::cout << "Da pressione di bottone" << std::endl
+		<< "L: " << L << std::endl
+		<< "beta: " << beta << std::endl
+		<< "delta: " << delta << std::endl
+		<< "G_B: " << G_B << std::endl;
+
+	double S = compute_absorbed_radiation_S(L, beta, delta, G_B, 1);
+	/*
+	Da http://seriss.com/people/erco/fltk/#Fl_Text_Display
+	Fl_Text_Display* disp = new Fl_Text_Display(20, 20, 640 - 40, 480 - 40, "Display");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text("line 0\nline 1\nline 2\n"
+		"line 3\nline 4\nline 5\n"
+		"line 6\nline 7\nline 8\n"
+		"line 9\nline 10\nline 11\n"
+		"line 12\nline 13\nline 14\n"
+		"line 15\nline 16\nline 17\n"
+		"line 18\nline 19\nline 20\n"
+		"line 21\nline 22\nline 23\n");
+		*/
+	//this->results->value;
+
+
+    //sStruct* s = static_cast<sStruct*>(data);
+
+    //char* strUserData = static_cast<char*>(btn->user_data());
+
+    //if (btn != NULL && s != NULL) {
+    //    std::cout << "UserData: " << strUserData << std::endl;
+    //}
+    
+    //((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);
+}
+void PVCreativityUI::cb_compute(Fl_Button* o, void* v) {
+  ((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);
+}
+
 PVCreativityUI::PVCreativityUI() {
-  Fl_Double_Window* w;
-  { Fl_Double_Window* o = new Fl_Double_Window(917, 1169, "Photovoltaic Creativity");
-    w = o; if (w) {/* empty */}
-    o->user_data((void*)(this));
+  { window = new Fl_Double_Window(917, 1169, "Photovoltaic Creativity");
+    window->user_data((void*)(this));
     { Fl_Group* o = new Fl_Group(670, 40, 200, 600, "Input Values");
       o->box(FL_THIN_UP_BOX);
       { L = new Fl_Value_Input(760, 60, 95, 23, "Latitude");
@@ -22,10 +66,11 @@ PVCreativityUI::PVCreativityUI() {
         delta->value(23.09);
       } // Fl_Value_Input* delta
       { G_B = new Fl_Value_Input(760, 150, 95, 23, "G_B");
-        G_B->maximum(90);
-        G_B->value(23.09);
+        G_B->maximum(2000);
+        G_B->value(715);
       } // Fl_Value_Input* G_B
       { compute = new Fl_Button(685, 590, 170, 35, "Compute");
+        compute->callback((Fl_Callback*)cb_compute);
       } // Fl_Button* compute
       o->end();
     } // Fl_Group* o
@@ -42,6 +87,10 @@ PVCreativityUI::PVCreativityUI() {
     } // PanelView* panel
     { results = new Fl_Text_Display(25, 645, 600, 400, "Results");
     } // Fl_Text_Display* results
-    o->end();
-  } // Fl_Double_Window* o
+    window->end();
+  } // Fl_Double_Window* window
+}
+
+void PVCreativityUI::show(int argc, char **argv) {
+  this->window->show(argc,argv);
 }

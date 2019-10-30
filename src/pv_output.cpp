@@ -1,17 +1,20 @@
 #include <windows.h>
+#include <stdio.h>
 #include <math.h>
 #include <iostream>
+#include <FL/Fl_Text_Buffer.H>
 #include "pv_output.h"
 
 #define PI 3.14159265
 
+extern Fl_Text_Buffer* resultsBuffer;
 
-void compute_absorbed_radiation_S(
+double compute_absorbed_radiation_S(
 	double L, // = 35, //Latitute degrees
 	double beta, // = 30, //tilt/slope paneldegrees
 	double delta, // = 23.09, //Degrees sole
-	double G_B // = 715 // W/m^2
-
+	double G_B, // = 715 // W/m^2
+	int printToBuffer
 ) {
 	/*
 	double L = 35; //Latitute degrees
@@ -65,6 +68,14 @@ void compute_absorbed_radiation_S(
 		<< "R_B: " << R_B << std::endl
 		<< "K_theta_B: " << K_theta_B << std::endl
 		<< "S: " << S << std::endl;
+
+	char strbuffer[500];
+	sprintf_s(strbuffer, 500, "Buffer: TauAlpha_n: %f\nM: %f\nG_B: %f\nR_B: %f\nK_theta_B: %f\nS: %f  [W/m^2]\n", taualpha_n, M, G_B, R_B, K_theta_B, S);
+	if (printToBuffer) {
+		resultsBuffer->text(strbuffer);
+	}
+
+	return S;
 
 }
 

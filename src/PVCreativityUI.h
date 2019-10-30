@@ -2,12 +2,14 @@
 
 #ifndef PVCreativityUI_h
 #define PVCreativityUI_h
-#include <Windows.h>
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
+#include <Windows.h>
+#include <iostream>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Button.H>
+#include "pv_output.h"
 #include "PanelView.h"
 #include <FL/Fl_Text_Display.H>
 
@@ -15,6 +17,7 @@ class PVCreativityUI {
 public:
   PVCreativityUI();
 protected:
+  Fl_Double_Window *window;
 public:
   Fl_Value_Input *L;
   Fl_Value_Input *beta;
@@ -22,8 +25,12 @@ public:
   Fl_Value_Input *G_B;
 protected:
   Fl_Button *compute;
+private:
+  inline void cb_compute_i(Fl_Button*, void*);
+  static void cb_compute(Fl_Button*, void*);
 public:
   PanelView *panel;
   Fl_Text_Display *results;
+  void show(int argc, char **argv);
 };
 #endif

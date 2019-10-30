@@ -20,15 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\draw.cpp" />
-    <ClCompile Include="..\src\form.cpp" />
-    <ClCompile Include="..\src\Frame.cpp" />
     <ClCompile Include="..\src\Main.cpp" />
+    <ClCompile Include="..\src\PanelView.cpp" />
+    <ClCompile Include="..\src\PVCreativityUI.cpp" />
     <ClCompile Include="..\src\pv_output.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\draw.h" />
-    <ClInclude Include="..\src\form.h" />
-    <ClInclude Include="..\src\Frame.h" />
+    <ClInclude Include="..\src\PanelView.h" />
+    <ClInclude Include="..\src\PVCreativityUI.h" />
     <ClInclude Include="..\src\pv_output.h" />
     <ClInclude Include="..\src\stdafx.h" />
     <ClInclude Include="..\src\targetver.h" />

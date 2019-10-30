@@ -2,8 +2,18 @@
 
 #include "PVCreativityUI.h"
 
-void PVCreativityUI::cb_compute_i(Fl_Button*, void*) {
-  compute_absorbed_radiation_S(this->L, this->beta, this->delta, this->G_B);
+void PVCreativityUI::cb_compute_i(Fl_Button* o, void* v) {
+  Fl_Button* btn = static_cast<Fl_Button*>(o);
+ std::cout << "Premuto bottone" << std::endl;
+    //sStruct* s = static_cast<sStruct*>(data);
+
+    //char* strUserData = static_cast<char*>(btn->user_data());
+
+    //if (btn != NULL && s != NULL) {
+    //    std::cout << "UserData: " << strUserData << std::endl;
+    //}
+    
+    //((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);
 }
 void PVCreativityUI::cb_compute(Fl_Button* o, void* v) {
   ((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);
@@ -50,6 +60,7 @@ PVCreativityUI::PVCreativityUI() {
     } // Fl_Text_Display* results
     window->end();
   } // Fl_Double_Window* window
+  printf("Hello, World!\n");
 }
 
 void PVCreativityUI::show(int argc, char **argv) {
