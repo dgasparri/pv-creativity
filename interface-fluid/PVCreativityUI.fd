@@ -2,13 +2,13 @@
 version 1.0305
 header_name {.h}
 code_name {.cpp}
-class PVCreativityUI {open selected
+class PVCreativityUI {open
 } {
   Function {PVCreativityUI()} {open
   } {
     Fl_Window window {
       label {Photovoltaic Creativity} open
-      protected xywh {2372 233 917 1169} type Double
+      protected xywh {1610 244 917 1169} type Double
       code0 {\#include <Windows.h>}
       code1 {\#include <iostream>} visible
     } {
@@ -34,17 +34,17 @@ class PVCreativityUI {open selected
         }
         Fl_Button compute {
           label Compute
-          callback {Fl_Button* btn = static_cast<Fl_Button*>(o);
- std::cout << "Premuto bottone" << std::endl;
-    //sStruct* s = static_cast<sStruct*>(data);
+          callback {double L = (double)this->L->value();
+	double beta = (double)this->beta->value();
+	double delta = (double)this->delta->value();
+	double G_B = (double)this->G_B->value();
+	std::cout << "Da pressione di bottone" << std::endl
+		<< "L: " << L << std::endl
+		<< "beta: " << beta << std::endl
+		<< "delta: " << delta << std::endl
+		<< "G_B: " << G_B << std::endl;
 
-    //char* strUserData = static_cast<char*>(btn->user_data());
-
-    //if (btn != NULL && s != NULL) {
-    //    std::cout << "UserData: " << strUserData << std::endl;
-    //}
-    
-    //((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);}
+	double S = compute_absorbed_radiation_S(L, beta, delta, G_B, 1);} selected
           protected xywh {685 590 170 35}
           code0 {\#include "pv_output.h"}
         }

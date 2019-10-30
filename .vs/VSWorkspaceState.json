@@ -2,10 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\bin",
-    "\\bin\\intermediate\\Win32",
-    "\\bin\\Win32\\Release",
+    "\\interface-fluid",
     "\\src"
   ],
-  "SelectedNode": "\\bin\\Win32",
+  "SelectedNode": "\\src\\PanelView.cpp",
   "PreviewInSolutionExplorer": false
 }

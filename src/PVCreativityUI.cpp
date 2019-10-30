@@ -2,10 +2,8 @@
 
 #include "PVCreativityUI.h"
 
-void PVCreativityUI::cb_compute_i(Fl_Button* o, void* v) {
-  //Fl_Button* btn = static_cast<Fl_Button*>(o);
-	//std::cout << "Premuto bottone" << this->L->value()<< std::endl;
-	double L = (double)this->L->value();
+void PVCreativityUI::cb_compute_i(Fl_Button*, void*) {
+  double L = (double)this->L->value();
 	double beta = (double)this->beta->value();
 	double delta = (double)this->delta->value();
 	double G_B = (double)this->G_B->value();
@@ -16,33 +14,6 @@ void PVCreativityUI::cb_compute_i(Fl_Button* o, void* v) {
 		<< "G_B: " << G_B << std::endl;
 
 	double S = compute_absorbed_radiation_S(L, beta, delta, G_B, 1);
-	/*
-	Da http://seriss.com/people/erco/fltk/#Fl_Text_Display
-	Fl_Text_Display* disp = new Fl_Text_Display(20, 20, 640 - 40, 480 - 40, "Display");
-	disp->buffer(buff);
-	win->resizable(*disp);
-	win->show();
-	buff->text("line 0\nline 1\nline 2\n"
-		"line 3\nline 4\nline 5\n"
-		"line 6\nline 7\nline 8\n"
-		"line 9\nline 10\nline 11\n"
-		"line 12\nline 13\nline 14\n"
-		"line 15\nline 16\nline 17\n"
-		"line 18\nline 19\nline 20\n"
-		"line 21\nline 22\nline 23\n");
-		*/
-	//this->results->value;
-
-
-    //sStruct* s = static_cast<sStruct*>(data);
-
-    //char* strUserData = static_cast<char*>(btn->user_data());
-
-    //if (btn != NULL && s != NULL) {
-    //    std::cout << "UserData: " << strUserData << std::endl;
-    //}
-    
-    //((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);
 }
 void PVCreativityUI::cb_compute(Fl_Button* o, void* v) {
   ((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);
