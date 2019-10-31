@@ -3,17 +3,44 @@
 #include "PVCreativityUI.h"
 
 void PVCreativityUI::cb_compute_i(Fl_Button*, void*) {
-  double L = (double)this->L->value();
+
+
+	int N = (int)this->N->value();
+	int minutes = (int)this->minutes->value();
+	double L = (double)this->L->value();
 	double beta = (double)this->beta->value();
-	double delta = (double)this->delta->value();
+	double Z_S = (double)this->Z_S->value();
+	double n_refraction_index = (double)this->n->value();
+	double L_T = (double)this->L_T->value();
+	double K = (double)this->K->value();
 	double G_B = (double)this->G_B->value();
+
+
+
+	double S = compute_absorbed_radiation_S(
+		N,
+		minutes,
+		L,
+		beta,
+		Z_S,
+		n_refraction_index,
+		L_T,
+		K,
+		G_B,
+		1);
+
 	std::cout << "Da pressione di bottone" << std::endl
 		<< "L: " << L << std::endl
 		<< "beta: " << beta << std::endl
-		<< "delta: " << delta << std::endl
-		<< "G_B: " << G_B << std::endl;
+		<< "Z_S: " << Z_S << std::endl
+		<< "L_T: " << L_T << std::endl
+		<< "Refraction Index (n): " << n_refraction_index << std::endl
+		<< "K: " << K << std::endl
+		<< "Giorni (N): " << N << std::endl
+		<< "Minuti (minutes): " << minutes << std::endl
+		<< "G_B: " << G_B << std::endl
+		<< "S: " << S << std::endl;
 
-	double S = compute_absorbed_radiation_S(L, beta, delta, G_B, 1);
 }
 void PVCreativityUI::cb_compute(Fl_Button* o, void* v) {
   ((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);

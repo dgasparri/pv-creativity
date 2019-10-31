@@ -3,10 +3,15 @@
 
 
 double compute_absorbed_radiation_S(
-	double L = 35, //Latitute degrees
-	double beta = 30, //tilt/slope paneldegrees
-	double delta = 23.09, //Degrees sole
-	double G_B = 715, // W/m^2
+	int N, // giorno dell'anno
+	int minutes, //minuti
+	double L=35, // = 35, //Latitute degrees
+	double beta = 30, // = 30, //tilt/slope paneldegrees
+	double Z_S = 0, // inclinazione pannello tra est/ovest
+	double n_refraction_index = 1.526, // n_refraction_index = 1.526;
+	double L_T = 0.002, // Spessore pannello in m 0.002
+	double K=4, //Coefficiente di estinzione del sistema fotovoltaico (di solito = 4), 
+	double G_B=715, // = 715 // W/m^2
 	int printToBuffer = 0
 );
 
