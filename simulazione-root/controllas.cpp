@@ -29,8 +29,7 @@ struct sun_position_in_sky {
 	int valid;
 };
 
-
-sun_position_in_sky compute_absorbed_radiation_S(
+void compute_absorbed_radiation_S(
 	int N, // giorno dell'anno
 	int minutes,
 	double beta,
@@ -57,134 +56,6 @@ double compute_S925(double M, double G_B, double R_B, double tau_alpha_D);
 double compute_sin_z(double delta_rad, double h_rad, double alpha_rad);
 
 
-void _pvdays_graph(double beta, double L, int day_of_year, TCanvas *c1, int quadrant ) {
-	const Int_t n = 20;
-	Double_t x[n];
-	Double_t y[n];
-	
-	Double_t hour[n];
-	Double_t azimuth[n];
-
-	Int_t n_points = 0;
-	for (int i=0;i<20;i++) {
-		sun_position_in_sky sp = 
-			compute_absorbed_radiation_S(day_of_year, (i-10) * 60, beta, L);
-		if(1 ) { //sp.valid
-			x[n_points] = sp.z_rad * 180 / PI;
-			y[n_points] = sp.alpha_rad * 180 / PI;
-			n_points++;
-		}
-		hour[i] = i - 10;
-		azimuth[i] = sp.alpha_rad * 180 / PI;
-		std::cout<<"Minuto: "<<((i-10) * 60) 
-				<< " Azimuth: " << sp.z_rad * 180 / PI 
-				<< " Altitude: "<< sp.alpha_rad * 180 / PI << std::endl;
-	}
-	c1->cd(quadrant);
-	TGraph *gr1 = new TGraph(n_points,x,y);
-	gr1->SetLineColor(2);
-	gr1->SetLineWidth(4);
-	gr1->SetMarkerColor(4);
-	gr1->SetMarkerStyle(21);
-	std::string title("Zenit-Azimut durante la giornata il giorno: ");
-	char beta_str[200];
-	std::snprintf(beta_str, 200, "%d", day_of_year);
-	title.append(beta_str);
-	gr1->SetTitle(title.c_str());
-	gr1->GetXaxis()->SetTitle("Azimut Gradi");
-	gr1->GetYaxis()->SetTitle("Altitudine Gradi");
-	//gr->GetYaxis()->SetTitle("S [W]");
-	gr1->Draw();
-
-	c1->cd(quadrant+1);
-	TGraph *gr2 = new TGraph(n,hour,azimuth);
-	gr2->SetLineColor(2);
-	gr2->SetLineWidth(4);
-	gr2->SetMarkerColor(4);
-	gr2->SetMarkerStyle(21);
-	std::string title2("Azimut durante la giornata il giorno: ");
-	char beta_str_2[200];
-	std::snprintf(beta_str_2, 200, "%d", day_of_year);
-	title2.append(beta_str_2);
-	gr2->SetTitle(title2.c_str());
-	gr2->GetXaxis()->SetTitle("Ora");
-	gr2->GetYaxis()->SetTitle("Azimuth");
-	//gr->GetYaxis()->SetTitle("S [W]");
-	gr2->Draw();
-
-
-
-}
-
-//TGraph *pvdays() {
-void pvdays() {
-
-
-  TCanvas *c1 = new TCanvas("c1","A 2 Simple Graph Example",200,10,700,500);
-   c1->SetGrid();
-   c1->Divide(2,2); // divides the canvas into three rows and three columns
-	//c1->cd(1);
-
-	double beta = 30; //37; // best Marseillle summer
-	//double L = 44.49861; //bologna
-	double L = 38;
-
-	_pvdays_graph(beta, L, 1, c1, 1);
-	//c1->cd(2);
-	//_pvdays_graph(beta, L, 90);
-	//c1->cd(3);
-	_pvdays_graph(beta,L, 180, c1, 3);
-	//c1->cd(4);
-	//_pvdays_graph(beta, L, 270);
-
-
-
-   //gr->Draw("ACP");
-   // TCanvas::Update() draws the frame, after which one can change it
-   c1->Update();
-   c1->GetFrame()->SetBorderSize(12);
-   c1->Modified();
-   // TH1F h("h","S during the year", 365, 1, 365);
-   // for (int i= 0; i<365; i++) {h.Fill(compute_absorbed_radiation_S(i, 0));}
-   // h.Draw();
-   //return gr;
-}
-
-
-//TGraph *pvdays() {
-void checkS() {
-
-
-  TCanvas *c1 = new TCanvas("c1","A 2 Simple Graph Example",200,10,700,500);
-   c1->SetGrid();
-   c1->Divide(1,2); // divides the canvas into three rows and three columns
-	//c1->cd(1);
-
-	double beta = 30; //37; // best Marseillle summer
-	double L = 44.49861; //bologna
-
-	//double L = 38;
-
-	//_pvdays_graph(beta, L, 1, c1, 1);
-	//c1->cd(2);
-	//_pvdays_graph(beta, L, 90);
-	//c1->cd(3);
-	//_pvdays_graph(beta,L, 180, c1, 3);
-	//c1->cd(4);
-	//_pvdays_graph(beta, L, 270);
-
-
-
-   //gr->Draw("ACP");
-   // TCanvas::Update() draws the frame, after which one can change it
-   c1->Update();
-   c1->GetFrame()->SetBorderSize(12);
-   c1->Modified();
-   // TH1F h("h","S during the year", 365, 1, 365);
-   // for (int i= 0; i<365; i++) {h.Fill(compute_absorbed_radiation_S(i, 0));}
-   // h.Draw();
-   //return gr;
-}
 
 
 
@@ -196,20 +67,13 @@ void checkS() {
 
 
 
-sun_position_in_sky compute_absorbed_radiation_S(
+
+void compute_absorbed_radiation_S(
 	int N, // giorno dell'anno
 	int minutes, //minuti
 	double beta,
 	double L
 ) {
-	//double L;
-	// L=23;
-	//L = 56; 
-	// L = 44.49861; //Bologna
-	// double L = 44; // Marseille - L = 35; //Latitute degrees
-	
-	//double beta = 55; //best Marseille winter
-	//double beta = 30; //tilt/slope paneldegrees
     double Z_S = 0;
 	double G_B = 715; // W/m^2
 	
@@ -228,11 +92,8 @@ sun_position_in_sky compute_absorbed_radiation_S(
 
 
 	double delta = compute_delta(N); //Eq. 1n
-//	return delta;
-	//std::cout<<"delta: " << delta << std::endl;
 	double h_rad = compute_h_rad(minutes); //Eq. 2n
 
-	//std::cout<<"h: " << h << std::endl;
 
 
 	double L_rad = L * PI / 180;
@@ -251,10 +112,6 @@ sun_position_in_sky compute_absorbed_radiation_S(
 		sp.valid = 0;
 	}
 
-	//return sp;
-
-	std::cout<<"N: " << N << " Zenith: " << std::acos(cos_Phi) * 180 / PI << std::endl;
-	//return std::acos(cos_Phi) * 180 / PI;
 
 	double beta_rad = beta * PI / 180;
 	double Z_S_rad = Z_S * PI / 180;
