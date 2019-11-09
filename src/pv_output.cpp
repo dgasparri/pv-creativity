@@ -96,7 +96,7 @@ double compute_absorbed_radiation_S(
 //Eq. 1n
 double compute_delta(int N) {
 	double parenthesis = (284 + N) * 360 / 365;
-	return 23.45 * sin(parenthesis);
+	return 23.45 * sin(parenthesis * PI / 180);
 }
 
 //Eq. 2n
