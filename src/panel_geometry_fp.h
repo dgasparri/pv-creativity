@@ -29,6 +29,10 @@ namespace p_geometry {
     pure bool is_valid_parallelogram(vertex a, vertex b, vertex c, vertex d, int ulp = 3);
     pure plane plane_from_vertices(vertex a, vertex b, vertex d);
     pure bool is_vertex_on_plane(plane pl, vertex c, int ulp = 3);
+    pure vertex plane_normal(plane pl);
+    pure vertex diagonal_intersection(vertex a, vertex b, vertex c, vertex d, int ulp = 3);
+    pure double beta_rad(plane pl);
+    pure double Z_S_rad(plane pl); 
 
 }
 

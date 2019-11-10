@@ -1,6 +1,57 @@
 #include "../src/panel_geometry_fp.h"
 #include <iostream>
 #include <functional>
+#include <cmath>
+
+#define M_PI 3.1415
+
+
+void print_v(p_geometry::vertex i) {
+    std::cout<<"Vertex x: "<<i.x<<" y: "<<i.y<<" z: "<<i.z<<std::endl;
+}
+
+void print_pl(p_geometry::plane i) {
+    std::cout<<"Plane a_x: "<<i.a_x<<" a_y: "<<i.a_y<<" a_z: "<<i.a_z<<" d: "<<i.d<<std::endl;
+}
+
+
+void test_vertex_intersection() {
+    p_geometry::vertex a(1,1,1);
+    p_geometry::vertex b(1,2,1);
+    p_geometry::vertex c(2,2,1);
+    p_geometry::vertex d(2,1,1);
+
+    p_geometry::vertex i = p_geometry::diagonal_intersection(a, b, c, d, 3);
+    print_v(i);
+
+    p_geometry::plane pl = p_geometry::plane_from_vertices(a, b, d);
+    p_geometry::vertex n = p_geometry::plane_normal(pl);
+    print_pl(pl);
+    print_v(n);
+
+    std::cout<<"Beta: "<< (p_geometry::beta_rad(pl) * 180 / M_PI) <<std::endl;
+    std::cout<<"Z_S: "<< (p_geometry::Z_S_rad(pl) * 180 / M_PI) <<std::endl;
+
+
+    /* Piano inclinato est */
+
+    p_geometry::vertex e(0,0,0);
+    p_geometry::vertex f(0,5,0);
+    p_geometry::vertex g(5,5,5);
+    p_geometry::vertex h(5,0,5);
+
+    p_geometry::vertex j = p_geometry::diagonal_intersection(e, f, g, h, 3);
+    print_v(j);
+
+    p_geometry::plane pl2 = p_geometry::plane_from_vertices(e, f, h);
+    print_pl(pl2);
+    std::cout<<"Punto g sul piano? "<<p_geometry::is_vertex_on_plane(pl2, g)<<std::endl;
+    p_geometry::vertex o = p_geometry::plane_normal(pl2);
+    print_v(o);
+
+    std::cout<<"Beta: "<< (p_geometry::beta_rad(pl2) * 180 / M_PI) <<std::endl;
+    std::cout<<"Z_S: "<< (p_geometry::Z_S_rad(pl2) * 180 / M_PI) <<std::endl;
+}
 
 
 void test_is_plane()
@@ -86,7 +137,8 @@ void test_is_valid_parallelogram()
 
 int main()
 {
-    test_is_valid_parallelogram();
-    test_is_plane();
+    //test_is_valid_parallelogram();
+    //test_is_plane();
+    test_vertex_intersection();
 }
  
