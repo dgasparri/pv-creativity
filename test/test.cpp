@@ -1,31 +1,62 @@
-#include "src/panel_geometry_fp.h"
+#include "../src/panel_geometry_fp.h"
 #include <iostream>
 
-struct vertex {
-    const double x;
-    const double y;
-    const double z;
-    vertex(double x, double y, double z):
-         x(x), y(y), z(z) {}
 
-    vertex operator-(const vertex& other) const {
-        std::cout<<"y "<<y <<" y other "<<other.y<<std::endl;
-        return vertex(x-other.x, y-other.y, z-other.z);
-    }
-};
+
+
+void test_is_valid_parallelogram()
+{
+    p_geometry::vertex a(1,1,1);
+    p_geometry::vertex b(1,2,1);
+    p_geometry::vertex c(2,2,1);
+    p_geometry::vertex d(2,1,1);
+
+
+    p_geometry::vertex ab = b - a;
+    p_geometry::vertex bc = c - b;
+    p_geometry::vertex cd = d - c;
+    p_geometry::vertex da = a - d;
+
+/*
+    ab.print();
+    bc.print();
+    cd.print();
+    da.print();
+    std::cout<<"ab bc "<<get_alpha(ab, bc)<<std::endl;
+    std::cout<<"ab cd "<<get_alpha(ab, cd)<<std::endl;
+    std::cout<<"bc cd "<<get_alpha(bc, cd)<<std::endl;
+    std::cout<<"bc da "<<get_alpha(bc, da)<<std::endl;
+    std::cout<<"cd da "<<get_alpha(cd, da)<<std::endl<<std::endl;
+
+
+    std::cout<<"ab bc "<<parallel(ab, bc, get_alpha(ab, bc))<<std::endl;
+    std::cout<<"ab cd "<<parallel(ab, cd, get_alpha(ab, cd))<<std::endl;
+    std::cout<<"bc cd "<<parallel(bc, cd, get_alpha(bc, cd))<<std::endl;
+    std::cout<<"bc da "<<parallel(bc, da, get_alpha(bc, da))<<std::endl;
+    std::cout<<"cd da "<<parallel(cd, da, get_alpha(cd, da))<<std::endl;
+
+*/
+    std::cout<<"ab_cd_iszero "<<(ab.y * cd.x)<<std::endl;
+    std::cout<<"ab_cd_iszero "<<(ab.z * cd.x)<<std::endl;
+    std::cout<<"ab_cd_iszero "<<(bc.y * da.x)<<std::endl;
+    std::cout<<"ab_cd_iszero "<<(bc.z * da.x)<<std::endl;
+
+    std::cout<<"Is valid parallelogram? (exp. 1) "<<p_geometry::is_valid_parallelogram(a, b, c, d, 3)<<std::endl;
+
+    p_geometry::vertex e(1,1,1);
+    p_geometry::vertex f(1,2,2);
+    p_geometry::vertex g(2,3,1);
+    p_geometry::vertex h(2,1,1);
+
+    std::cout<<"Is valid parallelogram? (exp. 0) "<<p_geometry::is_valid_parallelogram(e, f, g, h, 3)<<std::endl;;
+
+
+
+}
 
 
 int main()
 {
-    vertex a(0,0,0);
-    vertex b(0,1,0);
-    vertex c(1,1,0);
-    vertex d(1,0,0);
-
-
-    vertex ab = b - a;
-    vertex bc = c - b;
-    vertex cd = d - c;
-    vertex da = a - d;
-    std::cout<<"ab.y "<<ab.y<<std::endl;
+    test_is_valid_parallelogram();
 }
+ 

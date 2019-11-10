@@ -1,12 +1,21 @@
 #pragma once
 #define pure
-
-
 #include <functional>
-#include <vector>
-#include <iostream>
+#include <cmath>
 
-struct vertex ;
+namespace p_geometry {
 
-pure double beta_rad(vertex a, vertex b, vertex c, vertex d);
+    struct vertex {
+        const double x;
+        const double y;
+        const double z;
+        vertex(double x, double y, double z);
+
+        vertex operator-(const vertex& other) const;
+    };
+
+    // pure double beta_rad(vertex a, vertex b, vertex c, vertex d);
+    pure bool is_valid_parallelogram(vertex a, vertex b, vertex c, vertex d, int ulp = 3);
+}
+
 
