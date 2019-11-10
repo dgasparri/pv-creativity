@@ -2,4 +2,5 @@
 /.vscode
 /bin
 /test/bin
+/test/obj
 vc140.pdb
