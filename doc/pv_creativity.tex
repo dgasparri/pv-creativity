@@ -1,0 +1,228 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{Simulazione del rendimento di un pannello fotovoltaico v3}
+\author{Duccio Gasparri Matteo Pirazzini}
+\date{October 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+  L'inquinamento globale e in particolare l'aumento delle temperature sono una delle tematiche più calde negli ultimi anni perchè colpisce direttamente il nostro pianeta e noi stessi. Proprio per questo motivo sempre più paesi nel mondo stanno puntando molto sulle energie rinnovabili al fine di diminuire le emissioni di $CO_{2}$ e per calare la produzione di energia elettrica dovuta ai combustibili fossili quali il petrolio e il carbone che oltre ad essere una risorsa limitata, sono anche altamente inquinanti.Possiamo perciò dire che le energie rinnovabili che sfruttano eventi e fenomeni naturali senza creazione diretta di anidride carbonica sono il futuro della creazione di energia elettrica. Nel nostro progetto ci concentreremo sul fotovoltaico, una tecnologia ormai molto diffusa che sfrutta l'enrgia solare per generare elettricità.
+  Il progresso degli studi fotovoltaici ha portato a ideare nuove geometrie che seguissero figure non planari al fine di essere maggiormente integrati all'interno delle architetture degli  edifici stessi.Lo scopo di questo progetto è appunto quello di capire come la diversa geometria del pannello influisca sul rendimento del sistema fotovoltaico.
+  %%begin novalidate
+   \[
+      \begin{array}{lp{0.8\linewidth}}
+         I  & corrente in uscita della cella  fotovoltaica     \\
+         V               & voltaggio in uscita della cella fotovoltaica                    \\
+         I_{ph} & fotocorrente\\
+         I_{0},I_{01},I_{02} & corrrente inversa di saturazione del diodo     \\
+         V_{d} & voltaggio del diodo\\
+         I_{d} & corrente del diodo\\
+         I_{0} & correrte inversa di saturazione del diodo\\
+         a,a_{1},a_{2} & fattore ideale del diodo\\
+         k & costante di Boltzmann\\
+         T & temperatura della giunzione p-n\\
+         q & caricica dell'elettrone\\
+         K_{i} & coefficiente della corrente di cortocircuito sulla temperatura\\
+         K_{v} & coefficiente della corrente a circuito aperto sulla temperatura\\
+         G & radiazione solare effettiva\\
+         G_{B} &radiazione soalre del fasio su una superficie orizzontale (W/m^2)\\
+         G_{Bt}  &radiazione soalre del fasio su una superficie inclinata (W/m^2)\\
+         G _{R} &radiazione diffusa del cielo (W/m^2 rad)\\
+         \theta & angolo di incidenza\\
+         \theta_{r} & angolo di rifrazione\\
+         \theta_{e,D} & angolo della radiazione solare diffusa dal cielo\\
+         \theta_{e,G} & angolo della radiazione solare riflessa dal terreno \\
+         K & coefficiente di estinzione del sitema fotovoltaico (cap 9 pag 514)\\
+         K_{\theta} & rapporto tra la radiazione assorbita dalla cella all'angolo di incidenza $\theta$ diviso dalla radiazione assorbita dalla cella alla incidenza normale\\
+         S & radiazione solare assorbita\\
+         M & modificatore della massa d'aria\\
+         m & massa d'aria di riferimento al livello del mare\\
+         L & latitudine\\
+         h & angolo orario\\
+         \delta & declinazione (angolo fra piano equatoriale e  centro del sole)\\
+         \beta & inclinazione del pannello in gradi rispetto al terreno\\
+         \Phi & angolo dello zenith solare rispetto alla perpendicolare al terreno\\
+         z & angolo di di Azimuth rispetto al piano orizzontale\\
+         Z_{S} &  angolo di inclinazione del pannello fra il sud e la perpendiocolare del pannello(verso ovest è positivo)\\
+         \alpha & angolo di altitudine solare (complementare di $\Phi$) (capitolo 2 pag 60)\\
+         G_{STV} & radiazione solare nominale $(1000W/m^{2})$\\
+         \Delta T             & differenza fra la temperatura effettiva e la temperatura nominale\\
+         I_{ph,STC}         &fotocorrente nominale $(25^{\circ}C$ e $1000W/m^{2})$\\
+         N_{s} & numero di celle connesse in serie\\
+         N_{ss} & numero di moduli connessi per serie\\
+         N_{pp} & numero di moduli connessi in parallelo\\
+         V_{oc} & voltaggio di circuito aperto\\
+         I_{sc} & corrente di cortocircuito\\
+         N & giorno dell'anno\\
+         L_{T} & spessore del vetro\\
+         min & minuti dal mezzogiorno solare locale\\
+         MPP & punto di massima potenza
+      \end{array}
+   \]
+   %%end
+indice di rifrazione vetro = 1.526  
+(CAP 2)
+Scelto N giorno dell'anno calcolo $\delta$ declinazione
+
+Eq 1:
+\begin{equation}
+    \delta=23.45 sin \left[\frac{360}{365}(284+N)\right]
+\end{equation}
+
+dato min minuti (per semplicità di calcolo prendiamo come mezzogiorno solare sempre 12) calcoliamo h angolo orario
+
+Eq 2:
+\begin{equation}
+    h=\pm 0.25(min)
+\end{equation}
+
+data L latitudine(positiva per i valori a nord dell'equatore e negativa per i valori a sud dell'equatore) calcoliamo gli angoli di zenith solare $\alpha$ e $\Phi$
+
+Eq 3 pag517 calcolo dell'angolo di zenith:
+\begin{equation}
+    sin(\alpha)=cos(\Phi)=sin(L)sin(\delta)+cos(L)cos(\delta)cos(h)
+\end{equation}
+
+(pag 60 per calcolare z)
+
+dati $\beta$ inclinazione del pannello in gradi rispetto al terreno e $Z_{S}$ angolo di inclinazione del pannello fra il sud e la perpendiocolare del pannello(verso ovest è positivo) calcolo $\theta$ angolo di incidenza
+
+Eq 4:
+\begin{equation} \begin{split}
+    cos(\theta)&=sin(L)sin(\delta)cos(\beta)-cos(L)sin(\delta)sin(\beta)cos(Z_{S}) \\
+    &\qquad +cos(L)cos(\delta)cos(h)cos(\beta)+sin(L)cos(\delta)cos(h)sin(\beta)cos(Z_{S}) \\
+    &\qquad +cos(\delta)sin(h)sin(\beta)sin(Z_{S})
+\end{split}\end{equation}
+
+(CAP 9)
+
+dato $G_{Bt}=cos(\theta) $ e $G_{B}=cos(\Phi)$ (GUARDA PAG 101) calcolo $R_{B}$
+
+Eq 5:
+\begin{equation}
+    R_{B}=\frac{cos(\theta)}{cos(\Phi)}
+\end{equation}
+
+calcolo m
+
+Eq 6 pag517:
+\begin{equation}
+   m=\frac{1}{cos(\Phi)}
+\end{equation}
+
+dati gli alpha parametri della regressione dipendenti dal tipo di pannello calcolo M
+
+Eq 7, gli alpha sono a pag514 : 
+\begin{equation}
+    M=\alpha_{0}+\alpha_{1}m+\alpha_{2}m^2+\alpha_{3}m^3+\alpha_{4}m^4
+\end{equation}
+
+calcolo l'angoloo di rifrazione $\theta_{r}$
+
+Eq 8:
+\begin{equation}
+    sin(\theta_{r})=\frac{sin(\theta)}{1.526}
+\end{equation}
+
+dato $L_{T}$ spessore del pannello e K coefficiente di estizione del sistema fotovoltaico calcolo $\tau \alpha _{B}$
+
+Eq 9 (pag 516):
+\begin{equation}
+    (\tau \alpha)_{B}=exp^{-[KL_{T}/cos(\theta_{r})]} \left\{1-\frac{1}{2}\left[\frac{sin^{2}(\theta_{r}-\theta)}{sin^{2}(\theta_{r}+\theta)}+\frac{tan^{2}(\theta_{r}-\theta)}{tan^{2}(\theta_{r}+\theta)}\right]\right\}
+\end{equation}
+
+calcolo $\tau \alpha _{n}$
+
+Eq 10 (pag516):
+\begin{equation}
+   (\tau \alpha)_{n} =e^{-KL_{T}}\left[1-\left(\frac{n-1}{n+1}\right)^2\right]
+\end{equation}
+
+calcolo $K_{\theta , B}$
+
+ Eq 11 (pag516):
+\begin{equation}
+   K_{\theta,B}=\frac{(\tau \alpha)_{B}}{(\tau \alpha)_{n}}
+\end{equation}
+cacolo
+calocolo S
+
+Eq 12 (pag514):
+\begin{equation}
+   S=(\tau \alpha)_{n} M\left\{G_{B} R_{B} K_{\theta,B}\right\}
+\end{equation}
+
+dato $G_{R}$ calcolo $G_{D}$
+
+Eq 13:
+\begin{equation}
+    G _{D}=2G_{R}
+\end{equation}
+
+calcolo G
+
+Eq 14:
+\begin{equation}
+    G=G_{B}+G_{D}
+\end{equation}
+dato $I_{ph,STC}$ $K_{i}$ e $\Delta_{T}$ e $G_{STC}$ calcolo $I_{ph}$ fotocorrente
+
+Eq 15:
+\begin{equation}
+    I_{ph}=(I_{ph.STC}+K_{i}\Delta T)\frac{G}{G_{STC}}
+\end{equation}
+
+dato $N_{S}$ numero di celle connesse in serie $T$ temperatura della giunzione p-n $K_{V}$ ????????????????????????????????? calcolo $V_{T}$
+
+Eq 16:
+\begin{equation}
+    V_{T}=\frac{N_{S}KT}{q}
+\end{equation}
+
+calcolo $I_{0}$ corrente di saturazione
+
+Eq 17:
+\begin{equation}
+    I_{0}=\frac{I_{ph,STC}+K_{i}\Delta T}{exp[(V_{oc,STC}+K_{V}\Delta T)/aV_{T}]-1}
+\end{equation}
+
+dato k costante di Boltzmann, T temperatura assoluta della giunzione, q carica elettrica ($1.602*10^{-19}$ J/V), V voltaggio attorno alla cella, a fottore ideale del diodo calcolo I corrente di uscita del pannello
+
+Eq 18 (modello ideale):
+\begin{equation}
+    I=I_{ph}-I_{0}\left(exp\left(\frac{qV_{d}}{akT}\right)-1\right)
+\end{equation}
+
+Eq 18-bis: (modello boh)
+\begin{equation}
+    I=I_{ph}-I_{0}\left(\left exp\left(\frac{V+IR_{s}}{a V_{T}}\right)-1\right)\right-\frac{V+IR_{s}}{R_{p}}
+\end{equation}
+
+
+modelli a diodo doppio
+Eq i:
+\begin{equation}
+    I=I_{ph}+I_{01}\left[exp\left(\frac{V+IR_{s}}{a_{1}V_{T1}}\right)-1\right]-I_{02}\left[exp\left(\frac{V+IR_{s}}{a_{2}V_{T2}}\right)-1\right]-\frac{V+IR_{s}}{R_{p}}
+\end{equation}
+
+Eq ii:
+\begin{equation}
+    I_{01}=I_{02}=I_{0}=\frac{I_{ph,STC}+K_{j}\Delta T}{exp[(V_{oc,STC}+K_{V}\Delta T)/[(a_{1}+a_{2})/p]V_{T}]-1}
+\end{equation}
+
+
+Eq iii:
+\begin{equation}
+    V_{T1}=V_{T2}=\frac{N_{S}KT}{q}
+\end{equation}
+
+
+
+
+
+\end{document}
