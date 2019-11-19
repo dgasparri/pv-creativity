@@ -16,7 +16,7 @@ void PVCreativityUI::cb_compute_i(Fl_Button*, void*) {
 	double G_B = (double)this->G_B->value();
 
 
-
+  /*
 	double S = compute_absorbed_radiation_S(
 		N,
 		minutes,
@@ -28,7 +28,9 @@ void PVCreativityUI::cb_compute_i(Fl_Button*, void*) {
 		K,
 		G_B,
 		1);
+  */
 
+  double S = 5.0;
 	std::cout << "Da pressione di bottone" << std::endl
 		<< "L: " << L << std::endl
 		<< "beta: " << beta << std::endl

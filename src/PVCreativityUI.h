@@ -9,7 +9,6 @@
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Button.H>
-#include "pv_output.h"
 #include "PanelView.h"
 #include <FL/Fl_Text_Display.H>
 

@@ -1,14 +1,22 @@
+#define _USE_MATH_DEFINES
 #include <windows.h>
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Text_Buffer.H>
+
+
 // #include "form.h"
 
 // #include "frame.h"
 #include "PanelView.h"
 #include "PVCreativityUI.h"
 
-const double PI  =3.141592653589793238463;
+#include <cmath>
+#include "irradiance_fp.h"
+#include "panel_geometry_fp.h"
+#include "panel_pv_fp.h"
+#include "sun_fp.h"
+
 
 
 
@@ -93,7 +101,7 @@ double compute_absorbed_radiation_S(
 	//double K = 4; // m^-1
 	//double thickness = 0.002; // m la chiama L
 
-	//double delta_rad = delta * PI / 180;
+	//double delta_rad = delta * M_PI / 180;
 	*/
 
 	//Monocristallino Tabella pg. 514
@@ -107,11 +115,11 @@ double compute_absorbed_radiation_S(
 	double delta = compute_delta(N); //Eq. 1n
 	double h = compute_h(minutes); //Eq. 2n
 
-	double L_rad = L * PI / 180;
+	double L_rad = L * M_PI / 180;
 	double cos_Phi = compute_cos_Phi(L_rad, delta, h); //Eq. 3n
 
-	double beta_rad = beta * PI / 180;
-	double Z_S_rad = Z_S * PI / 180;
+	double beta_rad = beta * M_PI / 180;
+	double Z_S_rad = Z_S * M_PI / 180;
 
 	double cos_theta = compute_cos_theta(L_rad, beta_rad, 
 		Z_S_rad, delta, h); //Eq. 4
