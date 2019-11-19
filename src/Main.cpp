@@ -1,9 +1,9 @@
-#define _USE_MATH_DEFINES
+
 #include <windows.h>
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Text_Buffer.H>
-
+#define _USE_MATH_DEFINES
 
 // #include "form.h"
 
@@ -111,9 +111,9 @@ double compute_absorbed_radiation_S(
 	double alpha_3 = 0.000527;
 	double alpha_4 = -0.000011;
 
-
-	double delta = compute_delta(N); //Eq. 1n
-	double h = compute_h(minutes); //Eq. 2n
+	using namespace pv_sun;
+	double delta = compute_delta_rad(N); //Eq. 1n
+	double h = compute_h_rad(minutes); //Eq. 2n
 
 	double L_rad = L * M_PI / 180;
 	double cos_Phi = compute_cos_Phi(L_rad, delta, h); //Eq. 3n
@@ -126,7 +126,7 @@ double compute_absorbed_radiation_S(
 	double theta = acos(cos_theta);
 
 	double R_B = compute_R_B(cos_theta, cos_Phi); //Eq. 5n
-	double m = compute_m(cos_Phi); //Eq. 6n
+	double m = compute_m(N, minutes, L_rad); //Eq. 6n
 
 	double M = compute_M(m, alpha_0, alpha_1, 
 		alpha_2, alpha_3, alpha_4); //Eq. 7n

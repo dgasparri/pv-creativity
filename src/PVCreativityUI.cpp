@@ -3,9 +3,7 @@
 #include "PVCreativityUI.h"
 
 void PVCreativityUI::cb_compute_i(Fl_Button*, void*) {
-
-
-	int N = (int)this->N->value();
+  int N = (int)this->N->value();
 	int minutes = (int)this->minutes->value();
 	double L = (double)this->L->value();
 	double beta = (double)this->beta->value();
@@ -29,8 +27,7 @@ void PVCreativityUI::cb_compute_i(Fl_Button*, void*) {
 		G_B,
 		1);
   */
-
-  double S = 5.0;
+  double S = 10.0;
 	std::cout << "Da pressione di bottone" << std::endl
 		<< "L: " << L << std::endl
 		<< "beta: " << beta << std::endl
@@ -42,7 +39,6 @@ void PVCreativityUI::cb_compute_i(Fl_Button*, void*) {
 		<< "Minuti (minutes): " << minutes << std::endl
 		<< "G_B: " << G_B << std::endl
 		<< "S: " << S << std::endl;
-
 }
 void PVCreativityUI::cb_compute(Fl_Button* o, void* v) {
   ((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);
@@ -51,7 +47,7 @@ void PVCreativityUI::cb_compute(Fl_Button* o, void* v) {
 PVCreativityUI::PVCreativityUI() {
   { window = new Fl_Double_Window(917, 1169, "Photovoltaic Creativity");
     window->user_data((void*)(this));
-    { Fl_Group* o = new Fl_Group(670, 40, 200, 600, "Input Values");
+    { Fl_Group* o = new Fl_Group(640, 40, 230, 585, "Input Values");
       o->box(FL_THIN_UP_BOX);
       { L = new Fl_Value_Input(760, 60, 95, 23, "Latitude");
         L->maximum(360);
@@ -61,17 +57,36 @@ PVCreativityUI::PVCreativityUI() {
         beta->maximum(90);
         beta->value(30);
       } // Fl_Value_Input* beta
-      { delta = new Fl_Value_Input(760, 120, 95, 23, "delta");
-        delta->maximum(90);
-        delta->value(23.09);
-      } // Fl_Value_Input* delta
-      { G_B = new Fl_Value_Input(760, 150, 95, 23, "G_B");
+      { L_T = new Fl_Value_Input(760, 150, 95, 23, "Glass Thickness");
+        L_T->value(0.002);
+      } // Fl_Value_Input* L_T
+      { G_B = new Fl_Value_Input(760, 300, 95, 23, "G_B");
         G_B->maximum(2000);
         G_B->value(715);
       } // Fl_Value_Input* G_B
-      { compute = new Fl_Button(685, 590, 170, 35, "Compute");
+      { compute = new Fl_Button(660, 590, 195, 20, "Compute");
         compute->callback((Fl_Callback*)cb_compute);
       } // Fl_Button* compute
+      { N = new Fl_Value_Input(760, 240, 95, 23, "Day");
+        N->minimum(1);
+        N->maximum(365);
+        N->value(1);
+      } // Fl_Value_Input* N
+      { minutes = new Fl_Value_Input(760, 270, 95, 23, "Minutes");
+        minutes->minimum(-720);
+        minutes->maximum(720);
+      } // Fl_Value_Input* minutes
+      { Z_S = new Fl_Value_Input(760, 120, 95, 23, "Z_S");
+        Z_S->maximum(360);
+      } // Fl_Value_Input* Z_S
+      { n = new Fl_Value_Input(760, 180, 95, 23, "Refraction index");
+        n->maximum(10);
+        n->value(1.526);
+      } // Fl_Value_Input* n
+      { K = new Fl_Value_Input(760, 210, 95, 23, "K");
+        K->maximum(100);
+        K->value(4);
+      } // Fl_Value_Input* K
       o->end();
     } // Fl_Group* o
     { panel = new PanelView(25, 25, 600, 600, "pframe");

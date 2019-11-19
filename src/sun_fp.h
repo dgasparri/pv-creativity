@@ -5,6 +5,8 @@
 #endif
 #include <cmath>
 
+
+namespace pv_sun {
 /*
 -------- Related to the sun and earth -------
 
@@ -25,7 +27,7 @@ pure double cos_Phi(int N, int minutes, int L_rad);
 pure double Phi_rad(int N, int minutes, int L_rad);
 pure double sin_alpha(int N, int minutes, int L_rad);
 pure double alpha_rad(int N, int minutes, int L_rad);
-pure double m(int N, int minutes, int L_rad);
+pure double compute_m(int N, int minutes, int L_rad);
 
 
 // ----- INTERNAL ----
@@ -34,3 +36,5 @@ pure double compute_h_rad(int minutes);
 pure double compute_cos_Phi(double L_rad, double delta_rad, double h_rad);
 
 
+
+}

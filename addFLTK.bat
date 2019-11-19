@@ -1,0 +1,1 @@
+set LIB=%LIB%;C:\Users\dmg\C++\fltk-1.3.5\lib;
