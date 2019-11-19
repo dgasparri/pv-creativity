@@ -6,8 +6,10 @@
 
 // #include "frame.h"
 #include "PanelView.h"
-#include "pv_output.h"
 #include "PVCreativityUI.h"
+
+const double PI  =3.141592653589793238463;
+
 
 
 double compute_absorbed_radiation_S(

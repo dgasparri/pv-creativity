@@ -1,4 +1,4 @@
-#include "src/panel_pv_fp.h"
+#include "panel_pv_fp.h"
 
 // Eq. 1
 pure double compute_I(double I_ph, double I_0, double q, double V_d, double a, double k, double T) {

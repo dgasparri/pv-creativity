@@ -1,4 +1,5 @@
-#include "src/sun_fp.h"
+#include "sun_fp.h"
+
 
 
 pure double cos_Phi(int N, int minutes, int L_rad)
@@ -10,7 +11,7 @@ pure double cos_Phi(int N, int minutes, int L_rad)
 
 pure double Phi_rad(int N, int minutes, int L_rad) 
 {
-    return acos(cos_Phi_rad(N, minutes, L_rad));
+    return acos(cos_Phi(N, minutes, L_rad));
 }
 
 pure double sin_alpha(int N, int minutes, int L_rad)
