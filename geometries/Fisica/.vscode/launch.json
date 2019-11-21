@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Script",
+            "request": "launch",
+            "mainClass": "Script"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - CVSUtilExample",
+            "request": "launch",
+            "mainClass": "CVSUtilExample"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - WriteToFileCsv",
+            "request": "launch",
+            "mainClass": "WriteToFileCsv"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Create_CSV",
+            "request": "launch",
+            "mainClass": "Create_CSV"
+        }
+    ]
+}

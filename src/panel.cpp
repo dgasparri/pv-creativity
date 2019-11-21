@@ -34,7 +34,7 @@ namespace panel {
          glEnd();
       glEndList();
 
-
+      //Disegna i poligoni
       glNewList(PANEL, GL_COMPILE);
          glBegin(GL_TRIANGLES);
             glColor3f(1.0, 0.0, 0.0);
@@ -63,13 +63,8 @@ namespace panel {
          glEnd();
       glEndList(); 
 
-      glCallList(CARTESIO);
-      
-      glPushMatrix();  
-         glTranslated(0,0,0);
-         glRotated(0,0,0,1);
-         glCallList(PANEL);
-      glPopMatrix();
+
+
 
    }
 
@@ -86,6 +81,12 @@ namespace panel {
       glPushMatrix();  
          glTranslated(x,y,0);
          glRotated(t*180/3.1415927,t*180/3.1415927,0,1);
+         //Riempe i triangoli di colore
+         glPolygonMode(	GL_FRONT_AND_BACK, GL_FILL);
+         //Disegna semplicemente le linee ma non riempe i triangoli
+         //glLineWidth(1.0);
+         //glPolygonMode(	GL_FRONT_AND_BACK, GL_LINE);
+         
          glCallList(PANEL);
       glPopMatrix();
       

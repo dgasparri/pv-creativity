@@ -135,10 +135,28 @@ void test_is_valid_parallelogram()
 }
 
 
+#include <stdio.h>
+#include <stdlib.h>
+void test_load_vertex()
+{
+    float v1x, v1y, v1z, v2x, v2y, v2z, v3x, v3y, v3z;
+    FILE *fp;
+    fp = fopen ("C:/Users/dmg/C++/repos/pv-creativity/geometries/triangles.csv", "r");
+    for(int i=0; i<9; i++) {
+        fscanf(fp, "%f %f %f, %f %f %f, %f %f %f\n", &v1x, &v1y, &v1z, &v2x, &v2y, &v2z, &v3x, &v3y, &v3z);
+        std::cout<<"X: "<<v1x<<" Y: "<<v1y<<" Z: "<<v1z<<std::endl;
+        std::cout<<"X: "<<v2x<<" Y: "<<v2y<<" Z: "<<v2z<<std::endl;
+        std::cout<<"X: "<<v3x<<" Y: "<<v3y<<" Z: "<<v3z<<std::endl;
+    }
+    fclose(fp);
+}
+
+
 int main()
 {
     //test_is_valid_parallelogram();
     //test_is_plane();
-    test_vertex_intersection();
+    //test_vertex_intersection();
+    test_load_vertex();
 }
  
