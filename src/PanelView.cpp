@@ -3,7 +3,7 @@
 #include <GL/glu.h>
 
 #include "PanelView.h"
-#include "draw.h"
+#include "panel.h"
 
 //------------------------------------------------------------------------------
 void PanelView::draw() {
@@ -21,10 +21,13 @@ void PanelView::draw() {
 		gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
 		glEnable(GL_DEPTH_TEST);
 
-		draw_init();
+		panel::draw();
 		valid(1);
 	}
 
-	draw_scene();
+	panel::update();
 }
 //------------------------------------------------------------------------------
+
+
+

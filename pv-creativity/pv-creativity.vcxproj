@@ -19,19 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\draw.cpp" />
+    <ClCompile Include="..\src\irradiance_fp.cpp" />
     <ClCompile Include="..\src\Main.cpp" />
+    <ClCompile Include="..\src\panel.cpp" />
     <ClCompile Include="..\src\PanelView.cpp" />
+    <ClCompile Include="..\src\panel_geometry_fp.cpp" />
+    <ClCompile Include="..\src\panel_pv_fp.cpp" />
     <ClCompile Include="..\src\PVCreativityUI.cpp" />
-    <ClCompile Include="..\src\pv_output.cpp" />
+    <ClCompile Include="..\src\sun_fp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\draw.h" />
+    <ClInclude Include="..\src\irradiance_fp.h" />
+    <ClInclude Include="..\src\panel.h" />
     <ClInclude Include="..\src\PanelView.h" />
+    <ClInclude Include="..\src\panel_geometry_fp.h" />
+    <ClInclude Include="..\src\panel_pv_fp.h" />
     <ClInclude Include="..\src\PVCreativityUI.h" />
-    <ClInclude Include="..\src\pv_output.h" />
-    <ClInclude Include="..\src\stdafx.h" />
-    <ClInclude Include="..\src\targetver.h" />
+    <ClInclude Include="..\src\sun_fp.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -102,6 +106,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <LibraryPath>C:\Users\dmg\C++\fltk-github\build\lib\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -160,6 +165,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\Users\dmg\C++\fltk-1.3.5\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fltk.lib;fltk_forms.lib;fltk_gl.lib;fltk_jpeg.lib;fltk_images.lib;fltk_png.lib;fltk_z.lib;opengl32.lib;glu32.lib;wsock32.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
