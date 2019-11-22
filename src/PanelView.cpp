@@ -18,7 +18,8 @@ void PanelView::draw() {
 		glLoadIdentity();                                      // Reset The Modelview Matrix
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
 		glLoadIdentity();                                      // Reset The View
-		gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
+		//0,0, 10, 0, 0, 0, 0, 1, 0
+		gluLookAt(0, -10, 0, 0, 0, 0, 0, 0, 1);        // Position - View  - Up Vector
 		glEnable(GL_DEPTH_TEST);
 
 		panel::draw();

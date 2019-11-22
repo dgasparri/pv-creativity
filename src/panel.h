@@ -11,7 +11,7 @@
 #define CARTESIO  1
 #define PANEL  2
 
-
+//extern std::vector<p_geometry::vertex> vertices;
 
 namespace panel {
     void draw(void);

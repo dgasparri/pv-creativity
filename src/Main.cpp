@@ -12,6 +12,7 @@
 #include "PVCreativityUI.h"
 
 #include <cmath>
+#include <vector>
 #include "irradiance_fp.h"
 #include "panel_geometry_fp.h"
 #include "panel_pv_fp.h"
@@ -38,6 +39,54 @@ double compute_absorbed_radiation_S(
 PanelView   *scene;
 Fl_Text_Buffer* resultsBuffer;
 
+
+std::vector<p_geometry::vertex> test_load_vertex()
+{
+    std::vector<p_geometry::vertex> v;
+	float v1x, v1y, v1z, v2x, v2y, v2z, v3x, v3y, v3z;
+    FILE *fp;
+    fopen_s (&fp, "C:/Users/dmg/C++/repos/pv-creativity/geometries/triangles.csv", "r");
+    for(int i=0; i<9; i++) {
+        fscanf_s(fp, "%f %f %f, %f %f %f, %f %f %f\n", &v1x, &v1y, &v1z, &v2x, &v2y, &v2z, &v3x, &v3y, &v3z);
+		v.emplace_back(p_geometry::vertex(v1x, v1y, v1z));
+		v.emplace_back(p_geometry::vertex(v2x, v2y, v2z));
+		v.emplace_back(p_geometry::vertex(v3x, v3y, v3z));
+        std::cout<<"X: "<<v1x<<" Y: "<<v1y<<" Z: "<<v1z<<std::endl;
+        std::cout<<"X: "<<v2x<<" Y: "<<v2y<<" Z: "<<v2z<<std::endl;
+        std::cout<<"X: "<<v3x<<" Y: "<<v3y<<" Z: "<<v3z<<std::endl;
+    }
+    fclose(fp);
+	return v;
+}
+
+
+
+std::vector<p_geometry::vertex> temp_vertices()
+{
+    std::vector<p_geometry::vertex> vertices;
+
+	vertices.emplace_back(p_geometry::vertex(-3.0, -3.0, 0.0));
+	vertices.emplace_back(p_geometry::vertex( 3.0, -3.0, 0.0));
+	vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
+
+	vertices.emplace_back(p_geometry::vertex(-3.0, -3.0, 0.0));
+	vertices.emplace_back(p_geometry::vertex(-3.0,  3.0, 0.0));
+	vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
+
+	vertices.emplace_back(p_geometry::vertex( 3.0,  3.0, 0.0));
+	vertices.emplace_back(p_geometry::vertex(-3.0,  3.0, 0.0));
+	vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
+
+	vertices.emplace_back(p_geometry::vertex( 3.0,  3.0, 0.0));
+	vertices.emplace_back(p_geometry::vertex( 3.0, -3.0, 0.0));
+	vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
+
+	return vertices;
+
+}
+
+std::vector<p_geometry::vertex> vertices;
+
 //-------------------------------------------------------------------------------------------------
 void idle_cb(void*)
 {
@@ -46,6 +95,7 @@ void idle_cb(void*)
 //-------------------------------------------------------------------------------------------------
 int main(int argc, char **argv) {
 	// compute_absorbed_radiation_S();
+	vertices = temp_vertices();
 	
 
 	PVCreativityUI* w = new PVCreativityUI();
