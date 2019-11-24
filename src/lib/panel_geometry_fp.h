@@ -25,14 +25,21 @@ namespace p_geometry {
         plane(double a_x, double a_y, double a_z, double d);
     };
 
+    struct triangle {
+        const double beta_rad;
+        const double Z_S_rad;
+        const double area;
+        triangle(const vertex a, const vertex b, const vertex c);
+    };
+
     // pure double beta_rad(vertex a, vertex b, vertex c, vertex d);
-    pure bool is_valid_parallelogram(vertex a, vertex b, vertex c, vertex d, int ulp = 3);
-    pure plane plane_from_vertices(vertex a, vertex b, vertex d);
-    pure bool is_vertex_on_plane(plane pl, vertex c, int ulp = 3);
-    pure vertex plane_normal(plane pl);
-    pure vertex diagonal_intersection(vertex a, vertex b, vertex c, vertex d, int ulp = 3);
-    pure double beta_rad(plane pl);
-    pure double Z_S_rad(plane pl); 
+
+    pure plane plane_from_vertices(const vertex a, const vertex b, const vertex d);
+    pure vertex plane_normal(const plane pl);
+
+    pure double beta_rad(const plane pl);
+    pure double Z_S_rad(const plane pl);
+    pure double vector_norm(const vertex pl_normal);
 
 }
 
