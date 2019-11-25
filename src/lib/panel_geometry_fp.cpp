@@ -28,12 +28,16 @@ namespace p_geometry {
         a_x(a_x), a_y(a_y), a_z(a_z), d(d) {}
 
     //Serve plane horizon?
-    triangle::triangle(const vertex a, const vertex b, const vertex c) {
-        plane pl = plane_from_vertices(a, b, c);
-        beta_rad = p_geometry::beta_rad(pl);
-        Z_S_rad = p_geomtery::Z_S_rad(pl);
+    triangle::triangle(const vertex a, const vertex b, const vertex c):
+		beta_rad (p_geometry::beta_rad(plane_from_vertices(a, b, c))),
+		Z_S_rad (p_geometry::Z_S_rad(plane_from_vertices(a, b, c))),
+		area(vector_norm(plane_normal(plane_from_vertices(a, b, c))) / 2)
+	{
+        //plane pl = plane_from_vertices(a, b, c);
+        //beta_rad = p_geometry::beta_rad(pl);
+        //Z_S_rad = p_geometry::Z_S_rad(pl);
         //Area of a triangle from vectors a, b, c: 1/2 ||ab x ac||
-        area = vector_norm(plane_normal(pl))/2;
+        //area = vector_norm(plane_normal(pl))/2;
     }
 
 

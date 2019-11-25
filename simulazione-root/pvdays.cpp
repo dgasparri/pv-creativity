@@ -291,6 +291,7 @@ sun_position_in_sky compute_absorbed_radiation_S(
 			<< " S925: " << S925 << std::endl
 			;
 	}
+	return sp;
 
 
 }

@@ -1,33 +1,14 @@
-#include "panel.h"
-#include <iostream>
+#include "panel_opengl.h"
+#include "../lib/panel_geometry_fp.h"
 #include <GL/glu.h> //per gluLookAt
 
-std::vector<p_geometry::vertex> temp_vertices();
-std::vector<p_geometry::vertex> test_load_vertex();
 
-namespace panel {
+namespace panel_opengl {
 
-   void draw(void)
-   {
-      std::vector<p_geometry::vertex> vertices = test_load_vertex();
+   void draw(const std::vector<p_geometry::vertex *>& vertices)
+   { 
+      //std::vector<p_geometry::vertex> vertices = test_load_vertex();
       std::cout<<"Vertices size: "<<vertices.size()<<std::endl;
-      /*
-      vertices.emplace_back(p_geometry::vertex(-3.0, -3.0, 0.0));
-      vertices.emplace_back(p_geometry::vertex( 3.0, -3.0, 0.0));
-      vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
-   
-      vertices.emplace_back(p_geometry::vertex(-3.0, -3.0, 0.0));
-      vertices.emplace_back(p_geometry::vertex(-3.0,  3.0, 0.0));
-      vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
-   
-      vertices.emplace_back(p_geometry::vertex( 3.0,  3.0, 0.0));
-      vertices.emplace_back(p_geometry::vertex(-3.0,  3.0, 0.0));
-      vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
-      
-      vertices.emplace_back(p_geometry::vertex( 3.0,  3.0, 0.0));
-      vertices.emplace_back(p_geometry::vertex( 3.0, -3.0, 0.0));
-      vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
-      */
 
       glNewList(CARTESIO, GL_COMPILE);
          glColor3d(1.0, 1.0, 1.0);
@@ -45,13 +26,21 @@ namespace panel {
       glNewList(PANEL, GL_COMPILE);
          //glBegin(GL_LINE_LOOP);
          glBegin(GL_TRIANGLES);
-            glColor3f(1.0, 1.0, 1.0);
-            /*
-            for(p_geometry::vertex v: vertices) {
-               std::cout<<"x: "<<v.x<<"Y: "<<v.y<<"Z: "<<v.z<<std::endl;
-               glVertex3f(v.x, v.y, v.z);             
+            // glColor3f(1.0, 1.0, 1.0);
+            float t = 0.5;
+            float dt = 0.2; //(era 0.05)
+            float color;
+            
+			
+            for(p_geometry::vertex *v: vertices) {
+               std::cout<<"x: "<<v->x<<"Y: "<<v->y<<"Z: "<<v->z<<std::endl;
+               t+=dt;
+               color = 0.5 + 0.3 * sin(t);
+               glColor3f(color, color, color);
+               glVertex3f(v->x, v->y, v->z);             
             }
-            */
+			
+            /*
             glColor3f(1.0, 0.0, 0.0);
             float t= 0.5;
             
@@ -94,7 +83,7 @@ namespace panel {
             glVertex3f(vertices[21].x, vertices[21].y, vertices[21].z);
             glVertex3f(vertices[22].x, vertices[22].y, vertices[22].z);
             glVertex3f(vertices[23].x, vertices[23].y, vertices[23].z);
-
+            */
 
             glColor3f(1.0, 1.0, 1.0);
          glEnd();

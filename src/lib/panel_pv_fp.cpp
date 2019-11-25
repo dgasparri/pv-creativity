@@ -36,5 +36,4 @@ pure double compute_I3(double I_01, double R_s, double V, double I_ph, double I,
 	return I_ph + I_01 * var1 - I_02 * var2 - var3;
 }
 
-//Eq. 7
-//double compute_I01_I02()
+

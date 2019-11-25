@@ -4,116 +4,97 @@
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Text_Buffer.H>
 #define _USE_MATH_DEFINES
+#include <algorithm>
 
-// #include "form.h"
-
-// #include "frame.h"
-#include "PanelView.h"
-#include "PVCreativityUI.h"
-
-#include <cmath>
-#include <vector>
-#include "irradiance_fp.h"
-#include "panel_geometry_fp.h"
-#include "panel_pv_fp.h"
-#include "sun_fp.h"
+#include "fltk/PanelView.h"
+#include "fltk/PVCreativityUI.h"
+#include "lib/panel_io.h"
+#include "lib/sun_fp.h"
+#include "lib/sun_panel_fp.h"
 
 
-
-
-double compute_absorbed_radiation_S(
-	int N, // giorno dell'anno
-	int minutes, //minuti
-	double L=35, // = 35, //Latitute degrees
-	double beta = 30, // = 30, //tilt/slope paneldegrees
-	double Z_S = 0, // inclinazione pannello tra est/ovest
-	double n_refraction_index = 1.526, // n_refraction_index = 1.526;
-	double L_T = 0.002, // Spessore pannello in m 0.002
-	double K=4, //Coefficiente di estinzione del sistema fotovoltaico (di solito = 4), 
-	double G_B=715, // = 715 // W/m^2
-	int printToBuffer = 0
-);
-
-
-
-PanelView   *scene;
+PanelView   *opengl_box;
 Fl_Text_Buffer* resultsBuffer;
 
 
-std::vector<p_geometry::vertex> test_load_vertex()
-{
-    std::vector<p_geometry::vertex> v;
-	float v1x, v1y, v1z, v2x, v2y, v2z, v3x, v3y, v3z;
-    FILE *fp;
-    fopen_s (&fp, "C:/Users/dmg/C++/repos/pv-creativity/geometries/triangles.csv", "r");
-    for(int i=0; i<9; i++) {
-        fscanf_s(fp, "%f %f %f, %f %f %f, %f %f %f\n", &v1x, &v1y, &v1z, &v2x, &v2y, &v2z, &v3x, &v3y, &v3z);
-		v.emplace_back(p_geometry::vertex(v1x, v1y, v1z));
-		v.emplace_back(p_geometry::vertex(v2x, v2y, v2z));
-		v.emplace_back(p_geometry::vertex(v3x, v3y, v3z));
-        std::cout<<"X: "<<v1x<<" Y: "<<v1y<<" Z: "<<v1z<<std::endl;
-        std::cout<<"X: "<<v2x<<" Y: "<<v2y<<" Z: "<<v2z<<std::endl;
-        std::cout<<"X: "<<v3x<<" Y: "<<v3y<<" Z: "<<v3z<<std::endl;
-    }
-    fclose(fp);
-	return v;
-}
 
-
-
-std::vector<p_geometry::vertex> temp_vertices()
-{
-    std::vector<p_geometry::vertex> vertices;
-
-	vertices.emplace_back(p_geometry::vertex(-3.0, -3.0, 0.0));
-	vertices.emplace_back(p_geometry::vertex( 3.0, -3.0, 0.0));
-	vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
-
-	vertices.emplace_back(p_geometry::vertex(-3.0, -3.0, 0.0));
-	vertices.emplace_back(p_geometry::vertex(-3.0,  3.0, 0.0));
-	vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
-
-	vertices.emplace_back(p_geometry::vertex( 3.0,  3.0, 0.0));
-	vertices.emplace_back(p_geometry::vertex(-3.0,  3.0, 0.0));
-	vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
-
-	vertices.emplace_back(p_geometry::vertex( 3.0,  3.0, 0.0));
-	vertices.emplace_back(p_geometry::vertex( 3.0, -3.0, 0.0));
-	vertices.emplace_back(p_geometry::vertex( 0.0,  0.0, 1.5));
-
-	return vertices;
-
-}
-
-std::vector<p_geometry::vertex> vertices;
-
-//-------------------------------------------------------------------------------------------------
 void idle_cb(void*)
 {
-  scene->redraw();    
+	opengl_box->redraw();
 }
-//-------------------------------------------------------------------------------------------------
-int main(int argc, char **argv) {
-	// compute_absorbed_radiation_S();
-	//vertices = temp_vertices();
-	
 
-	PVCreativityUI* w = new PVCreativityUI();
-	scene = w->panel;
+int main(int argc, char **argv) {
+
+	PVCreativityUI* fltk_window = new PVCreativityUI();
+	opengl_box = fltk_window->panel;
+	const std::vector<p_geometry::vertex*> vertices = panel_io::test_vertices();
+	//const std::vector<p_geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesCirc.csv");
+	//const std::vector<p_geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesSinu.csv");
+	opengl_box->setVertices(vertices);
 	
 	resultsBuffer = new Fl_Text_Buffer();
-	w->results->buffer(resultsBuffer);
+	fltk_window->results->buffer(resultsBuffer);
+	fltk_window->show(argc, argv);
 
-	w->show(argc, argv);
+	std::vector<p_geometry::triangle> triangles;
+	triangles.reserve(vertices.size() / 3 + 1);
+	//Checks for 3 available vertices
+	for (int i = 0; i+2 < vertices.size(); i+=3) {
+		triangles.emplace_back(p_geometry::triangle(*vertices[i], *vertices[i + 1], *vertices[i + 2]));
+	}
+	for (p_geometry::triangle t : triangles) {
+		std::cout << "Triangolo beta: " << t.beta_rad << " Z_S: " << t.Z_S_rad << " area: " << t.area << std::endl;
+	}
+
+	double L = 44;
+	double L_rad = 44/180*M_PI;
+	//double S[365][9];
+	double S[365];
+	for(int N=1; N<=365; N++)  
+		for(int h=0; h < 9; h++) 
+			//S[N-1][h]=0;
+			S[N-1]=0;
+
+	for(int N=1; N<=365; N++)  {
+		for(int h=0; h < 9; h++) {
+			const pv_sun::position_in_sky pos = pv_sun::sun(
+				N,
+				h * 60 - 120, //from 10 am to 18 pm
+				L_rad
+			);
+			for (p_geometry::triangle t : triangles) {
+				//S[N-1][h]+=t.area * absorbed_radiation_S(
+				S[N-1]+=t.area * absorbed_radiation_S(
+					L_rad,
+					pos,
+					t.beta_rad,
+					t.Z_S_rad
+
+				);
+			}
+		}
+	}
+
+	for(int N=1; N<=365; N++) {
+		std::cout<<"N: "<<N<<" S: "<<S[N-1]<<std::endl;
+	}
+
+/*
+	char strbuffer[500];
+	sprintf_s(strbuffer, 500, "Buffer: TauAlpha_n: %f\nM: %f\nG_B: %f\nR_B: %f\nK_theta_B: %f\nS: %f  [W/m^2]\n", taualpha_n, M, G_B, R_B, K_theta_B, S);
+	if (printToBuffer) {
+		resultsBuffer->text(strbuffer);
+	}
+	*/
 
 
 	Fl::add_idle(idle_cb, 0);
 	Fl::run();
 	return 0;
 }
-//-------------------------------------------------------------------------------------------------
 
 
+/*
 #include <FL/Fl_Text_Buffer.H>
 extern Fl_Text_Buffer* resultsBuffer;
 
@@ -143,7 +124,7 @@ double compute_absorbed_radiation_S(
 	//double thickness = 0.002; // m la chiama L
 
 	//double delta_rad = delta * M_PI / 180;
-	*/
+	* /
 
 	//Monocristallino Tabella pg. 514
 	double alpha_0 = 0.935823;
@@ -200,3 +181,4 @@ double compute_absorbed_radiation_S(
 	return S;
 
 }
+*/

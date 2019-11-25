@@ -19,23 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\irradiance_fp.cpp" />
-    <ClCompile Include="..\src\Main.cpp" />
-    <ClCompile Include="..\src\panel.cpp" />
-    <ClCompile Include="..\src\PanelView.cpp" />
-    <ClCompile Include="..\src\panel_geometry_fp.cpp" />
-    <ClCompile Include="..\src\panel_pv_fp.cpp" />
-    <ClCompile Include="..\src\PVCreativityUI.cpp" />
-    <ClCompile Include="..\src\sun_fp.cpp" />
+    <ClInclude Include="..\src\fltk\PanelView.h" />
+    <ClInclude Include="..\src\fltk\panel_opengl.h" />
+    <ClInclude Include="..\src\fltk\PVCreativityUI.h" />
+    <ClInclude Include="..\src\lib\irradiance_fp.h" />
+    <ClInclude Include="..\src\lib\panel_geometry_fp.h" />
+    <ClInclude Include="..\src\lib\panel_io.h" />
+    <ClInclude Include="..\src\lib\panel_pv_fp.h" />
+    <ClInclude Include="..\src\lib\sun_fp.h" />
+    <ClInclude Include="..\src\lib\sun_panel_fp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\irradiance_fp.h" />
-    <ClInclude Include="..\src\panel.h" />
-    <ClInclude Include="..\src\PanelView.h" />
-    <ClInclude Include="..\src\panel_geometry_fp.h" />
-    <ClInclude Include="..\src\panel_pv_fp.h" />
-    <ClInclude Include="..\src\PVCreativityUI.h" />
-    <ClInclude Include="..\src\sun_fp.h" />
+    <ClCompile Include="..\src\fltk\PanelView.cpp" />
+    <ClCompile Include="..\src\fltk\panel_opengl.cpp" />
+    <ClCompile Include="..\src\fltk\PVCreativityUI.cpp" />
+    <ClCompile Include="..\src\lib\irradiance_fp.cpp" />
+    <ClCompile Include="..\src\lib\panel_geometry_fp.cpp" />
+    <ClCompile Include="..\src\lib\panel_io.cpp" />
+    <ClCompile Include="..\src\lib\panel_pv_fp.cpp" />
+    <ClCompile Include="..\src\lib\sun_fp.cpp" />
+    <ClCompile Include="..\src\lib\sun_panel_fp.cpp" />
+    <ClCompile Include="..\src\Main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -6,14 +6,14 @@
 #include <vector>
 #include <iostream>
 
-#include "panel_geometry_fp.h"
+#include "../lib/panel_geometry_fp.h"
 
 #define CARTESIO  1
 #define PANEL  2
 
 //extern std::vector<p_geometry::vertex> vertices;
 
-namespace panel {
-    void draw(void);
-    void update(void);
+namespace panel_opengl {
+    void draw(const std::vector<p_geometry::vertex *> &vertices);
+    void update();
 }

@@ -1,0 +1,44 @@
+gSystem->cd("/Users/dmg/C++/repos/pv-creativity/simulazione-root");
+std::cout<<gSystem->pwd();
+c1 = new TCanvas("c1","Lab Root",200,10,700,500);
+c1->SetGrid();
+.L ../src/lib/sun_fp.cpp
+.L labroot_cos_p.cpp
+cos_p(c1, deg_to_rad(15));
+
+
+
+
+.L ParticleType.cpp
+.L ResonanceType.cpp
+.L Particle.cpp
+.L LrCanvas.cpp
+.L analysis.cpp
+.L labroot.cpp
+labroot();
+
+
+
+
+gSystem->cd("/Users/dmg/C++/repos/labroot1");
+.L ParticleType.cpp
+.L ResonanceType.cpp
+.L Particle.cpp
+gSystem->cd("/Users/dmg/C++/repos/labroot1");
+.L LrCanvas.cpp
+.L labroot3.cpp
+labroot3();
+
+
+
+TCanvas *c1 = new TCanvas("c1","Lab Root",200,10,700,500);
+
+
+../root/bin/root
+std::cout<<gSystem->pwd();
+gSystem->cd("/home/duccio/labroot");
+.L ParticleType.cpp
+.L ResonanceType.cpp
+.L Particle.cpp
+.L labroot.cpp
+
