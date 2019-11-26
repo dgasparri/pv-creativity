@@ -7,4 +7,5 @@
 namespace panel_io {
 	const std::vector<p_geometry::vertex *> load_vertices(std::string filename);
 	const std::vector<p_geometry::vertex *> test_vertices();
+	const std::vector<p_geometry::vertex *> test_vertices_2();
 }

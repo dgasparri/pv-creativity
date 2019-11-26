@@ -27,8 +27,8 @@ int main(int argc, char **argv) {
 
 	PVCreativityUI* fltk_window = new PVCreativityUI();
 	opengl_box = fltk_window->panel;
-	const std::vector<p_geometry::vertex*> vertices = panel_io::test_vertices();
-	//const std::vector<p_geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesCirc.csv");
+	//const std::vector<p_geometry::vertex*> vertices = panel_io::test_vertices_2();
+	const std::vector<p_geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesCirc.csv");
 	//const std::vector<p_geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesSinu.csv");
 	opengl_box->setVertices(vertices);
 	
@@ -41,6 +41,8 @@ int main(int argc, char **argv) {
 	//Checks for 3 available vertices
 	for (int i = 0; i+2 < vertices.size(); i+=3) {
 		triangles.emplace_back(p_geometry::triangle(*vertices[i], *vertices[i + 1], *vertices[i + 2]));
+		p_geometry::plane pl = p_geometry::plane_from_vertices(*vertices[i], *vertices[i + 1], *vertices[i + 2]);
+		std::cout<<"Piano: "<<pl.a_x<<", "<<pl.a_y<<", "<<pl.a_z<<" d:"<<pl.d<<std::endl;
 	}
 	for (p_geometry::triangle t : triangles) {
 		std::cout << "Triangolo beta: " << t.beta_rad << " Z_S: " << t.Z_S_rad << " area: " << t.area << std::endl;

@@ -1,9 +1,14 @@
 gSystem->cd("/Users/dmg/C++/repos/pv-creativity/simulazione-root");
 std::cout<<gSystem->pwd();
+.L ../src/lib/sun_fp.cpp
+.L ../src/lib/irradiance_fp.cpp
+.L ../src/lib/panel_geometry_fp.cpp
+.L ../src/lib/panel_io.cpp
+.L labroot_sun_fp.cpp
+
+
 c1 = new TCanvas("c1","Lab Root",200,10,700,500);
 c1->SetGrid();
-.L ../src/lib/sun_fp.cpp
-.L labroot_cos_p.cpp
 cos_p(c1, deg_to_rad(15));
 
 

@@ -56,6 +56,7 @@ pure double pv_sun::compute_m(const int N, const int minutes, const double L_rad
 
 
 //Eq. 1n
+//Ok
 pure double pv_sun::compute_delta_rad(const int N) {
 	double parenthesis = (284 + N) * 360 / 365;
 	return 23.45 * sin(parenthesis * M_PI / 180) * M_PI / 180;
@@ -63,12 +64,14 @@ pure double pv_sun::compute_delta_rad(const int N) {
 
 //Eq. 2n
 //TODO che significa il + e -???
+//Ok
 pure double pv_sun::compute_h_rad(const int minutes) {
 	return 0.25 * minutes * M_PI / 180;
 }
 
 // Eq. 3 n
 // Output cos(Phi) Zenith Angle
+//Ok
 pure double pv_sun::compute_cos_Phi(const double L_rad, const double delta_rad, const double h_rad) {
 	return sin(L_rad) * sin(delta_rad) + cos(L_rad) * cos(delta_rad) * cos(h_rad);
 }

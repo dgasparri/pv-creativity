@@ -54,3 +54,28 @@ const std::vector<p_geometry::vertex *> panel_io::test_vertices()
 	return vertices;
 
 }
+
+const std::vector<p_geometry::vertex *> panel_io::test_vertices_2()
+{
+	std::vector<p_geometry::vertex *> vertices;
+	double L = 3;
+	double V = 4;
+	vertices.emplace_back(new p_geometry::vertex(-V, -L, 0.0));
+	vertices.emplace_back(new p_geometry::vertex(V, -L, 0.0));
+	vertices.emplace_back(new p_geometry::vertex(0.0, 0.0, V));
+
+	/* vertices.emplace_back(new p_geometry::vertex(L, -3.0, 0.0));
+	vertices.emplace_back(new p_geometry::vertex(-3.0, 3.0, 0.0));
+	vertices.emplace_back(new p_geometry::vertex(0.0, 0.0, 1.5));
+
+	vertices.emplace_back(new p_geometry::vertex(3.0, 3.0, 0.0));
+	vertices.emplace_back(new p_geometry::vertex(-3.0, 3.0, 0.0));
+	vertices.emplace_back(new p_geometry::vertex(0.0, 0.0, 1.5));
+
+	vertices.emplace_back(new p_geometry::vertex(3.0, 3.0, 0.0));
+	vertices.emplace_back(new p_geometry::vertex(3.0, -3.0, 0.0));
+	vertices.emplace_back(new p_geometry::vertex(0.0, 0.0, 1.5));*/
+
+	return vertices;
+
+}

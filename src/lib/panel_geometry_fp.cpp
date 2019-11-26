@@ -75,6 +75,8 @@ namespace p_geometry {
     // Quindi deve essere parallelo a y (nord-sud) per essere a zero
     pure double Z_S_rad(const plane pl) 
     {
+        //Direzione sud vertice 0, -1, 0
+        
         //nord-sud plane is 0x+1y+0z = 0
         double cos_Z_S = pl.a_y / sqrt(pow(pl.a_x,2)+pow(pl.a_y,2) + pow(pl.a_z,2));
         return acos(cos_Z_S);
