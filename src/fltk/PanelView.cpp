@@ -16,7 +16,7 @@ PanelView::PanelView(int x, int y, int w, int h, const char* l)
 }
 
 
-void PanelView::setVertices(const std::vector<p_geometry::vertex *>& v) {
+void PanelView::setVertices(const std::vector<geometry::vertex *>& v) {
 	std::cout << "Numero vertici: " << v.size() << std::endl;
 	vertices = v;
 }

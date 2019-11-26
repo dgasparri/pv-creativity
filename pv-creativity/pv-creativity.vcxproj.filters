@@ -27,9 +27,6 @@
     <ClInclude Include="..\src\lib\irradiance_fp.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\lib\panel_geometry_fp.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\lib\panel_io.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
@@ -42,12 +39,12 @@
     <ClInclude Include="..\src\lib\sun_panel_fp.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\lib\geometry_fp.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\lib\irradiance_fp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\lib\panel_geometry_fp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\lib\panel_io.cpp">
@@ -72,6 +69,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\lib\sun_panel_fp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\geometry_fp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

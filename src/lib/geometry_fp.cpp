@@ -1,4 +1,4 @@
-#include "panel_geometry_fp.h"
+#include "geometry_fp.h"
 
 
 
@@ -13,7 +13,7 @@ pure bool are_double_equal(double x, double y, int ulp)
 
 
 
-namespace p_geometry {
+namespace geometry {
 
     
     vertex::vertex(double x, double y, double z):
@@ -29,12 +29,18 @@ namespace p_geometry {
 
     //Serve plane horizon?
     triangle::triangle(const vertex a, const vertex b, const vertex c):
-		beta_rad (p_geometry::beta_rad(plane_from_vertices(a, b, c))),
-		Z_S_rad (p_geometry::Z_S_rad(plane_from_vertices(a, b, c))),
-		area(vector_norm(plane_normal(plane_from_vertices(a, b, c))) / 2)
+		Z_S_rad(Z_S_rad_from_plane(plane_from_vertices(a, b, c))),
+		area(1),
+        plane_normal(normal_vector_from_plane(plane_from_vertices(a, b, c))),
+        beta_rad(
+			beta_rad_from_plane(
+				rotate_plane_to_xparallel(
+					a, b, c,
+					Z_S_rad_from_plane(plane_from_vertices(a, b, c))
+				))
+            )
 	{
         //plane pl = plane_from_vertices(a, b, c);
-        //beta_rad = p_geometry::beta_rad(pl);
         //Z_S_rad = p_geometry::Z_S_rad(pl);
         //Area of a triangle from vectors a, b, c: 1/2 ||ab x ac||
         //area = vector_norm(plane_normal(pl))/2;
@@ -58,28 +64,63 @@ namespace p_geometry {
     }
 
 
-    pure vertex plane_normal(const plane pl) 
+    pure vertex normal_vector_from_plane(const plane pl) 
     {
         return vertex(pl.a_x, pl.a_y, pl.a_z);
     }
 
-
-    pure double beta_rad(const plane pl) 
+    pure vertex rotate_zaxis(const vertex v, const double angle)
     {
-        //Horizontal plane is 0x+0y+1z = 0
-        double cos_beta = pl.a_z / sqrt(pow(pl.a_x,2)+pow(pl.a_y,2) + pow(pl.a_z,2));
-        return acos(cos_beta);
+        return vertex(
+				v.x * cos(angle) - v.y * sin(angle),
+				v.x * sin(angle) + v.y * cos(angle),
+				v.z
+			);
+    }
+
+    pure plane plane_rotate_zaxis(const vertex a, const vertex b, const vertex d, const double angle)
+    {
+		return plane_from_vertices(
+            rotate_zaxis(a, angle), 
+            rotate_zaxis(b, angle), 
+            rotate_zaxis(d, angle));
+    }
+
+    //Check direction
+    pure plane_xparallel rotate_plane_to_xparallel(const vertex a, const vertex b, const vertex d, const Z_S_rad Z_S_rad)
+    {
+        return plane_rotate_zaxis(
+            a,
+            b,
+            d,
+            -Z_S_rad
+        );
+    }
+
+
+	//Positive - direction south
+	//Negative - direction north
+    pure double beta_rad_from_plane(const plane_xparallel pl) 
+    {
+		if (are_double_equal(pl.a_z, 0, 3)) {
+			return M_PI/2;
+		}
+		return atan( - pl.a_y / pl.a_z);
     }
 
     // X è ovest-est, con negativi è ovest
-    // Quindi deve essere parallelo a y (nord-sud) per essere a zero
-    pure double Z_S_rad(const plane pl) 
+    pure double Z_S_rad_from_plane(const plane pl) 
     {
-        //Direzione sud vertice 0, -1, 0
+		// y/x
+		if (are_double_equal(pl.a_y, 0.0, 3)) {
+			if (pl.a_x > 0)
+				return -M_PI / 2; //Points from est to west
+			else
+				return M_PI / 2; //Points from west to east
+		}
+
+		return atan(pl.a_x / pl.a_y);
         
-        //nord-sud plane is 0x+1y+0z = 0
-        double cos_Z_S = pl.a_y / sqrt(pow(pl.a_x,2)+pow(pl.a_y,2) + pow(pl.a_z,2));
-        return acos(cos_Z_S);
     }
 
     pure double vector_norm(const vertex pl_normal)

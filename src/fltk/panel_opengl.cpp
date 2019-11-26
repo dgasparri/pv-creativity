@@ -1,13 +1,13 @@
 #include "panel_opengl.h"
-#include "../lib/panel_geometry_fp.h"
+#include "../lib/geometry_fp.h"
 #include <GL/glu.h> //per gluLookAt
 
 
 namespace panel_opengl {
 
-   void draw(const std::vector<p_geometry::vertex *>& vertices)
+   void draw(const std::vector<geometry::vertex *>& vertices)
    { 
-      //std::vector<p_geometry::vertex> vertices = test_load_vertex();
+      //std::vector<geometry::vertex> vertices = test_load_vertex();
       std::cout<<"Vertices size: "<<vertices.size()<<std::endl;
 
       glNewList(CARTESIO, GL_COMPILE);
@@ -32,7 +32,7 @@ namespace panel_opengl {
             float color;
             
 			
-            for(p_geometry::vertex *v: vertices) {
+            for(geometry::vertex *v: vertices) {
                std::cout<<"x: "<<v->x<<"Y: "<<v->y<<"Z: "<<v->z<<std::endl;
                t+=dt;
                color = 0.5 + 0.3 * sin(t);
