@@ -22,34 +22,46 @@ namespace geometry {
     vertex vertex::operator-(const vertex& other) const {
         return vertex(x-other.x, y-other.y, z-other.z);
     }
+
+    bool vertex::operator==(const vertex& other) const {
+        return std::fabs(x - other.x) < EQUAL_COORDINATES_EPSILON
+            && std::fabs(y - other.y) < EQUAL_COORDINATES_EPSILON
+            && std::fabs(z - other.z) < EQUAL_COORDINATES_EPSILON;
+        //return are_double_equal(x, other.x, 3) 
+        //    && are_double_equal(y, other.y, 3)
+        //    && are_double_equal(z, other.z, 3);
+    }
+
+    std::ostream& operator<<(std::ostream& os, const vertex& v)
+    {
+        os << "<" << v.x << "," << v.y << "," << v.z <<  ">";
+        return os;
+    }
+
     
 
     plane::plane(double a_x, double a_y, double a_z, double d):
         a_x(a_x), a_y(a_y), a_z(a_z), d(d) {}
 
+    std::ostream& operator<<(std::ostream& os, const plane& pl)
+    {
+        os << "pl(<" << pl.a_x << "," << pl.a_y << "," << pl.a_z <<  ">,"<< pl.d <<")";
+        return os;
+    }
+
     //Serve plane horizon?
     triangle::triangle(const vertex a, const vertex b, const vertex c):
-		Z_S_rad(Z_S_rad_from_plane(plane_from_vertices(a, b, c))),
-		area(1),
-        plane_normal(normal_vector_from_plane(plane_from_vertices(a, b, c))),
-        beta_rad(
-			beta_rad_from_plane(
-				rotate_plane_to_xparallel(
-					a, b, c,
-					Z_S_rad_from_plane(plane_from_vertices(a, b, c))
-				))
-            )
+		mZ_S_rad(fZ_S_rad(fplane(a, b, c))),
+		marea(farea(a, b, c)),
+        mplane_normal(fnormal(fplane(a, b, c))),
+        mbeta_rad(fbeta_rad(a, b, c, fZ_S_rad(fplane(a, b, c))))
 	{
-        //plane pl = plane_from_vertices(a, b, c);
-        //Z_S_rad = p_geometry::Z_S_rad(pl);
-        //Area of a triangle from vectors a, b, c: 1/2 ||ab x ac||
-        //area = vector_norm(plane_normal(pl))/2;
     }
 
 
     // Returns the plane
     // Throw exception if vertices is not in plane
-    pure plane plane_from_vertices(const vertex a, const vertex b, const vertex d)
+    pure plane fplane(const vertex a, const vertex b, const vertex d)
     {
         vertex ab = b - a;
         vertex da = d - a;
@@ -64,32 +76,32 @@ namespace geometry {
     }
 
 
-    pure vertex normal_vector_from_plane(const plane pl) 
+    pure vertex fnormal(const plane pl) 
     {
         return vertex(pl.a_x, pl.a_y, pl.a_z);
     }
 
-    pure vertex rotate_zaxis(const vertex v, const double angle)
+    pure vertex rotate_vertex_zaxis(const vertex v, const double angle_rad)
     {
         return vertex(
-				v.x * cos(angle) - v.y * sin(angle),
-				v.x * sin(angle) + v.y * cos(angle),
+				v.x * cos(angle_rad) - v.y * sin(angle_rad),
+				v.x * sin(angle_rad) + v.y * cos(angle_rad),
 				v.z
 			);
     }
 
-    pure plane plane_rotate_zaxis(const vertex a, const vertex b, const vertex d, const double angle)
+    pure plane rotate_plane_zaxis(const vertex a, const vertex b, const vertex d, const double angle)
     {
-		return plane_from_vertices(
-            rotate_zaxis(a, angle), 
-            rotate_zaxis(b, angle), 
-            rotate_zaxis(d, angle));
+		return fplane(
+            rotate_vertex_zaxis(a, angle), 
+            rotate_vertex_zaxis(b, angle), 
+            rotate_vertex_zaxis(d, angle));
     }
 
     //Check direction
     pure plane_xparallel rotate_plane_to_xparallel(const vertex a, const vertex b, const vertex d, const Z_S_rad Z_S_rad)
     {
-        return plane_rotate_zaxis(
+        return rotate_plane_zaxis(
             a,
             b,
             d,
@@ -100,16 +112,18 @@ namespace geometry {
 
 	//Positive - direction south
 	//Negative - direction north
-    pure double beta_rad_from_plane(const plane_xparallel pl) 
+    pure double fbeta_rad(const vertex a, const vertex b, const vertex d, const Z_S_rad Z_S) 
     {
-		if (are_double_equal(pl.a_z, 0, 3)) {
+
+        const plane_xparallel mpl_xparallel = rotate_plane_to_xparallel(a, b, d, Z_S);
+		if (are_double_equal(mpl_xparallel.a_z, 0, 3)) {
 			return M_PI/2;
 		}
-		return atan( - pl.a_y / pl.a_z);
+		return atan( - mpl_xparallel.a_y / mpl_xparallel.a_z);
     }
 
     // X è ovest-est, con negativi è ovest
-    pure double Z_S_rad_from_plane(const plane pl) 
+    pure double fZ_S_rad(const plane pl) 
     {
 		// y/x
 		if (are_double_equal(pl.a_y, 0.0, 3)) {
@@ -123,15 +137,26 @@ namespace geometry {
         
     }
 
-    pure double vector_norm(const vertex pl_normal)
+    pure double fnorm(const vertex pl)
     {
         return sqrt(
-            std::pow(pl_normal.x,2) +
-            std::pow(pl_normal.y,2) +
-            std::pow(pl_normal.z,2)
-            ) / 2;
+            std::pow(pl.x,2) +
+            std::pow(pl.y,2) +
+            std::pow(pl.z,2)
+            ) ;
     }
 
+    pure m_squared farea(const vertex a, const vertex b, const vertex c)
+    {
+        // See https://math.stackexchange.com/questions/128991/how-to-calculate-the-area-of-a-3d-triangle
+        vertex ab = b - a;
+        vertex ac = c - a;
+        double ab_ac_norm_product = fnorm(ab) * fnorm(ac);
+        double ab_ac_dot_product = ab.x * ac.x + ab.y * ac.y + ab.z * ac.z ;
+        double cos_theta = ab_ac_dot_product / ab_ac_norm_product;
+        double sin_theta = std::sqrt(1-std::pow(cos_theta,2));
+        return ab_ac_norm_product * sin_theta / 2;
+    }
 }
 
 

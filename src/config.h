@@ -1,0 +1,3 @@
+#define pure
+#define _USE_MATH_DEFINES
+#define EQUAL_COORDINATES_EPSILON 0.00001

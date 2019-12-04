@@ -11,6 +11,7 @@
 #include "lib/panel_io.h"
 #include "lib/sun_fp.h"
 #include "lib/sun_panel_fp.h"
+#include "lib/geometry_fp.h"
 
 
 PanelView   *opengl_box;
@@ -27,25 +28,26 @@ int main(int argc, char **argv) {
 
 	PVCreativityUI* fltk_window = new PVCreativityUI();
 	opengl_box = fltk_window->panel;
-	//const std::vector<p_geometry::vertex*> vertices = panel_io::test_vertices_2();
-	const std::vector<p_geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesCirc.csv");
-	//const std::vector<p_geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesSinu.csv");
+	//const std::vector<geometry::vertex*> vertices = panel_io::test_vertices_2();
+	//const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesCirc.csv");
+	//const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesSinu.csv");
+	const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesCirc2.csv");
 	opengl_box->setVertices(vertices);
 	
 	resultsBuffer = new Fl_Text_Buffer();
 	fltk_window->results->buffer(resultsBuffer);
 	fltk_window->show(argc, argv);
 
-	std::vector<p_geometry::triangle> triangles;
+	std::vector<geometry::triangle> triangles;
 	triangles.reserve(vertices.size() / 3 + 1);
 	//Checks for 3 available vertices
 	for (int i = 0; i+2 < vertices.size(); i+=3) {
-		triangles.emplace_back(p_geometry::triangle(*vertices[i], *vertices[i + 1], *vertices[i + 2]));
-		p_geometry::plane pl = p_geometry::plane_from_vertices(*vertices[i], *vertices[i + 1], *vertices[i + 2]);
-		std::cout<<"Piano: "<<pl.a_x<<", "<<pl.a_y<<", "<<pl.a_z<<" d:"<<pl.d<<std::endl;
+		triangles.emplace_back(geometry::triangle(*vertices[i], *vertices[i + 1], *vertices[i + 2]));
+		geometry::plane pl = geometry::fplane(*vertices[i], *vertices[i + 1], *vertices[i + 2]);
+		std::cout<<"Piano: "<<pl<<std::endl;
 	}
-	for (p_geometry::triangle t : triangles) {
-		std::cout << "Triangolo beta: " << t.beta_rad << " Z_S: " << t.Z_S_rad << " area: " << t.area << std::endl;
+	for (geometry::triangle t : triangles) {
+		std::cout << "Triangolo beta: " << t.mbeta_rad << " Z_S: " << t.mZ_S_rad << " area: " << t.marea << std::endl;
 	}
 
 	double L = 44;
@@ -64,13 +66,13 @@ int main(int argc, char **argv) {
 				h * 60 - 120, //from 10 am to 18 pm
 				L_rad
 			);
-			for (p_geometry::triangle t : triangles) {
+			for (geometry::triangle t : triangles) {
 				//S[N-1][h]+=t.area * absorbed_radiation_S(
-				S[N-1]+=t.area * absorbed_radiation_S(
+				S[N-1]+=t.marea * absorbed_radiation_S(
 					L_rad,
 					pos,
-					t.beta_rad,
-					t.Z_S_rad
+					t.mbeta_rad,
+					t.mZ_S_rad
 
 				);
 			}
