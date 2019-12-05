@@ -1,7 +1,7 @@
 #include "sun_fp.h"
 
 
-pure pv_sun::position_in_sky pv_sun::sun(
+pure pv_sun::position_in_sky* pv_sun::sun(
 	const int N, // giorno dell'anno
 	const int minutes, //minuti
 	const double L_rad // = 35, //Latitute degrees
@@ -11,7 +11,7 @@ pure pv_sun::position_in_sky pv_sun::sun(
     //    double z_rad; //Solar Azimuth
     //    double h_rad;
     //    int valid;
-    pv_sun::position_in_sky pos(
+    pv_sun::position_in_sky *pos = new pv_sun::position_in_sky(
         pv_sun::alpha_rad(N, minutes, L_rad),
         60.0, //must implement Solar Azimuth
         pv_sun::compute_h_rad(minutes),

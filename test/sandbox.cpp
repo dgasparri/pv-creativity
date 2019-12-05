@@ -41,9 +41,19 @@ struct ab {
     int a;
 };
 
+int somma_abcd(int a, int b)
+{
+    std::cout<<"A: "<<a<<" B: "<<b<<std::endl;
+    return a + b;
+}
+
+
 int main()
 {
 
+    auto somma_bc = [](int b)->int{return somma_abcd(3, b);};
+    std::cout<<somma_bc(5)<<std::endl;
+    return 0;
     std::vector<vertex> panel_vertices = test_vertices();
     
     //[1] Works fine

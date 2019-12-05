@@ -18,9 +18,13 @@ namespace pv_sun {
     * L_rad: latitude in radians
 
     Output:
-    * Phi (Zenith)
-    * alpha (Altitude)
-    * z (not yet)
+    * cos_Phi (Zenith)
+    * alpha_rad (Altitude)
+    * h_rad (not yet)
+    * delta_rad
+    * cos_Phi
+    * m
+    * valid
 
     */
 
@@ -32,7 +36,7 @@ namespace pv_sun {
         const double delta_rad;
         const double cos_Phi;
         const double m;
-        const int valid;
+        const bool valid;
   
         position_in_sky(
             const double alpha_rad,
@@ -53,7 +57,7 @@ namespace pv_sun {
 
     };
 
-    pure position_in_sky sun(const int N, const int minutes, const double L_rad);
+    pure position_in_sky* sun(const int N, const int minutes, const double L_rad);
 
 
     // ------ INTERFACES -----
