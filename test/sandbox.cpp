@@ -50,7 +50,21 @@ int somma_abcd(int a, int b)
 
 int main()
 {
+    int** a;
+    a = []()->int** {
+        int** c = new int* [2];
+        
+        c[0] = new int[2]{3,4};
+        c[1] = new int[2]{9,8};
+        
 
+        //int c[2][2] = ;
+        //return (int **)c;
+        return c;
+    }(); 
+    //int b[2][2] = &a;
+    std::cout<<"a: "<<a[1][0];
+    return 0;
     auto somma_bc = [](int b)->int{return somma_abcd(3, b);};
     std::cout<<somma_bc(5)<<std::endl;
     return 0;

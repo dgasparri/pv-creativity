@@ -38,6 +38,13 @@ int main(int argc, char **argv) {
 	fltk_window->results->buffer(resultsBuffer);
 	fltk_window->show(argc, argv);
 
+
+
+	/*
+		CARICA I VERTICI DALL'CSV
+		E CREA IL VETTORE/ARRAY DI TRIANGOLI
+
+	*/
 	std::vector<geometry::triangle> triangles;
 	triangles.reserve(vertices.size() / 3 + 1);
 	//Checks for 3 available vertices
@@ -58,7 +65,12 @@ int main(int argc, char **argv) {
 		for(int h=0; h < 9; h++) 
 			//S[N-1][h]=0;
 			S[N-1]=0;
+	/*
 
+		POSIZIONI NEL SOLE
+		-> PERO' NON CREA L'ARRAY, LO USA SOLO PER DARLO IN PASTO AD UN SINGOLO TRIANGOLO
+
+	*/
 	for(int N=1; N<=365; N++)  {
 		for(int h=0; h < 9; h++) {
 			const pv_sun::position_in_sky pos = pv_sun::sun(
