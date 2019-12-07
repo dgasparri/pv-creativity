@@ -31,7 +31,8 @@ int main(int argc, char **argv) {
 	//const std::vector<geometry::vertex*> vertices = panel_io::test_vertices_2();
 	//const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesCirc.csv");
 	//const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesSinu.csv");
-	const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesCirc2.csv");
+	//const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesCirc2.csv");
+	const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("./trianglesCirc2.csv");
 	opengl_box->setVertices(vertices);
 	
 	resultsBuffer = new Fl_Text_Buffer();
@@ -73,7 +74,7 @@ int main(int argc, char **argv) {
 	*/
 	for(int N=1; N<=365; N++)  {
 		for(int h=0; h < 9; h++) {
-			const pv_sun::position_in_sky pos = pv_sun::sun(
+			const pv_sun::position_in_sky *pos = pv_sun::sun(
 				N,
 				h * 60 - 120, //from 10 am to 18 pm
 				L_rad
@@ -82,7 +83,7 @@ int main(int argc, char **argv) {
 				//S[N-1][h]+=t.area * absorbed_radiation_S(
 				S[N-1]+=t.marea * absorbed_radiation_S(
 					L_rad,
-					pos,
+					*pos,
 					t.mbeta_rad,
 					t.mZ_S_rad
 
