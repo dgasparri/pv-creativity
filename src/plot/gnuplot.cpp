@@ -16,11 +16,11 @@ void sa_gnuplot::plot() {
         set title 'Solar Absorption'
         set xlabel 'Day of year'
         set ylabel 'Hour'
-        set xrange[1:365]
+        set xrange[1:36]
         set yrange[9:18]
         set palette
         set pm3d at s
-        splot 'C:\\Users\\dmg\\C++\\repos\\pv-creativity\\src\\plot\\data.txt' with lines
+        splot 'C:\\Users\\dmg\\C++\\repos\\pv-creativity\\src\\plot\\data1.txt' with lines
     )";
 }
 
