@@ -4,29 +4,15 @@
 #include "..\plot\gnuplot.h"
 #include <iostream>
 
-void PVCreativityUI::cb_compute_i(Fl_Button*, void*) {
-  int N = (int)this->N->value();
-	int minutes = (int)this->minutes->value();
+void PVCreativityUI::cb_compute_i(Fl_Button*, void*) 
+{
 	double L = (double)this->L->value();
-	double beta = (double)this->beta->value();
-	double Z_S = (double)this->Z_S->value();
 	double n_refraction_index = (double)this->n->value();
 	double L_T = (double)this->L_T->value();
 	double K = (double)this->K->value();
-	double G_B = (double)this->G_B->value();
 
 
-	std::cout << "Da pressione di bottone" << std::endl
-		<< "L: " << L << std::endl
-		<< "beta: " << beta << std::endl
-		<< "Z_S: " << Z_S << std::endl
-		<< "L_T: " << L_T << std::endl
-		<< "Refraction Index (n): " << n_refraction_index << std::endl
-		<< "K: " << K << std::endl
-		<< "Giorni (N): " << N << std::endl
-		<< "Minuti (minutes): " << minutes << std::endl
-		<< "G_B: " << G_B << std::endl;
-//		<< "S: " << S << std::endl;
+
   std::cout<<"Chiamando plot\n";
   sa_gnuplot::plot();
 

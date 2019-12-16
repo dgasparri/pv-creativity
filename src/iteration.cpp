@@ -71,3 +71,53 @@ double iteration::S_thread()
 
 }
 
+
+
+
+double da_alessandro(){
+	ofstream myfile;
+    myfile.open ("nostroFile.txt");
+    //valori polycristalline
+	double a0 = 0.918093;
+	double a1 = 0.086257;
+	double a2 = -0.024459;
+	double a3 = 0.002816;
+	double a4 = -0.000126;
+	//giorno
+	for (int i = 0; i < 365; i++)
+	{
+		//ora
+		for (int j = 0; j < 24; j++)
+		{
+		//definisco posizione sole
+		int h = 720 - j*60;
+		const pv_sun::position_in_sky pos = pv_sun::sun(
+			i,
+			h,
+			L_rad
+		);
+
+		//risultato S
+		double S = 0;
+		//triangolo
+		for (geometry::triangle t : triangles) {
+
+			double cos_theta = compute_cos_theta( L_rad, t.beta_rad, t.Z_S_rad, pos.delta_rad, pos.h_rad)
+			double R_B = compute_R_B(cos_theta, pos.cos_Phi);
+			double M = compute_M(pos.m, a0, a1, a2, a3, a4);
+			double theta_r = compute_theta_r(acos(cos_theta), n_refraction_index);
+			double taualpha_B = compute_taualpha_B(K, thickness, theta_r, acos(cos_theta));
+			double taualpha_n = compute_taualpha_n(K, thickness, n_refraction_index);
+			double K_theta_B= compute_K_theta_B(taualpha_B, taualpha_n);
+			double calcolaS;
+			S += calcolaS;
+		}
+		//stampa informazioni
+		myfile << i << " " << j << " " << S << "\n";
+		}
+		//stampa riga vuota
+		myfile << "\n";
+	}
+
+	myfile.close();
+}

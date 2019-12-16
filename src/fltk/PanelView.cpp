@@ -40,7 +40,7 @@ void PanelView::draw() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
 		glLoadIdentity();                                      // Reset The View
 		//0,0, 10, 0, 0, 0, 0, 1, 0
-		gluLookAt(0, -10, 0, 0, 0, 0, 0, 0, 1);        // Position - View  - Up Vector
+		gluLookAt(0, -15, 0, 0, 0, 0, 0, 0, 1);        // Position - View  - Up Vector
 		glEnable(GL_DEPTH_TEST);
 
 		panel_opengl::draw(vertices);
