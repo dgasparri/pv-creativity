@@ -1,4 +1,3 @@
-
 #include <windows.h>
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
@@ -12,190 +11,96 @@
 #include "lib/sun_fp.h"
 #include "lib/sun_panel_fp.h"
 #include "lib/geometry_fp.h"
+using namespace std;
 
 
 PanelView   *opengl_box;
 Fl_Text_Buffer* resultsBuffer;
+PVCreativityUI* fltk_window;
 
 
 
 void idle_cb(void*)
 {
+
 	opengl_box->redraw();
 }
 
-int main(int argc, char **argv) {
-
-	PVCreativityUI* fltk_window = new PVCreativityUI();
+void init(std::vector<geometry::vertex*> vertices)
+{
+	//fltk_window = new PVCreativityUI();
 	opengl_box = fltk_window->panel;
-	//const std::vector<geometry::vertex*> vertices = panel_io::test_vertices_2();
-	//const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesCirc.csv");
-	//const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesSinu.csv");
-	//const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/dmg/C++/repos/pv-creativity/geometries/trianglesCirc2.csv");
-	const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("./trianglesCirc2.csv");
 	opengl_box->setVertices(vertices);
-	
+
 	resultsBuffer = new Fl_Text_Buffer();
 	fltk_window->results->buffer(resultsBuffer);
-	fltk_window->show(argc, argv);
+	//fltk_window->show(1, args);
 
-
-
-	/*
-		CARICA I VERTICI DALL'CSV
-		E CREA IL VETTORE/ARRAY DI TRIANGOLI
-
-	*/
 	std::vector<geometry::triangle> triangles;
 	triangles.reserve(vertices.size() / 3 + 1);
 	//Checks for 3 available vertices
-	for (int i = 0; i+2 < vertices.size(); i+=3) {
+	for (int i = 0; i + 2 < vertices.size(); i += 3) {
 		triangles.emplace_back(geometry::triangle(*vertices[i], *vertices[i + 1], *vertices[i + 2]));
 		geometry::plane pl = geometry::fplane(*vertices[i], *vertices[i + 1], *vertices[i + 2]);
-		std::cout<<"Piano: "<<pl<<std::endl;
-	}
-	for (geometry::triangle t : triangles) {
-		std::cout << "Triangolo beta: " << t.mbeta_rad << " Z_S: " << t.mZ_S_rad << " area: " << t.marea << std::endl;
 	}
 
-	double L = 44;
-	double L_rad = 44/180*M_PI;
-	//double S[365][9];
+
 	double S[365];
-	for(int N=1; N<=365; N++)  
-		for(int h=0; h < 9; h++) 
-			//S[N-1][h]=0;
-			S[N-1]=0;
-	/*
+	for (int N = 1; N <= 365; N++)
+		for (int h = 0; h < 9; h++)
+			S[N - 1] = 0;
 
-		POSIZIONI NEL SOLE
-		-> PERO' NON CREA L'ARRAY, LO USA SOLO PER DARLO IN PASTO AD UN SINGOLO TRIANGOLO
-
-	*/
-	for(int N=1; N<=365; N++)  {
-		for(int h=0; h < 9; h++) {
-			const pv_sun::position_in_sky *pos = pv_sun::sun(
-				N,
-				h * 60 - 120, //from 10 am to 18 pm
-				L_rad
-			);
-			for (geometry::triangle t : triangles) {
-				//S[N-1][h]+=t.area * absorbed_radiation_S(
-				S[N-1]+=t.marea * absorbed_radiation_S(
-					L_rad,
-					*pos,
-					t.mbeta_rad,
-					t.mZ_S_rad
-
-				);
-			}
-		}
-	}
-
-	for(int N=1; N<=365; N++) {
-		std::cout<<"N: "<<N<<" S: "<<S[N-1]<<std::endl;
-	}
-
-/*
-	char strbuffer[500];
-	sprintf_s(strbuffer, 500, "Buffer: TauAlpha_n: %f\nM: %f\nG_B: %f\nR_B: %f\nK_theta_B: %f\nS: %f  [W/m^2]\n", taualpha_n, M, G_B, R_B, K_theta_B, S);
-	if (printToBuffer) {
-		resultsBuffer->text(strbuffer);
-	}
-	*/
 
 
 	Fl::add_idle(idle_cb, 0);
-	Fl::run();
-	return 0;
+	//Fl::run();
 }
 
 
-/*
-#include <FL/Fl_Text_Buffer.H>
-extern Fl_Text_Buffer* resultsBuffer;
+char** args = NULL;
+int main(int argc, char **argv) {
+	std::vector<geometry::vertex*> vertices;
+	string nomeFile = "";
+	args = argv;
 
+	if (nomeFile == "" )
+	{
 
-double compute_absorbed_radiation_S(
-	int N, // giorno dell'anno
-	int minutes, //minuti
-	double L, // = 35, //Latitute degrees
-	double beta, // = 30, //tilt/slope paneldegrees
-	double Z_S, // inclinazione pannello tra est/ovest
-	double n_refraction_index, // n_refraction_index = 1.526;
-	double L_T, // Spessore pannello in m 0.002
-	double K, //Coefficiente di estinzione del sistema fotovoltaico (di solito = 4), 
-	// double delta, // = 23.09, //Degrees sole
-	double G_B, // = 715 // W/m^2
-	int printToBuffer
-) {
-	/*
-	double L = 35; //Latitute degrees
-	double beta = 30; //tilt/slope paneldegrees
-	double delta = 23.09; //Degrees sole
-	double G_B = 715; // W/m^2
-	* /
+	   nomeFile = "./trianglesCirc2.csv";
 
+		
+	}
+	//const std::vector<geometry::vertex*> vertices = panel_io::test_vertices_2();
 
-	//double K = 4; // m^-1
-	//double thickness = 0.002; // m la chiama L
+	std::cout << " Nome: " << nomeFile;
+	//std::cout << " Nome2: " << "C:/Users/andre/source/repos/Progetto/geometries/trianglesCirc2.csv";
+    vertices = panel_io::load_vertices(nomeFile);
+	//const std::vector<geometry::vertex*> vertices = panel_io::load_vertices("C:/Users/andre/source/repos/Progetto/geometries/trianglesSinu.csv");
 
-	//double delta_rad = delta * M_PI / 180;
-	* /
+	fltk_window = new PVCreativityUI();
+	opengl_box = fltk_window->panel;
+	opengl_box->setVertices(vertices);
 
-	//Monocristallino Tabella pg. 514
-	double alpha_0 = 0.935823;
-	double alpha_1 = 0.054289;
-	double alpha_2 = -0.008677;
-	double alpha_3 = 0.000527;
-	double alpha_4 = -0.000011;
+	resultsBuffer = new Fl_Text_Buffer();
+	fltk_window->results->buffer(resultsBuffer);
+	fltk_window->show(1, args);
 
-	using namespace pv_sun;
-	double delta = compute_delta_rad(N); //Eq. 1n
-	double h = compute_h_rad(minutes); //Eq. 2n
-
-	double L_rad = L * M_PI / 180;
-	double cos_Phi = compute_cos_Phi(L_rad, delta, h); //Eq. 3n
-
-	double beta_rad = beta * M_PI / 180;
-	double Z_S_rad = Z_S * M_PI / 180;
-
-	double cos_theta = compute_cos_theta(L_rad, beta_rad, 
-		Z_S_rad, delta, h); //Eq. 4
-	double theta = acos(cos_theta);
-
-	double R_B = compute_R_B(cos_theta, cos_Phi); //Eq. 5n
-	double m = compute_m(N, minutes, L_rad); //Eq. 6n
-
-	double M = compute_M(m, alpha_0, alpha_1, 
-		alpha_2, alpha_3, alpha_4); //Eq. 7n
-
-	double theta_r = compute_theta_r(theta, n_refraction_index); //Eq. 8n
-
-	double taualpha_B = compute_taualpha_B(K, L_T, 
-		theta_r, theta); //Eq. 9n
-
-	double taualpha_n = compute_taualpha_n(K, L_T, 
-		n_refraction_index); //Eq. 10n
-
-	double K_theta_B = compute_K_theta_B(taualpha_B, taualpha_n); //Eq. 11n
-
-	double S = compute_S(taualpha_n, M, G_B, R_B, K_theta_B); //Eq. 12n
-
-	std::cout << "TauAlpha_n: " << taualpha_n << std::endl
-		<< "M: " << M << std::endl
-		<< "G_B: " << G_B << std::endl
-		<< "R_B: " << R_B << std::endl
-		<< "K_theta_B: " << K_theta_B << std::endl
-		<< "S: " << S << std::endl;
-
-	char strbuffer[500];
-	sprintf_s(strbuffer, 500, "Buffer: TauAlpha_n: %f\nM: %f\nG_B: %f\nR_B: %f\nK_theta_B: %f\nS: %f  [W/m^2]\n", taualpha_n, M, G_B, R_B, K_theta_B, S);
-	if (printToBuffer) {
-		resultsBuffer->text(strbuffer);
+	std::vector<geometry::triangle> triangles;
+	triangles.reserve(vertices.size() / 3 + 1);
+	//Checks for 3 available vertices
+	for (int i = 0; i + 2 < vertices.size(); i += 3) {
+		triangles.emplace_back(geometry::triangle(*vertices[i], *vertices[i + 1], *vertices[i + 2]));
+		geometry::plane pl = geometry::fplane(*vertices[i], *vertices[i + 1], *vertices[i + 2]);
 	}
 
-	return S;
+	//double S[365][9];
+	double S[365];
+	for (int N = 1; N <= 365; N++)
+		for (int h = 0; h < 9; h++)
+			S[N - 1] = 0;
 
+	Fl::add_idle(idle_cb, 0);
+	Fl::run();
+	return 1;
 }
-*/
+
