@@ -81,6 +81,15 @@ PVCreativityUI::PVCreativityUI() {
       o->end();
     } // Fl_Group* o
     { panel = new PanelView(25, 25, 600, 600, "pframe");
+          panel->box(FL_EMBOSSED_BOX);
+      panel->color(FL_BACKGROUND_COLOR);
+      panel->selection_color(FL_BACKGROUND_COLOR);
+      panel->labeltype(FL_NORMAL_LABEL);
+      panel->labelfont(0);
+      panel->labelsize(14);
+      panel->labelcolor(FL_FOREGROUND_COLOR);
+      panel->align(Fl_Align(FL_ALIGN_CENTER));
+      panel->when(FL_WHEN_RELEASE);
       
     } // PanelView* panel
     { results = new Fl_Text_Display(25, 645, 600, 400, "Results");
