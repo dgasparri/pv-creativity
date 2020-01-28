@@ -11,6 +11,7 @@
 
 const double K = 4; // m^-1
 const double thickness = 0.002; // m la chiama L
+const double n_refraction_index = 1.526;
 //Monocristallino Tabella pg. 514
 const double alpha_0 = 0.935823;
 const double alpha_1 = 0.054289;

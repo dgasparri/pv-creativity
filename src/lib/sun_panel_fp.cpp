@@ -1,6 +1,8 @@
 #include "sun_panel_fp.h"
+#include <iostream>
 
 
+//DEPRECATA usare panel_irradiance
 
 //Area 
 pure double absorbed_radiation_S(
@@ -9,6 +11,7 @@ pure double absorbed_radiation_S(
     const double beta_rad,
     const double Z_S_rad
 ) {
+	std::cout<<"sun_panel_fp deprecata, usare panel_irradiance::compute_S"<<std::endl;
 	const double K = 4; // m^-1
 	const double thickness = 0.002; // m la chiama L
 	const double G_B = 715; // W/m^2

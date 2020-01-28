@@ -80,5 +80,8 @@
     <ClCompile Include="..\src\plot\gnuplot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\lib\panel_irradiance.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
