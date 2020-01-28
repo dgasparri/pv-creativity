@@ -1,9 +1,8 @@
 #pragma once
 #define pure
-#define G_SC_CONSTANT 1366.1  //W/m^2 
-#ifndef _USE_MATH_DEFINES
-#define _USE_MATH_DEFINES
-#endif
+
+#include "../config.h"
+
 #include <cmath>
 
 

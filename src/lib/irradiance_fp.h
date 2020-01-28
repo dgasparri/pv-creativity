@@ -1,7 +1,10 @@
 #pragma once
 #define pure
 
-#include <math.h>
+#include "../config.h"
+
+
+#include <cmath>
 
 
 pure double compute_cos_theta(double L_rad, double beta_rad, double Z_S_rad, double delta_rad, double h_rad);

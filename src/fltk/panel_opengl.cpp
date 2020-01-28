@@ -1,6 +1,6 @@
 #include "panel_opengl.h"
 #include "../lib/geometry_fp.h"
-#include <C:\Users\andre\Desktop\C++\fltk-1.3.5\fltk-1.3.5\GL\glut.h>
+#include <GL/glut.h>
 #include <FL/Fl.H>
 #include <FL/fl_message.H>
 using namespace std;

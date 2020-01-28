@@ -1,7 +1,13 @@
 #pragma once
+
+#ifndef pure
 #define pure
+#endif
+
 #define _USE_MATH_DEFINES
 #define EQUAL_COORDINATES_EPSILON 0.00001
+
+#define G_SC_CONSTANT 1366.1  //W/m^2 
 
 const double K = 4; // m^-1
 const double thickness = 0.002; // m la chiama L

@@ -57,7 +57,7 @@ double compute_K_theta_B(double taualpha_B, double taualpha_N) {
 
 
 
-pure double compute_G_on(const int N, const double G_SC=G_SC_CONSTANT) {
+pure double compute_G_on(const int N, const double G_SC) {
 	return G_SC*(1+0.033 * cos(2 * M_PI * N /365)); //substituted 360 with 2PI
 }
 
@@ -100,18 +100,18 @@ pure double compute_r(const double h_rad, const double h_ss_rad) {
 	return M_PI / 24 
 		* ( alpha + beta * cos(h_rad))
 		* (cos(h_rad)-cos(h_ss_rad))
-		/ (sin(h_ss)-h_ss_rad*cos(h_ss_rad);) 
+		/ (sin(h_ss_rad)-h_ss_rad*cos(h_ss_rad)); 
 }
 pure double compute_G(const double H, const double r) {
 	return H*r;
 }
 pure double compute_G_B(const double G, const double h_rad, const double h_ss_rad) {
 	return 0.6 * G +
-		0.25 * (std:abs(h_ss_rad)-std:abs(h_rad)) * 2 / M_PI * G;
+		0.25 * (abs(h_ss_rad) - abs(h_rad)) * 2 / M_PI * G;
 }
 pure double compute_G_D(const double G, const double h_rad, const double h_ss_rad) {
 	return 0.4 * G -
-		0.25 * (std:abs(h_ss_rad)-std:abs(h_rad)) * 2 / M_PI * G;
+		0.25 * (abs(h_ss_rad) - abs(h_rad)) * 2 / M_PI * G;
 }
 
 
