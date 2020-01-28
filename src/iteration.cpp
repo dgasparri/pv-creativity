@@ -109,6 +109,11 @@ double da_alessandro(){
 			double taualpha_B = compute_taualpha_B(K, thickness, theta_r, acos(cos_theta));
 			double taualpha_n = compute_taualpha_n(K, thickness, n_refraction_index);
 			double K_theta_B= compute_K_theta_B(taualpha_B, taualpha_n);
+
+			double h_ss_rad = 1.832595715;
+
+
+
 			double calcolaS;
 			S += calcolaS;
 		}

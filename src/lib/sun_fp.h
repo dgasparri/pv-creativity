@@ -1,5 +1,6 @@
 #pragma once
 #define pure
+#define G_SC_CONSTANT 1366.1  //W/m^2 
 #ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
 #endif
@@ -66,7 +67,7 @@ namespace pv_sun {
     pure double sin_alpha(const int N, const int minutes, const double L_rad);
     pure double alpha_rad(const int N, const int minutes, const double L_rad);
     pure double compute_m(const int N, const int minutes, const double L_rad);
-
+    
 
     // ----- INTERNAL ----
     pure double compute_delta_rad(const int N);
