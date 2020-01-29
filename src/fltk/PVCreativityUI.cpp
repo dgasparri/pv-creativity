@@ -70,8 +70,7 @@ void calcola(double n_refraction_index, double thickness, double K) {
 			//triangolo
 
 		   for (geometry::triangle t : triangles) {
-			   
-				S += panel_irradiance::compute_S(
+			   double S_temp = panel_irradiance::compute_S(
 					pos,
 					pvstate.day,
 					L_rad,
@@ -86,8 +85,7 @@ void calcola(double n_refraction_index, double thickness, double K) {
 					alpha_3,
 					alpha_4
 				);
-
-			
+				S += (S_temp / 3600);
 			}
 			//stampa informazioni
 			myfile << i << " " << j << " " << S << "\n";
