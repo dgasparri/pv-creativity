@@ -7,7 +7,6 @@
 #include <FL/Fl_Text_Buffer.H>
 #include <FL/Fl_File_Chooser.H>
 #include <iostream>
-#include "../lib/panel_io.h"
 #include <fstream>
 #include <math.h>
 #include "PanelView.h"
@@ -15,6 +14,7 @@
 #include "../lib/sun_fp.h"
 #include "../lib/sun_panel_fp.h"
 #include "../lib/geometry_fp.h"
+#include "../lib/panel_irradiance.h"
 #include <algorithm>
 
 using namespace std;
@@ -70,17 +70,24 @@ void calcola(double n_refraction_index, double thickness, double K) {
 			//triangolo
 
 		   for (geometry::triangle t : triangles) {
+			   
+				S += panel_irradiance::compute_S(
+					pos,
+					pvstate.day,
+					L_rad,
+					t.mbeta_rad,
+					t.mZ_s_rad,
+					n_refraction_index, 
+					thickness, 
+					K,
+					alpha_0,
+					alpha_1,
+					alpha_2,
+					alpha_3,
+					alpha_4
+				);
 
-				double cos_theta = compute_cos_theta(L_rad, t.mbeta_rad, t.mZ_S_rad, pos->delta_rad, pos->h_rad);
-				double R_B = compute_R_B(cos_theta, pos->cos_Phi);
-				double M = compute_M(pos->m, a0, a1, a2, a3, a4);
-				double theta_r = compute_theta_r(acos(cos_theta), n_refraction_index);
-				double taualpha_B = compute_taualpha_B(K, thickness, theta_r, acos(cos_theta));
-				double taualpha_n = compute_taualpha_n(K, thickness, n_refraction_index);
-				double K_theta_B = compute_K_theta_B(taualpha_B, taualpha_n);
-				double calcolaS = 1;
-				S += calcolaS;
-				
+			
 			}
 			//stampa informazioni
 			myfile << i << " " << j << " " << S << "\n";
