@@ -159,7 +159,6 @@
     <ClCompile Include="..\src\lib\panel_irradiance.cpp" />
     <ClCompile Include="..\src\lib\panel_pv_fp.cpp" />
     <ClCompile Include="..\src\lib\sun_fp.cpp" />
-    <ClCompile Include="..\src\lib\sun_panel_fp.cpp" />
     <ClCompile Include="..\src\pv_commandline\pv_commandline.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,7 +166,6 @@
     <ClInclude Include="..\src\lib\panel_irradiance.h" />
     <ClInclude Include="..\src\lib\panel_pv_fp.h" />
     <ClInclude Include="..\src\lib\sun_fp.h" />
-    <ClInclude Include="..\src\lib\sun_panel_fp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

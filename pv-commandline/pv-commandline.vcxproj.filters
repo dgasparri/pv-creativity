@@ -30,9 +30,6 @@
     <ClCompile Include="..\src\lib\sun_fp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\lib\sun_panel_fp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\lib\panel_irradiance.h">
@@ -45,9 +42,6 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\lib\sun_fp.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\lib\sun_panel_fp.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>

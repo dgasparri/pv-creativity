@@ -33,6 +33,11 @@ double compute_theta_r(double theta_rad, double n_refraction_index) {
 	return asin(sin(theta_rad) / n_refraction_index);
 }
 
+
+pure double compute_theta_e_D(double beta_rad) {
+	return 59.68-0.1388 * beta_rad + 0.001497 * std::pow(beta_rad, 2);
+}
+
 //Eq. 9n
 double compute_taualpha_B(double K, double thickness, double theta_r, double theta) {
 	double theta_diff = theta_r - theta;
@@ -42,6 +47,10 @@ double compute_taualpha_B(double K, double thickness, double theta_r, double the
 	double curly_brakets = 1 - inner_square_brakes / 2;
 	double exponent = -(K * thickness / cos(theta_r));
 	return exp(exponent) * curly_brakets;
+}
+
+pure double compute_taualpha_D(double K, double thickness, double theta_r, double theta_e_D) {
+	return compute_taualpha_B(K, thickness, theta_r, theta_e_D);
 }
 
 // Eq. 10n
@@ -55,28 +64,30 @@ double compute_K_theta_B(double taualpha_B, double taualpha_N) {
 	return taualpha_B / taualpha_N;
 }
 
+double compute_K_theta_D(double taualpha_D, double taualpha_N) {
+	return taualpha_D / taualpha_N;
+}
 
-
-pure double compute_G_on(const int N, const double G_SC) {
+pure double irradiance::compute_G_on(const int N, const double G_SC) {
 	return G_SC*(1+0.033 * cos(2 * M_PI * N /365)); //substituted 360 with 2PI
 }
 
-pure double compute_G_oH(const double G_on, const double cos_Phi) {
+pure double irradiance::compute_G_oH(const double G_on, const double cos_Phi) {
 	return G_on * cos_Phi;
 }
 
-pure double compute_H_o_rad(const double L_rad, const double delta_rad, const double h_ss_rad, const double G_on) {
+pure double irradiance::compute_H_o_rad(const double L_rad, const double delta_rad, const double h_ss_rad, const double G_on) {
 	return 2 * G_on *(
 		cos(L_rad)*cos(delta_rad)*sin(h_ss_rad)
 		+ h_ss_rad * sin(L_rad) * sin(delta_rad)
 	);
 }
 
-pure double compute_H_o(const double H_o_rad) {
+pure double irradiance::compute_H_o(const double H_o_rad) {
 	return H_o_rad * 24 * 60 *60 / (2 * M_PI);
 }
 
-pure double compute_r_ground(const int N) {
+pure double irradiance::compute_r_ground(const int N) {
 	if(N<= 31) return 0.61;
 	if(N<= 59) return 0.64;
 	if(N<= 90) return 0.67;
@@ -90,11 +101,11 @@ pure double compute_r_ground(const int N) {
 	if(N<=334) return 0.55;
 	return 0.55;
 }
-pure double compute_H(const double H_o, const double r_ground) {
+pure double irradiance::compute_H(const double H_o, const double r_ground) {
 	return H_o*r_ground;
 }
 
-pure double compute_r(const double h_rad, const double h_ss_rad) {
+pure double irradiance::compute_r(const double h_rad, const double h_ss_rad) {
 	const double alpha = 0.409+0.5016*sin(h_ss_rad - M_PI / 3); //60 gradi
 	const double beta = 0.6609-0.4767*sin(h_ss_rad - M_PI / 3); //60 gradi
 	return M_PI / 24 
@@ -102,14 +113,14 @@ pure double compute_r(const double h_rad, const double h_ss_rad) {
 		* (cos(h_rad)-cos(h_ss_rad))
 		/ (sin(h_ss_rad)-h_ss_rad*cos(h_ss_rad)); 
 }
-pure double compute_G(const double H, const double r) {
+pure double irradiance::compute_G(const double H, const double r) {
 	return H*r;
 }
-pure double compute_G_B(const double G, const double h_rad, const double h_ss_rad) {
+pure double irradiance::compute_G_B(const double G, const double h_rad, const double h_ss_rad) {
 	return 0.6 * G +
 		0.25 * (abs(h_ss_rad) - abs(h_rad)) * 2 / M_PI * G;
 }
-pure double compute_G_D(const double G, const double h_rad, const double h_ss_rad) {
+pure double irradiance::compute_G_D(const double G, const double h_rad, const double h_ss_rad) {
 	return 0.4 * G -
 		0.25 * (abs(h_ss_rad) - abs(h_rad)) * 2 / M_PI * G;
 }
@@ -117,7 +128,7 @@ pure double compute_G_D(const double G, const double h_rad, const double h_ss_ra
 
 
 //Eq. 12n
-double compute_S(double taualpha_n, double M, double G_B, double R_B, double K_theta_B) {
-	return taualpha_n * M * G_B * R_B * K_theta_B;
-}
+//double compute_S(double taualpha_n, double M, double G_B, double R_B, double K_theta_B) {
+//	return taualpha_n * M * G_B * R_B * K_theta_B;
+//}
 

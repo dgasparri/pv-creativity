@@ -15,6 +15,7 @@ pure pv_sun::position_in_sky* pv_sun::sun(
         pv_sun::alpha_rad(N, minutes, L_rad),
         60.0, //must implement Solar Azimuth
         pv_sun::compute_h_rad(minutes),
+        pv_sun::compute_h_ss_rad(L_rad, pv_sun::compute_delta_rad(N)),
         pv_sun::compute_delta_rad(N),
         pv_sun::cos_Phi(N, minutes, L_rad),
         pv_sun::compute_m(N, minutes, L_rad),
@@ -67,6 +68,11 @@ pure double pv_sun::compute_delta_rad(const int N) {
 //Ok
 pure double pv_sun::compute_h_rad(const int minutes) {
 	return 0.25 * minutes * M_PI / 180;
+}
+
+//Eq. pg 61 capitolo 2 Solar Energy Engineering
+pure double pv_sun::compute_h_ss_rad(const double L_rad, const double delta_rad) {
+    return acos(-tan(L_rad)*tan(delta_rad));
 }
 
 // Eq. 3 n

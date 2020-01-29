@@ -64,6 +64,7 @@ int main(int argc, char **argv) {
 		("Z_s", po::value<double>(), "set the Z_s of the panel")
 		("area", po::value<double>(), "set the area of the panel in square meters")
 		("S", "return the irradiance S in W/m^2")
+		("verbose", "return the irradiance S in W/m^2 - verbose mode")
 		;
 
 
@@ -209,15 +210,17 @@ int main(int argc, char **argv) {
 			pvstate.lon = vm["lon"].as<double>();
 		}
 
-		if(vm.count("S")) {
+		if(vm.count("S") || vm.count("verbose")) {
 		    const pv_sun::position_in_sky* pos = pv_sun::sun(
         		pvstate.day,
         		pvstate.h,
         		pvstate.L_rad
     		);
 
+			panel_irradiance::s_debug debug_output;
 			double S = panel_irradiance::compute_S(
 				pos,
+				pvstate.day,
 				pvstate.L_rad,
 				pvstate.beta_rad,
 				pvstate.Z_s_rad,
@@ -228,8 +231,46 @@ int main(int argc, char **argv) {
 				pvstate.a1,
 				pvstate.a2,
 				pvstate.a3,
-				pvstate.a4
+				pvstate.a4,
+				&debug_output
 			);
+
+			if(vm.count("verbose")) {
+
+				std::cout << "position_in_sky:" << std::endl;
+				std::cout << " alpha_rad : " << pos->alpha_rad << std::endl;  
+				std::cout << " z_rad     : " << pos->z_rad << std::endl; 
+				std::cout << " h_rad     : " << pos->h_rad << std::endl;  
+				std::cout << " h_ss_rad  : " << pos->h_ss_rad << std::endl;  
+				std::cout << " delta_rad : " << pos->delta_rad << std::endl;  
+				std::cout << " cos_Phi   : " << pos->cos_Phi << std::endl;  
+				std::cout << " m         : " << pos->m << std::endl;  
+				std::cout << " valid     : " << pos->valid << std::endl;  
+
+				std::cout << "compute_S:" << std::endl;
+				std::cout << " G_on      : " << debug_output.G_on << std::endl;  
+				std::cout << " G_oH      : " << debug_output.G_oH << std::endl;
+				std::cout << " H_o_rad   : " << debug_output.H_o_rad << std::endl;
+				std::cout << " H_o       : " << debug_output.H_o << std::endl;
+				std::cout << " r_ground  : " << debug_output.r_ground << std::endl;
+				std::cout << " H         : " << debug_output.H << std::endl;
+				std::cout << " r         : " << debug_output.r << std::endl;
+				std::cout << " G         : " << debug_output.G << std::endl;
+				std::cout << " G_B       : " << debug_output.G_B << std::endl;
+				std::cout << " G_D       : " << debug_output.G_D << std::endl;
+				std::cout << " cos_theta : " << debug_output.cos_theta << std::endl;
+				std::cout << " R_B       : " << debug_output.R_B << std::endl;
+				std::cout << " M         : " << debug_output.M << std::endl;
+				std::cout << " theta_r   : " << debug_output.theta_r << std::endl;
+				std::cout << " theta_e_D : " << debug_output.theta_e_D << std::endl;
+				std::cout << " taualpha_B: " << debug_output.taualpha_B << std::endl;
+				std::cout << " taualpha_D: " << debug_output.taualpha_D << std::endl;
+				std::cout << " taualpha_n: " << debug_output.taualpha_n << std::endl;
+				std::cout << " K_theta_B : " << debug_output.K_theta_B << std::endl;
+				std::cout << " k_theta_D : " << debug_output.K_theta_D << std::endl;
+				std::cout << " S         : " << debug_output.S << std::endl;
+
+			}
 
 			std::cout << "Absorbed irradiance S at lat " << pvstate.L 
 						<< " with beta " << pvstate.beta 
@@ -237,6 +278,8 @@ int main(int argc, char **argv) {
 						<< " at day " << pvstate.day 
 						<< " and time " << pvstate.hour <<":"<<pvstate.min 
 						<< " is " << S << " W/m^2" << std::endl;
+			
+			delete pos;
 
 
 		}

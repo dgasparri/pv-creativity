@@ -42,8 +42,8 @@ pure double absorbed_radiation_S(
 
 	double K_theta_B = compute_K_theta_B(taualpha_B, taualpha_n); //Eq. 11n
 
-	double S = compute_S(taualpha_n, M, G_B, R_B, K_theta_B); //Eq. 12n
-
+	//double S = compute_S(taualpha_n, M, G_B, R_B, K_theta_B); //Eq. 12n
+	double S = 1;
     /*
 	std::cout << "TauAlpha_n: " << taualpha_n << std::endl
 		<< "M: " << M << std::endl

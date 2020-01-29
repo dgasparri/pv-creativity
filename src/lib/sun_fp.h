@@ -20,7 +20,8 @@ namespace pv_sun {
     Output:
     * cos_Phi (Zenith)
     * alpha_rad (Altitude)
-    * h_rad (not yet)
+    * h_rad
+    * h_ss_rad
     * delta_rad
     * cos_Phi
     * m
@@ -33,6 +34,7 @@ namespace pv_sun {
         const double alpha_rad;  //Solar altitude
         const double z_rad; //Solar Azimuth
         const double h_rad;
+        const double h_ss_rad;
         const double delta_rad;
         const double cos_Phi;
         const double m;
@@ -42,6 +44,7 @@ namespace pv_sun {
             const double alpha_rad,
             const double z_rad,
             const double h_rad,
+            const double h_ss_rad,
             const double delta_rad,
             const double cos_Phi,
             const double m,
@@ -50,6 +53,7 @@ namespace pv_sun {
             alpha_rad(alpha_rad),
             z_rad(z_rad),
             h_rad(h_rad),
+            h_ss_rad(h_ss_rad),
             delta_rad(delta_rad),
             cos_Phi(cos_Phi),
             m(m),
@@ -71,6 +75,7 @@ namespace pv_sun {
     // ----- INTERNAL ----
     pure double compute_delta_rad(const int N);
     pure double compute_h_rad(const int minutes);
+    pure double compute_h_ss_rad(const double L_rad, const double delta_rad);
     pure double compute_cos_Phi(const double L_rad, const double delta_rad, const double h_rad);
 
 
