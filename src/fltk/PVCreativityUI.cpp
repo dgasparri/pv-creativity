@@ -55,7 +55,7 @@ void calcola(double n_refraction_index, double thickness, double K) {
 	for (int i = 1; i <= 365; i++)
 	{
 		//ora
-		for (int j = 0; j < 24; j++)
+		for (int j = 9; j < 18; j++)
 		{
 			//definisco posizione sole
 			int h = 720 - j * 60;
@@ -72,10 +72,10 @@ void calcola(double n_refraction_index, double thickness, double K) {
 		   for (geometry::triangle t : triangles) {
 			   double S_temp = panel_irradiance::compute_S(
 					pos,
-					pvstate.day,
+					i,
 					L_rad,
 					t.mbeta_rad,
-					t.mZ_s_rad,
+					t.mZ_S_rad,
 					n_refraction_index, 
 					thickness, 
 					K,
