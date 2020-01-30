@@ -44,9 +44,9 @@ const double panel_irradiance::compute_S(
     double taualpha_n = compute_taualpha_n(K, thickness, n_refraction_index);
     double K_theta_B = compute_K_theta_B(taualpha_B, taualpha_n);
     double K_theta_D = compute_K_theta_D(taualpha_D, taualpha_n);
-    double S = taualpha_n * M * 
-        (G_B * R_B * K_theta_B
-        + G_D * K_theta_D * ((1-cos(beta_rad))/2)) ;
+    double S_B = taualpha_n * M * G_B * R_B * K_theta_B;
+    double S_D = taualpha_n * M *  G_D * K_theta_D * ((1-cos(beta_rad))/2);
+    double S = S_B + S_D;
     
 
     debug_output->G_on = G_on;
@@ -69,6 +69,8 @@ const double panel_irradiance::compute_S(
     debug_output->taualpha_n = taualpha_n;
     debug_output->K_theta_B = K_theta_B;
     debug_output->K_theta_D = K_theta_D;
+    debug_output->S_B = S_B;
+    debug_output->S_D = S_D;
     debug_output->S = S;
 
     return S;

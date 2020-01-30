@@ -101,7 +101,7 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 
-		if (vm.count("status")) {
+		if (vm.count("status") || vm.count("verbose")) {
 			std::cout << "Printing the current state of the program:" << std::endl;
 			std::cout << "  lat: " << pvstate.L << std::endl;
 			std::cout << "  lat_rad: " << pvstate.L_rad << std::endl;
@@ -193,6 +193,13 @@ int main(int argc, char **argv) {
 			pvstate.beta_rad = vm["beta"].as<double>() /180 * M_PI;
 		}
 
+		if (vm.count("Z_s")) {
+			std::cout << "set the Z_s to " << vm["Z_s"].as<double>() << std::endl;
+			pvstate.Z_s = vm["Z_s"].as<double>();
+			pvstate.Z_s_rad = vm["Z_s"].as<double>() /180 * M_PI;
+		}
+
+
 		if (vm.count("beta_rad")) {
 			std::cout << "set the beta_rad to " << vm["beta_rad"].as<double>() << std::endl;
 			pvstate.beta = vm["beta_rad"].as<double>() / M_PI * 180;
@@ -253,11 +260,11 @@ int main(int argc, char **argv) {
 				std::cout << " H_o_rad   : " << debug_output.H_o_rad << std::endl;
 				std::cout << " H_o       : " << debug_output.H_o << std::endl;
 				std::cout << " r_ground  : " << debug_output.r_ground << std::endl;
-				std::cout << " H         : " << debug_output.H << std::endl;
+				std::cout << " H         : " << debug_output.H <<  " J/day (" << (debug_output.H / (24* 60 *60)) << " W/day)" << std::endl;;
 				std::cout << " r         : " << debug_output.r << std::endl;
-				std::cout << " G         : " << debug_output.G << std::endl;
-				std::cout << " G_B       : " << debug_output.G_B << std::endl;
-				std::cout << " G_D       : " << debug_output.G_D << std::endl;
+				std::cout << " G         : " << debug_output.G << " J/h (" << (debug_output.G / 3600) << " W/h)" << std::endl;
+				std::cout << " G_B       : " << debug_output.G_B << " J/h (" << (debug_output.G_B / 3600) << " W/h)" << std::endl;
+				std::cout << " G_D       : " << debug_output.G_D << " J/h (" << (debug_output.G_D / 3600) << " W/h)" << std::endl;
 				std::cout << " cos_theta : " << debug_output.cos_theta << std::endl;
 				std::cout << " R_B       : " << debug_output.R_B << std::endl;
 				std::cout << " M         : " << debug_output.M << std::endl;
@@ -268,7 +275,9 @@ int main(int argc, char **argv) {
 				std::cout << " taualpha_n: " << debug_output.taualpha_n << std::endl;
 				std::cout << " K_theta_B : " << debug_output.K_theta_B << std::endl;
 				std::cout << " k_theta_D : " << debug_output.K_theta_D << std::endl;
-				std::cout << " S         : " << debug_output.S << std::endl;
+				std::cout << " S_B       : " << debug_output.S_B <<  " J/h (" << (debug_output.S_B / 3600) << " W/h)" << std::endl;
+				std::cout << " S_D       : " << debug_output.S_D <<  " J/h (" << (debug_output.S_D / 3600) << " W/h)" << std::endl;
+				std::cout << " S         : " << debug_output.S <<  " J/h (" << (debug_output.S / 3600) << " W/h)" << std::endl;
 
 			}
 

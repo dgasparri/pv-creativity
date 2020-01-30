@@ -30,6 +30,8 @@ namespace panel_irradiance {
         double taualpha_n;
         double K_theta_B;
         double K_theta_D;
+        double S_B;
+        double S_D;
         double S;
     };
 
