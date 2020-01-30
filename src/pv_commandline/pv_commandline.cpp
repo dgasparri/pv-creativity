@@ -50,6 +50,7 @@ int main(int argc, char **argv) {
 	desc.add_options()
 		("help", "produce the help message")
 		("status", "print the currently set parameters")
+		("sun", "print the sun parameters")
 		("quit", "exit the program")
 		("default", "set the parameters to default")
 		("lat", po::value<double>(), "set the latitude of the installation")
@@ -61,7 +62,9 @@ int main(int argc, char **argv) {
 		("h", po::value<int>(), "set the number of minutes from midday, negatives are morning time")
 		// ("h_rad", po::value<double>(), "set the number of minutes from midday in radians")
 		("beta", po::value<double>(), "set the beta of the panel")
+		("beta_rad", po::value<double>(), "set the beta of the panel in radians")
 		("Z_s", po::value<double>(), "set the Z_s of the panel")
+		("Z_s_rad", po::value<double>(), "set the Z_s of the panel in radians")
 		("area", po::value<double>(), "set the area of the panel in square meters")
 		("S", "return the irradiance S in W/m^2")
 		("verbose", "return the irradiance S in W/m^2 - verbose mode")
@@ -84,7 +87,12 @@ int main(int argc, char **argv) {
             args.push_back(arg.c_str());
 
         po::variables_map vm;
-		po::store(po::parse_command_line(args.size(), args.data(), desc), vm);
+		try {
+			po::store(po::parse_command_line(args.size(), args.data(), desc), vm);
+		} catch (...) {
+			std::cout<<"Unknown or malformed command"<<std::endl;
+		}
+		
 		po::notify(vm);
        
 
@@ -124,6 +132,24 @@ int main(int argc, char **argv) {
 			std::cout << "  alpha_3: " << pvstate.a3 << std::endl;
 			std::cout << "  alpha_4: " << pvstate.a4 << std::endl;
 			std::cout << "  Area: " << pvstate.area << std::endl;
+		}
+
+		if (vm.count("sun") || vm.count("verbose")) { 
+		    const pv_sun::position_in_sky* pos = pv_sun::sun(
+        		pvstate.day,
+        		pvstate.h,
+        		pvstate.L_rad
+    		);
+
+			std::cout << "Sun position_in_sky:" << std::endl;
+			std::cout << " alpha_rad : " << pos->alpha_rad << std::endl;  
+			std::cout << " z_rad     : " << pos->z_rad << std::endl; 
+			std::cout << " h_rad     : " << pos->h_rad << std::endl;  
+			std::cout << " h_ss_rad  : " << pos->h_ss_rad << std::endl;  
+			std::cout << " delta_rad : " << pos->delta_rad << std::endl;  
+			std::cout << " cos_Phi   : " << pos->cos_Phi << std::endl;  
+			std::cout << " m         : " << pos->m << std::endl;  
+			std::cout << " valid     : " << pos->valid << std::endl;  
 		}
 
 		if (vm.count("default")) {
@@ -199,6 +225,12 @@ int main(int argc, char **argv) {
 			pvstate.Z_s_rad = vm["Z_s"].as<double>() /180 * M_PI;
 		}
 
+		if (vm.count("Z_s_rad")) {
+			std::cout << "set the Z_s to " << vm["Z_s_rad"].as<double>() << std::endl;
+			pvstate.Z_s = vm["Z_s_rad"].as<double>()  * 180 / M_PI;
+			pvstate.Z_s_rad = vm["Z_s_rad"].as<double>();
+		}
+
 
 		if (vm.count("beta_rad")) {
 			std::cout << "set the beta_rad to " << vm["beta_rad"].as<double>() << std::endl;
@@ -244,15 +276,6 @@ int main(int argc, char **argv) {
 
 			if(vm.count("verbose")) {
 
-				std::cout << "position_in_sky:" << std::endl;
-				std::cout << " alpha_rad : " << pos->alpha_rad << std::endl;  
-				std::cout << " z_rad     : " << pos->z_rad << std::endl; 
-				std::cout << " h_rad     : " << pos->h_rad << std::endl;  
-				std::cout << " h_ss_rad  : " << pos->h_ss_rad << std::endl;  
-				std::cout << " delta_rad : " << pos->delta_rad << std::endl;  
-				std::cout << " cos_Phi   : " << pos->cos_Phi << std::endl;  
-				std::cout << " m         : " << pos->m << std::endl;  
-				std::cout << " valid     : " << pos->valid << std::endl;  
 
 				std::cout << "compute_S:" << std::endl;
 				std::cout << " G_on      : " << debug_output.G_on << std::endl;  
@@ -260,11 +283,11 @@ int main(int argc, char **argv) {
 				std::cout << " H_o_rad   : " << debug_output.H_o_rad << std::endl;
 				std::cout << " H_o       : " << debug_output.H_o << std::endl;
 				std::cout << " r_ground  : " << debug_output.r_ground << std::endl;
-				std::cout << " H         : " << debug_output.H <<  " J/day (" << (debug_output.H / (24* 60 *60)) << " W/day)" << std::endl;;
+				std::cout << " H         : " << debug_output.H <<  " J/m^2*day (" << (debug_output.H / (24* 60 *60)) << " W/m^2*day)" << std::endl;;
 				std::cout << " r         : " << debug_output.r << std::endl;
-				std::cout << " G         : " << debug_output.G << " J/h (" << (debug_output.G / 3600) << " W/h)" << std::endl;
-				std::cout << " G_B       : " << debug_output.G_B << " J/h (" << (debug_output.G_B / 3600) << " W/h)" << std::endl;
-				std::cout << " G_D       : " << debug_output.G_D << " J/h (" << (debug_output.G_D / 3600) << " W/h)" << std::endl;
+				std::cout << " G         : " << debug_output.G << " J/m^2*h (" << (debug_output.G / 3600) << " W/m^2*h)" << std::endl;
+				std::cout << " G_B       : " << debug_output.G_B << " J/m^2*h (" << (debug_output.G_B / 3600) << " W/m^2*h)" << std::endl;
+				std::cout << " G_D       : " << debug_output.G_D << " J/m^2*hh (" << (debug_output.G_D / 3600) << " W/m^2*h)" << std::endl;
 				std::cout << " cos_theta : " << debug_output.cos_theta << std::endl;
 				std::cout << " R_B       : " << debug_output.R_B << std::endl;
 				std::cout << " M         : " << debug_output.M << std::endl;
@@ -275,18 +298,19 @@ int main(int argc, char **argv) {
 				std::cout << " taualpha_n: " << debug_output.taualpha_n << std::endl;
 				std::cout << " K_theta_B : " << debug_output.K_theta_B << std::endl;
 				std::cout << " k_theta_D : " << debug_output.K_theta_D << std::endl;
-				std::cout << " S_B       : " << debug_output.S_B <<  " J/h (" << (debug_output.S_B / 3600) << " W/h)" << std::endl;
-				std::cout << " S_D       : " << debug_output.S_D <<  " J/h (" << (debug_output.S_D / 3600) << " W/h)" << std::endl;
-				std::cout << " S         : " << debug_output.S <<  " J/h (" << (debug_output.S / 3600) << " W/h)" << std::endl;
+				std::cout << " S_B       : " << debug_output.S_B <<  " J/m^2*h (" << (debug_output.S_B / 3600) << " W/m^2*h)" << std::endl;
+				std::cout << " S_D       : " << debug_output.S_D <<  " J/m^2*h (" << (debug_output.S_D / 3600) << " W/m^2*h)" << std::endl;
+				std::cout << " S         : " << debug_output.S <<  " J/m^2*h (" << (debug_output.S / 3600) << " W/m^2*h)" << std::endl;
 
 			}
 
-			std::cout << "Absorbed irradiance S at lat " << pvstate.L 
-						<< " with beta " << pvstate.beta 
-						<< " and Z_S " << pvstate.Z_s
-						<< " at day " << pvstate.day 
-						<< " and time " << pvstate.hour <<":"<<pvstate.min 
-						<< " is " << S << " W/m^2" << std::endl;
+			std::cout << "Absorbed irradiance S:" << std::endl;
+			std::cout << " lat  : " << pvstate.L  << std::endl;
+			std::cout << " beta : " << pvstate.beta  << std::endl;
+			std::cout << " Z_S  : " << pvstate.Z_s << std::endl;
+			std::cout << " day  : " << pvstate.day  << std::endl;
+			std::cout << " time : " << pvstate.hour <<":"<<pvstate.min  << std::endl;
+			std::cout << " S    : " << debug_output.S <<  " J/m^2*h (" << (debug_output.S / 3600) << " W/m^2*h)" << std::endl;
 			
 			delete pos;
 

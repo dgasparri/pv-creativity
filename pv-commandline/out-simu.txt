@@ -1,0 +1,283 @@
+Type a command ( --help for help, --quit to quit )
+>>set the day to 30
+>set the hour to 11
+>set the Z_s to -0.2765
+>Printing the current state of the program:
+  lat: 44.499
+  lat_rad: 0.776654
+  lon: 11.3535
+  day: 30
+  hour: 11
+  min: 0
+  h: -60
+  beta: 30
+  beta_rad: 0.523599
+  Z_s: -15.8423
+  Z_s_rad: -0.2765
+  K: 4
+  Thickness of glass: 0.002
+  Refraction index: 1.526
+  alpha_0: 0.935823
+  alpha_1: 0.054289
+  alpha_2: -0.008677
+  alpha_3: 0.000527
+  alpha_4: -1.1e-05
+  Area: 1
+>Sun position_in_sky:
+ alpha_rad : 0.450268
+ z_rad     : -0.276564
+ h_rad     : -0.261799
+ h_ss_rad  : 1.24133
+ delta_rad : -0.31807
+ cos_Phi   : 0.435207
+ m         : 2.29776
+ valid     : 1
+>set the beta_rad to 0.26
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 14.8969
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 1.53109e+06 J/m^2*h (425.303 W/m^2*h)
+>set the beta_rad to 0.3
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 17.1887
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 1.60889e+06 J/m^2*h (446.914 W/m^2*h)
+>set the beta_rad to 0.35
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 20.0535
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 1.70174e+06 J/m^2*h (472.705 W/m^2*h)
+>set the beta_rad to 0.4
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 22.9183
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 1.78959e+06 J/m^2*h (497.108 W/m^2*h)
+>set the beta_rad to 0.43
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 24.6372
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 1.83986e+06 J/m^2*h (511.071 W/m^2*h)
+>set the beta_rad to 0.44
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 25.2101
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 1.8562e+06 J/m^2*h (515.611 W/m^2*h)
+>set the beta_rad to 0.45
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 25.7831
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 1.87234e+06 J/m^2*h (520.093 W/m^2*h)
+>set the beta_rad to 0.46
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 26.3561
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 1.88826e+06 J/m^2*h (524.518 W/m^2*h)
+>set the beta_rad to 0.47
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 26.929
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 1.90398e+06 J/m^2*h (528.884 W/m^2*h)
+>set the beta_rad to 0.48
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 27.502
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 1.91949e+06 J/m^2*h (533.191 W/m^2*h)
+>set the beta_rad to 0.5
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 28.6479
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 1.94986e+06 J/m^2*h (541.629 W/m^2*h)
+>set the beta_rad to 0.55
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 31.5127
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.02204e+06 J/m^2*h (561.678 W/m^2*h)
+>set the beta_rad to 0.6
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 34.3775
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.08872e+06 J/m^2*h (580.2 W/m^2*h)
+>set the beta_rad to 0.65
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 37.2423
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.14973e+06 J/m^2*h (597.147 W/m^2*h)
+>set the beta_rad to 0.7
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 40.107
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.20487e+06 J/m^2*h (612.464 W/m^2*h)
+>set the beta_rad to 0.75
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 42.9718
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.25391e+06 J/m^2*h (626.087 W/m^2*h)
+>set the beta_rad to 0.8
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 45.8366
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.29658e+06 J/m^2*h (637.939 W/m^2*h)
+>set the beta_rad to 0.85
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 48.7014
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.33254e+06 J/m^2*h (647.927 W/m^2*h)
+>set the beta_rad to 0.9
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 51.5662
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.36135e+06 J/m^2*h (655.931 W/m^2*h)
+>set the beta_rad to 0.95
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 54.431
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.38249e+06 J/m^2*h (661.803 W/m^2*h)
+>set the beta_rad to 1
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 57.2958
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.39524e+06 J/m^2*h (665.344 W/m^2*h)
+>set the beta_rad to 1.05
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 60.1606
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.39865e+06 J/m^2*h (666.29 W/m^2*h)
+>set the beta_rad to 1.1
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 63.0254
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.39141e+06 J/m^2*h (664.279 W/m^2*h)
+>set the beta_rad to 1.15
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 65.8901
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.39451e+06 J/m^2*h (665.142 W/m^2*h)
+>set the beta_rad to 1.2
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 68.7549
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.40495e+06 J/m^2*h (668.042 W/m^2*h)
+>set the beta_rad to 1.25
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 71.6197
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.40832e+06 J/m^2*h (668.977 W/m^2*h)
+>set the beta_rad to 1.3
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 74.4845
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.40479e+06 J/m^2*h (667.998 W/m^2*h)
+>set the beta_rad to 1.35
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 77.3493
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.39454e+06 J/m^2*h (665.151 W/m^2*h)
+>set the beta_rad to 1.4
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 80.2141
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.37771e+06 J/m^2*h (660.475 W/m^2*h)
+>set the beta_rad to 1.45
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 83.0789
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.35442e+06 J/m^2*h (654.005 W/m^2*h)
+>set the beta_rad to 1.5
+>Absorbed irradiance S:
+ lat  : 44.499
+ beta : 85.9437
+ Z_S  : -15.8423
+ day  : 30
+ time : 11:0
+ S    : 2.32479e+06 J/m^2*h (645.774 W/m^2*h)
+>

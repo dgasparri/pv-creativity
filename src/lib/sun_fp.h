@@ -77,6 +77,7 @@ namespace pv_sun {
     pure double compute_h_rad(const int minutes);
     pure double compute_h_ss_rad(const double L_rad, const double delta_rad);
     pure double compute_cos_Phi(const double L_rad, const double delta_rad, const double h_rad);
+    pure double compute_z_rad(const double delta_rad, const double h_rad, const double alpha_rad);
 
 
 

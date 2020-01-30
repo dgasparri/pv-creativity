@@ -13,7 +13,11 @@ pure pv_sun::position_in_sky* pv_sun::sun(
     //    int valid;
     pv_sun::position_in_sky *pos = new pv_sun::position_in_sky(
         pv_sun::alpha_rad(N, minutes, L_rad),
-        60.0, //must implement Solar Azimuth
+        pv_sun::compute_z_rad(
+            pv_sun::compute_delta_rad(N),
+            pv_sun::compute_h_rad(minutes),
+            pv_sun::alpha_rad(N, minutes, L_rad)
+        ),
         pv_sun::compute_h_rad(minutes),
         pv_sun::compute_h_ss_rad(L_rad, pv_sun::compute_delta_rad(N)),
         pv_sun::compute_delta_rad(N),
@@ -83,3 +87,6 @@ pure double pv_sun::compute_cos_Phi(const double L_rad, const double delta_rad, 
 }
 
 
+pure double pv_sun::compute_z_rad(const double delta_rad, const double h_rad, const double alpha_rad) {
+    return asin(cos(delta_rad) * sin(h_rad) / cos(alpha_rad));
+}

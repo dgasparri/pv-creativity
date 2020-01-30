@@ -1,0 +1,68 @@
+--default
+--day 30
+--hour 11
+--Z_s_rad -0.2765
+--status
+--sun
+--beta_rad 0.26
+--S
+--beta_rad 0.30
+--S
+--beta_rad 0.35
+--S
+--beta_rad 0.40
+--S
+--beta_rad 0.43
+--S
+--beta_rad 0.44
+--S
+--beta_rad 0.45
+--S
+--beta_rad 0.46
+--S
+--beta_rad 0.47
+--S
+--beta_rad 0.48
+--S
+--beta_rad 0.50
+--S
+--beta_rad 0.55
+--S
+--beta_rad 0.60
+--S
+--beta_rad 0.65
+--S
+--beta_rad 0.70
+--S
+--beta_rad 0.75
+--S
+--beta_rad 0.80
+--S
+--beta_rad 0.85
+--S
+--beta_rad 0.90
+--S
+--beta_rad 0.95
+--S
+--beta_rad 1.00
+--S
+--beta_rad 1.05
+--S
+--beta_rad 1.10
+--S
+--beta_rad 1.15
+--S
+--beta_rad 1.20
+--S
+--beta_rad 1.25
+--S
+--beta_rad 1.30
+--S
+--beta_rad 1.35
+--S
+--beta_rad 1.40
+--S
+--beta_rad 1.45
+--S
+--beta_rad 1.50
+--S
