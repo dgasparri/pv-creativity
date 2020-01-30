@@ -35,7 +35,7 @@ double compute_theta_r(double theta_rad, double n_refraction_index) {
 
 
 pure double compute_theta_e_D(double beta_rad) {
-	return 59.68-0.1388 * beta_rad + 0.001497 * std::pow(beta_rad, 2);
+	return (59.68 - 0.1388 * (beta_rad / M_PI * 180) + 0.001497 * std::pow((beta_rad / M_PI * 180), 2)) / 180 * M_PI;
 }
 
 //Eq. 9n
