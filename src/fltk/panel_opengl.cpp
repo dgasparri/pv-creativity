@@ -104,13 +104,17 @@ namespace panel_opengl {
          //glBegin(GL_LINE_LOOP);
          glBegin(GL_TRIANGLES);
             // glColor3f(1.0, 1.0, 1.0);
-            float t = 0.5;
-            float dt = 0.2; //(era 0.05)
+            
+            float t = 0.05;
+            float dt = 0.05;
+            // cambiato il 7.2.2020, prima era:
+            // float t = 0.5;
+            // float dt = 0.2; //(era 0.05)
             float color;
             
 			
             for(geometry::vertex *v: vertices) {
-               std::cout<<"x: "<<v->x<<"Y: "<<v->y<<"Z: "<<v->z<<std::endl;
+               std::cout<<"x--: "<<v->x<<"Y: "<<v->y<<"Z: "<<v->z<<std::endl;
                t+=dt;
                color = 0.5 + 0.3 * sin(t);
                glColor3f(color, color, color);
@@ -180,9 +184,13 @@ namespace panel_opengl {
       static double t= 0.0;
       double dt=0.001,r=5.0,x,y;
       static double angle = 0.0;
-      angle += 0.07;
+      angle += 0.05;
+      //Cambiato 7.2.2020, prima era:
+      // angle += 0.07;
       //Sleep(1000);
-      dt=0.1;      
+      dt=0.001; 
+      // cambiato 7.2.2020, prima era:
+      // dt=0.1;      
       t+=dt;
       x= r*cos(t); y= r*sin(t);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -196,7 +204,8 @@ namespace panel_opengl {
 	  yy = cursorPos.y;
       
 	  //Add positioned light
-	 /* GLfloat lightColor0[] = { 0.5f, 0.5f, 0.5f, 1.0f }; //Color (0.5, 0.5, 0.5)
+     //Tolto commento il 7.2.2020
+	  GLfloat lightColor0[] = { 0.5f, 0.5f, 0.5f, 1.0f }; //Color (0.5, 0.5, 0.5)
 	  GLfloat lightPos0[] = { 10.0f, -100.0f, 8.0f, 1.0f }; //Positioned at (4, 0, 8)
 	  glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
 	  glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
@@ -207,7 +216,7 @@ namespace panel_opengl {
 	  GLfloat lightPos1[] = { -1.0f, 0.5f, 0.5f, 0.0f };
 	  glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
 	  glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
-	  */
+	
 
 
       //gluLookAt(10*sin(t), 10*cos(t), 0, 0, 0, 0, 0, 0, 1);
@@ -217,7 +226,8 @@ namespace panel_opengl {
 	  
 		 //glRotatef(-yy*0.5f, 0.0f, 1.0f, 0.0f);
          glRotatef(xx*0.5f,0.0,0.0,-1.0);
-         glTranslatef(0,-2.5,0);
+         // Commentato il 7.2.2020
+         // glTranslatef(0,-2.5,0);
          
 		
 
@@ -227,12 +237,14 @@ namespace panel_opengl {
 
 	glEnd();
 	
-         //glTranslated(0,0,0);
+         // Tolto il commento il 7.2.2020
+         glTranslated(0,0,0);
          //glRotated(t*180/3.1415927,t*180/3.1415927,0,1);
          //Riempe i triangoli di colore
 
 
-         glPolygonMode(	GL_FRONT_AND_BACK, GL_FILL);
+         // Commentato il 7.2.2020
+         // glPolygonMode(	GL_FRONT_AND_BACK, GL_FILL);
          //Disegna semplicemente le linee ma non riempe i triangoli
          //glLineWidth(1.0);
          //glPolygonMode(	GL_FRONT_AND_BACK, GL_LINE);

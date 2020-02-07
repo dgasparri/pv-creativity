@@ -36,15 +36,18 @@ protected:
   Fl_Button *openfile;
 private:
   inline void cb_compute_i(Fl_Button*, void*);
+  inline void cb_compute_plot(Fl_Button*, void*);
   static void cb_compute(Fl_Button*, void*);
+  static void cb_computePlot(Fl_Button*, void*);
 public:
   Fl_Value_Input *N;
   Fl_Value_Input *minutes;
   Fl_Value_Input *Z_S;
   Fl_Value_Input *n;
-  Fl_Value_Input *K;
+  Fl_Value_Input *K_;
   PanelView *panel;
   Fl_Text_Display *results;
+  Fl_Text_Buffer* buff;
   void show(int argc, char **argv);
 };
 #endif

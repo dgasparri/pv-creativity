@@ -15,9 +15,9 @@ using namespace std;
 
 
 PanelView   *opengl_box;
-Fl_Text_Buffer* resultsBuffer;
+// Fl_Text_Buffer* resultsBuffer;
 PVCreativityUI* fltk_window;
-
+// std::vector<geometry::vertex*> vertices;
 
 
 void idle_cb(void*)
@@ -26,13 +26,14 @@ void idle_cb(void*)
 	opengl_box->redraw();
 }
 
+
 void init(std::vector<geometry::vertex*> vertices)
 {
 	opengl_box = fltk_window->panel;
 	opengl_box->setVertices(vertices);
 
-	resultsBuffer = new Fl_Text_Buffer();
-	fltk_window->results->buffer(resultsBuffer);
+	//resultsBuffer = new Fl_Text_Buffer();
+	//fltk_window->results->buffer(resultsBuffer);
 
 	std::vector<geometry::triangle> triangles;
 	triangles.reserve(vertices.size() / 3 + 1);
@@ -43,39 +44,38 @@ void init(std::vector<geometry::vertex*> vertices)
 
 char** args = NULL;
 int main(int argc, char **argv) {
-	std::vector<geometry::vertex*> vertices;
+	
 	string nomeFile = "";
 	args = argv;
 
 	if (nomeFile == "" )
 	{
 
-	   nomeFile = "./trianglesCirc2.csv";
+	  // nomeFile = "./trianglesCirc2.csv";
 
 		
 	}
 
-	std::cout << " Nome: " << nomeFile;
-    vertices = panel_io::load_vertices(nomeFile);
+	//std::cout << " Nome: " << nomeFile;
+    //vertices = panel_io::load_vertices(nomeFile);
 
 	fltk_window = new PVCreativityUI();
 	opengl_box = fltk_window->panel;
-	opengl_box->setVertices(vertices);
+	//opengl_box->setVertices(vertices);
 
-	resultsBuffer = new Fl_Text_Buffer();
-	fltk_window->results->buffer(resultsBuffer);
+	//resultsBuffer = new Fl_Text_Buffer();
+	//fltk_window->results->buffer(resultsBuffer);
 	fltk_window->show(1, args);
 
-	std::vector<geometry::triangle> triangles;
-	triangles.reserve(vertices.size() / 3 + 1);
+	//std::vector<geometry::triangle> triangles;
+	//triangles.reserve(vertices.size() / 3 + 1);
 	//Checks for 3 available vertices
-	for (int i = 0; i + 2 < vertices.size(); i += 3) {
-		triangles.emplace_back(geometry::triangle(*vertices[i], *vertices[i + 1], *vertices[i + 2]));
-		geometry::plane pl = geometry::fplane(*vertices[i], *vertices[i + 1], *vertices[i + 2]);
-	}
+	//for (int i = 0; i + 2 < vertices.size(); i += 3) {
+	//	triangles.emplace_back(geometry::triangle(*vertices[i], *vertices[i + 1], *vertices[i + 2]));
+	//	geometry::plane pl = geometry::fplane(*vertices[i], *vertices[i + 1], *vertices[i + 2]);
+	//}
 
 	Fl::add_idle(idle_cb, 0);
-	Fl::run();
-	return 1;
+	return(Fl::run());
 }
 
