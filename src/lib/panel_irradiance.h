@@ -1,7 +1,7 @@
 #include "../global.h"
 #include "../lib/panel_io.h"
 #include "../lib/sun_fp.h"
-#include "../lib/sun_panel_fp.h"
+// #include "../lib/sun_panel_fp.h"
 #include "../lib/geometry_fp.h"
 #include <algorithm>
 #include <cmath>

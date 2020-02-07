@@ -9,10 +9,10 @@
 #include <algorithm>
 */
 // #include "fltk/PanelView.h"
-#include "fltk/PVCreativityUI.h"
+#include "fltk/fltk_window.h"
 
 
-PVCreativityUI* fltk_window;
+fltk_window* fltk_window;
 
 
 void idle_cb(void*)
@@ -34,7 +34,7 @@ void init(std::vector<geometry::vertex*> vertices)
 
 int main(int argc, char **argv) {
 
-	fltk_window = new PVCreativityUI();
+	fltk_window = new fltk_window();
 	fltk_window->show(1, argv);
 	Fl::add_idle(idle_cb, 0);
 	return(Fl::run());

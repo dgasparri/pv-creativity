@@ -23,22 +23,7 @@
 #include "fltk_actions.h"
 
 
-std::string nf = "";
 
-std::string nomeFile;
-
-
-
-
-namespace patch
-{
-	template < typename T > std::string to_string(const T& n)
-	{
-		std::ostringstream stm;
-		stm << n;
-		return stm.str();
-	}
-}
 
 
 void fltk_window::cb_compute(Fl_Button* o, void* v) 

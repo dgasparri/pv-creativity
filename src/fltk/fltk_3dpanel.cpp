@@ -1,4 +1,4 @@
-#include "PanelView.h"
+#include "fltk_3dpanel.h"
 #include "../lib/panel_io.h"
 
 
@@ -18,10 +18,13 @@ fltk_3dpanel::fltk_3dpanel(int x, int y, int w, int h, const char* l)
 
 void fltk_3dpanel::set_vertices(const std::vector<geometry::vertex *>& v) {
     if(!vertices.empty()) {
-        std::for_each(vertices.begin(), vertices.end(), [](geometry::vertex *v){ delete v;});
-        std::for_each(triangles.begin(), triangles.end(), [](geometry::triangle *t){ delete t;});
+		for(geometry::vertex *v : vertices) {
+			delete v;
+		}
+        //std::for_each(vertices.begin(), vertices.end(), [](){ });
+        //std::for_each(triangles.begin(), triangles.end(), [](geometry::triangle *t){ delete t;});
         vertices.clear();
-        triangles.clear();
+        //triangles.clear();
     }
 	std::cout << "Numero vertici: " << v.size() << std::endl;
 	vertices = v;
