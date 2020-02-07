@@ -142,14 +142,16 @@ int main(int argc, char **argv) {
     		);
 
 			std::cout << "Sun position_in_sky:" << std::endl;
-			std::cout << " alpha_rad : " << pos->alpha_rad << std::endl;  
-			std::cout << " z_rad     : " << pos->z_rad << std::endl; 
-			std::cout << " h_rad     : " << pos->h_rad << std::endl;  
-			std::cout << " h_ss_rad  : " << pos->h_ss_rad << std::endl;  
-			std::cout << " delta_rad : " << pos->delta_rad << std::endl;  
-			std::cout << " cos_Phi   : " << pos->cos_Phi << std::endl;  
-			std::cout << " m         : " << pos->m << std::endl;  
-			std::cout << " valid     : " << pos->valid << std::endl;  
+			std::cout << " alpha_rad  : " << pos->alpha_rad << " (" << (pos->alpha_rad / M_PI * 180) << " degree)" std::endl;  
+			std::cout << " z_rad      : " << pos->z_rad << " (" << (pos->z_rad / M_PI * 180) << " degree)" std::endl;  
+			std::cout << " h_rad      : " << pos->h_rad << " (" << (pos->h_rad / M_PI * 180) << " degree)" std::endl;  
+			std::cout << " h_ss_rad   : " << pos->h_ss_rad << " (" << (pos->h_ss_rad / M_PI * 180) << " degree)" std::endl;  
+			std::cout << " delta_rad  : " << pos->delta_rad << " (" << (pos->delta_rad / M_PI * 180) << " degree)" std::endl;  
+			std::cout << " cos_Phi    : " << pos->cos_Phi << std::endl;  
+			std::cout << " m          : " << pos->m << std::endl; 
+			std::cout << " pm_beta_rad: " << (M_PI /2 - post->alpha_rad) << " (" << ((M_PI /2 - post->alpha_rad) / M_PI * 180) << " degree)" std::endl;  
+			std::cout << " pm_Z_S_rad : " << (M_PI /2 - post->z_rad) << " (" << (post->z_rad / M_PI * 180) << " degree)" std::endl;  
+			std::cout << " valid      : " << pos->valid << std::endl;  
 		}
 
 		if (vm.count("default")) {

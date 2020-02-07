@@ -1,0 +1,42 @@
+﻿Build started 31/01/2020 00:17:39.
+     1>Project "C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.vcxproj" on node 2 (Rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Release\test-graph.tlog\test-graph.lastbuildstate".
+     1>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+       InitializeBuildStatus:
+         Creating "Release\test-graph.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+       VcpkgTripletSelection:
+         Using triplet "x86-windows" from "C:\Users\dmg\C++\vcpkg\installed\x86-windows\"
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\bin\HostX86\x86\CL.exe /c /I"C:\Users\dmg\C++\vcpkg\installed\x86-windows\include" /Zi /nologo /W3 /WX- /diagnostics:column /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc142.pdb" /Gd /TP /analyze- /FC /errorReport:prompt ..\src\lib\irradiance_fp.cpp ..\src\lib\panel_irradiance.cpp ..\src\lib\sun_fp.cpp "test-graph.cpp"
+         irradiance_fp.cpp
+         panel_irradiance.cpp
+         sun_fp.cpp
+         test-graph.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\bin\HostX86\x86\link.exe /ERRORREPORT:PROMPT /OUT:".\bin\test-graph.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\dmg\C++\vcpkg\installed\x86-windows\lib" /LIBPATH:"C:\Users\dmg\C++\vcpkg\installed\x86-windows\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "C:\Users\dmg\C++\vcpkg\installed\x86-windows\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:".\bin\test-graph.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\bin\test-graph.lib" /MACHINE:X86 /SAFESEH Release\irradiance_fp.obj
+         Release\panel_irradiance.obj
+         Release\sun_fp.obj
+         "Release\test-graph.obj"
+         Generating code
+         Previous IPDB not found, fall back to full compilation.
+         All 179 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+         Finished generating code
+         test-graph.vcxproj -> C:\Users\dmg\C++\repos\pv-creativity\test-graph\.\bin\test-graph.exe
+       AppLocalFromInstalled:
+         C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -noprofile -File "C:\Users\dmg\C++\vcpkg\scripts\buildsystems\msbuild\applocal.ps1" "C:\Users\dmg\C++\repos\pv-creativity\test-graph\.\bin\test-graph.exe" "C:\Users\dmg\C++\vcpkg\installed\x86-windows\bin" "Release\test-graph.tlog\test-graph.write.1u.tlog" "Release\vcpkg.applocal.log"
+       FinalizeBuildStatus:
+         Deleting file "Release\test-graph.tlog\unsuccessfulbuild".
+         Touching "Release\test-graph.tlog\test-graph.lastbuildstate".
+     1>Done Building Project "C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+       "C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.vcxproj" (Rebuild target) (1) ->
+       (PrepareForBuild target) -> 
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+
+    1 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:04.54
