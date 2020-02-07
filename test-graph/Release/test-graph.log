@@ -1,42 +1,105 @@
-﻿Build started 31/01/2020 00:17:39.
-     1>Project "C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.vcxproj" on node 2 (Rebuild target(s)).
-     1>_PrepareForClean:
-         Deleting file "Release\test-graph.tlog\test-graph.lastbuildstate".
-     1>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-       InitializeBuildStatus:
-         Creating "Release\test-graph.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+﻿Build started 07/02/2020 23:22:12.
+Logging verbosity is set to: Normal.     1>Project "C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.vcxproj" on node 2 (Build target(s)).
+     1>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(445,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+     1>InitializeBuildStatus:
+         Touching "Release\test-graph.tlog\unsuccessfulbuild".
        VcpkgTripletSelection:
          Using triplet "x86-windows" from "C:\Users\dmg\C++\vcpkg\installed\x86-windows\"
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\bin\HostX86\x86\CL.exe /c /I"C:\Users\dmg\C++\vcpkg\installed\x86-windows\include" /Zi /nologo /W3 /WX- /diagnostics:column /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc142.pdb" /Gd /TP /analyze- /FC /errorReport:prompt ..\src\lib\irradiance_fp.cpp ..\src\lib\panel_irradiance.cpp ..\src\lib\sun_fp.cpp "test-graph.cpp"
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\bin\HostX86\x86\CL.exe /c /I"C:\Users\dmg\C++\vcpkg\installed\x86-windows\include" /Zi /nologo /W3 /WX- /diagnostics:column /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc142.pdb" /Gd /TP /analyze- /FC /errorReport:prompt ..\src\lib\irradiance_fp.cpp ..\src\lib\panel_irradiance.cpp ..\src\lib\sun_fp.cpp "test-graph.cpp"
          irradiance_fp.cpp
          panel_irradiance.cpp
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(24,43): error C2653: 'irradiance': is not a class or namespace name
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(24,31): error C3861: 'compute_G_on': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(25,43): error C2653: 'irradiance': is not a class or namespace name
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(25,31): error C3861: 'compute_G_oH': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(27,49): error C2653: 'irradiance': is not a class or namespace name
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(27,34): error C3861: 'compute_H_o_rad': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(28,41): error C2653: 'irradiance': is not a class or namespace name
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(28,30): error C3861: 'compute_H_o': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(29,51): error C2653: 'irradiance': is not a class or namespace name
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(29,35): error C3861: 'compute_r_ground': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(30,37): error C2653: 'irradiance': is not a class or namespace name
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(30,28): error C3861: 'compute_H': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(31,37): error C2653: 'irradiance': is not a class or namespace name
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(31,28): error C3861: 'compute_r': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(32,37): error C2653: 'irradiance': is not a class or namespace name
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(32,28): error C3861: 'compute_G': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(33,41): error C2653: 'irradiance': is not a class or namespace name
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(33,30): error C3861: 'compute_G_B': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(34,41): error C2653: 'irradiance': is not a class or namespace name
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(34,30): error C3861: 'compute_G_D': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(37,24): error C3861: 'compute_cos_theta': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(38,18): error C3861: 'compute_R_B': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(39,16): error C3861: 'compute_M': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(40,22): error C3861: 'compute_theta_r': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(41,24): error C3861: 'compute_theta_e_D': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(42,25): error C3861: 'compute_taualpha_B': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(43,25): error C3861: 'compute_taualpha_D': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(44,25): error C3861: 'compute_taualpha_n': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(45,24): error C3861: 'compute_K_theta_B': identifier not found
+     1>C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(46,24): error C3861: 'compute_K_theta_D': identifier not found
          sun_fp.cpp
          test-graph.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\bin\HostX86\x86\link.exe /ERRORREPORT:PROMPT /OUT:".\bin\test-graph.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\dmg\C++\vcpkg\installed\x86-windows\lib" /LIBPATH:"C:\Users\dmg\C++\vcpkg\installed\x86-windows\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "C:\Users\dmg\C++\vcpkg\installed\x86-windows\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:".\bin\test-graph.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\bin\test-graph.lib" /MACHINE:X86 /SAFESEH Release\irradiance_fp.obj
-         Release\panel_irradiance.obj
-         Release\sun_fp.obj
-         "Release\test-graph.obj"
-         Generating code
-         Previous IPDB not found, fall back to full compilation.
-         All 179 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-         Finished generating code
-         test-graph.vcxproj -> C:\Users\dmg\C++\repos\pv-creativity\test-graph\.\bin\test-graph.exe
-       AppLocalFromInstalled:
-         C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -noprofile -File "C:\Users\dmg\C++\vcpkg\scripts\buildsystems\msbuild\applocal.ps1" "C:\Users\dmg\C++\repos\pv-creativity\test-graph\.\bin\test-graph.exe" "C:\Users\dmg\C++\vcpkg\installed\x86-windows\bin" "Release\test-graph.tlog\test-graph.write.1u.tlog" "Release\vcpkg.applocal.log"
-       FinalizeBuildStatus:
-         Deleting file "Release\test-graph.tlog\unsuccessfulbuild".
-         Touching "Release\test-graph.tlog\test-graph.lastbuildstate".
-     1>Done Building Project "C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.vcxproj" (Rebuild target(s)).
+     1>C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(146,31): error C2065: 'n_refraction_index': undeclared identifier
+     1>C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(147,14): error C2065: 'K': undeclared identifier
+     1>C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(148,22): error C2065: 'thickness': undeclared identifier
+     1>C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(149,15): error C2065: 'alpha_0': undeclared identifier
+     1>C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(150,15): error C2065: 'alpha_1': undeclared identifier
+     1>C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(151,15): error C2065: 'alpha_2': undeclared identifier
+     1>C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(152,15): error C2065: 'alpha_3': undeclared identifier
+     1>C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(153,15): error C2065: 'alpha_4': undeclared identifier
+     1>Done Building Project "C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-       "C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.vcxproj" (Rebuild target) (1) ->
+       "C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.vcxproj" (Build target) (1) ->
        (PrepareForBuild target) -> 
-         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(445,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+
+
+       "C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.vcxproj" (Build target) (1) ->
+       (ClCompile target) -> 
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(24,43): error C2653: 'irradiance': is not a class or namespace name
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(24,31): error C3861: 'compute_G_on': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(25,43): error C2653: 'irradiance': is not a class or namespace name
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(25,31): error C3861: 'compute_G_oH': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(27,49): error C2653: 'irradiance': is not a class or namespace name
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(27,34): error C3861: 'compute_H_o_rad': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(28,41): error C2653: 'irradiance': is not a class or namespace name
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(28,30): error C3861: 'compute_H_o': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(29,51): error C2653: 'irradiance': is not a class or namespace name
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(29,35): error C3861: 'compute_r_ground': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(30,37): error C2653: 'irradiance': is not a class or namespace name
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(30,28): error C3861: 'compute_H': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(31,37): error C2653: 'irradiance': is not a class or namespace name
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(31,28): error C3861: 'compute_r': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(32,37): error C2653: 'irradiance': is not a class or namespace name
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(32,28): error C3861: 'compute_G': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(33,41): error C2653: 'irradiance': is not a class or namespace name
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(33,30): error C3861: 'compute_G_B': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(34,41): error C2653: 'irradiance': is not a class or namespace name
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(34,30): error C3861: 'compute_G_D': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(37,24): error C3861: 'compute_cos_theta': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(38,18): error C3861: 'compute_R_B': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(39,16): error C3861: 'compute_M': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(40,22): error C3861: 'compute_theta_r': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(41,24): error C3861: 'compute_theta_e_D': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(42,25): error C3861: 'compute_taualpha_B': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(43,25): error C3861: 'compute_taualpha_D': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(44,25): error C3861: 'compute_taualpha_n': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(45,24): error C3861: 'compute_K_theta_B': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\src\lib\panel_irradiance.cpp(46,24): error C3861: 'compute_K_theta_D': identifier not found
+         C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(146,31): error C2065: 'n_refraction_index': undeclared identifier
+         C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(147,14): error C2065: 'K': undeclared identifier
+         C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(148,22): error C2065: 'thickness': undeclared identifier
+         C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(149,15): error C2065: 'alpha_0': undeclared identifier
+         C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(150,15): error C2065: 'alpha_1': undeclared identifier
+         C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(151,15): error C2065: 'alpha_2': undeclared identifier
+         C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(152,15): error C2065: 'alpha_3': undeclared identifier
+         C:\Users\dmg\C++\repos\pv-creativity\test-graph\test-graph.cpp(153,15): error C2065: 'alpha_4': undeclared identifier
 
     1 Warning(s)
-    0 Error(s)
+    38 Error(s)
 
-Time Elapsed 00:00:04.54
+Time Elapsed 00:00:01.53

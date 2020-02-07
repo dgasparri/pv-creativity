@@ -30,6 +30,10 @@ void fltk_3dpanel::set_vertices(const std::vector<geometry::vertex *>& v) {
 	vertices = v;
 }
 
+std::vector<geometry::vertex *>& fltk_3dpanel::get_vertices() {
+	return vertices;
+}
+
 
 
 

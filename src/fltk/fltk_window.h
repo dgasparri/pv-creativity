@@ -12,10 +12,11 @@
 extern int  arg;
 extern char** args;
 
-class fltk_window {
+
+class fltk_window_t {
 
 public:
-  fltk_window();
+  fltk_window_t();
 protected:
   Fl_Double_Window *window;
 public:
@@ -45,3 +46,4 @@ public:
   void show(int argc, char **argv);
 };
 
+extern fltk_window_t* fltk_window;

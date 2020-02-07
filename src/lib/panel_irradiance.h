@@ -1,10 +1,13 @@
+#pragma once
 #include "../global.h"
-#include "../lib/panel_io.h"
-#include "../lib/sun_fp.h"
-// #include "../lib/sun_panel_fp.h"
-#include "../lib/geometry_fp.h"
 #include <algorithm>
 #include <cmath>
+
+#include "panel_io.h"
+#include "sun_fp.h"
+#include "irradiance_fp.h"
+// #include "../lib/sun_panel_fp.h"
+#include "geometry_fp.h"
 
 
 namespace panel_irradiance {

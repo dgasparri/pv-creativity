@@ -34,16 +34,16 @@ const double panel_irradiance::compute_S(
     double G_D = irradiance::compute_G_D(G, pos->h_rad, pos->h_ss_rad);
 
 
-    double cos_theta = compute_cos_theta(L_rad, beta_rad, Z_S_rad, pos->delta_rad, pos->h_rad);
-    double R_B = compute_R_B(cos_theta, pos->cos_Phi);
-    double M = compute_M(pos->m, a0, a1, a2, a3, a4);
-    double theta_r = compute_theta_r(acos(cos_theta), n_refraction_index);
-    double theta_e_D = compute_theta_e_D(beta_rad);
-    double taualpha_B = compute_taualpha_B(K, thickness, theta_r, acos(cos_theta));
-    double taualpha_D = compute_taualpha_D(K, thickness, theta_r, theta_e_D);
-    double taualpha_n = compute_taualpha_n(K, thickness, n_refraction_index);
-    double K_theta_B = compute_K_theta_B(taualpha_B, taualpha_n);
-    double K_theta_D = compute_K_theta_D(taualpha_D, taualpha_n);
+    double cos_theta = irradiance::compute_cos_theta(L_rad, beta_rad, Z_S_rad, pos->delta_rad, pos->h_rad);
+    double R_B = irradiance::compute_R_B(cos_theta, pos->cos_Phi);
+    double M = irradiance::compute_M(pos->m, a0, a1, a2, a3, a4);
+    double theta_r = irradiance::compute_theta_r(acos(cos_theta), n_refraction_index);
+    double theta_e_D = irradiance::compute_theta_e_D(beta_rad);
+    double taualpha_B = irradiance::compute_taualpha_B(K, thickness, theta_r, acos(cos_theta));
+    double taualpha_D = irradiance::compute_taualpha_D(K, thickness, theta_r, theta_e_D);
+    double taualpha_n = irradiance::compute_taualpha_n(K, thickness, n_refraction_index);
+    double K_theta_B = irradiance::compute_K_theta_B(taualpha_B, taualpha_n);
+    double K_theta_D = irradiance::compute_K_theta_D(taualpha_D, taualpha_n);
     double S_B = taualpha_n * M * G_B * R_B * K_theta_B;
     double S_D = taualpha_n * M *  G_D * K_theta_D * ((1-cos(beta_rad))/2);
     double S = S_B + S_D;

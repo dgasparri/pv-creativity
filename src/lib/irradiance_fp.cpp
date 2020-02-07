@@ -4,7 +4,7 @@
 
 
 //Eq. 4n
-pure double compute_cos_theta(double L_rad, double beta_rad, double Z_S_rad, double delta_rad, double h_rad) {
+pure double irradiance::compute_cos_theta(double L_rad, double beta_rad, double Z_S_rad, double delta_rad, double h_rad) {
 	return sin(L_rad) * sin(delta_rad) * cos(beta_rad)
 		- cos(L_rad) * sin(delta_rad) * sin(beta_rad) * cos(Z_S_rad)
 		+ cos(L_rad) * cos(delta_rad) * cos(h_rad) * cos(beta_rad)
@@ -13,13 +13,13 @@ pure double compute_cos_theta(double L_rad, double beta_rad, double Z_S_rad, dou
 }
 
 //Eq. 5n
-double compute_R_B(double cos_theta, double cos_Phi) {
+double irradiance::compute_R_B(double cos_theta, double cos_Phi) {
 	return cos_theta / cos_Phi;
 }
 
 
 //Eq. 7n
-double compute_M(double m, double a0, double a1, double a2, double a3, double a4) {
+double irradiance::compute_M(double m, double a0, double a1, double a2, double a3, double a4) {
 	return a0
 		+ a1 * m
 		+ a2 * pow(m, 2)
@@ -29,17 +29,17 @@ double compute_M(double m, double a0, double a1, double a2, double a3, double a4
 
 //Eq. 8n
 //Glass refraction index = 1.526
-double compute_theta_r(double theta_rad, double n_refraction_index) {
+double irradiance::compute_theta_r(double theta_rad, double n_refraction_index) {
 	return asin(sin(theta_rad) / n_refraction_index);
 }
 
 
-pure double compute_theta_e_D(double beta_rad) {
+pure double irradiance::compute_theta_e_D(double beta_rad) {
 	return (59.68 - 0.1388 * (beta_rad / M_PI * 180) + 0.001497 * std::pow((beta_rad / M_PI * 180), 2)) / 180 * M_PI;
 }
 
 //Eq. 9n
-double compute_taualpha_B(double K, double thickness, double theta_r, double theta) {
+double irradiance::compute_taualpha_B(double K, double thickness, double theta_r, double theta) {
 	double theta_diff = theta_r - theta;
 	double theta_sum = theta_r + theta;
 	double inner_square_brakes = pow(sin(theta_diff) / sin(theta_sum), 2)
@@ -49,22 +49,22 @@ double compute_taualpha_B(double K, double thickness, double theta_r, double the
 	return exp(exponent) * curly_brakets;
 }
 
-pure double compute_taualpha_D(double K, double thickness, double theta_r, double theta_e_D) {
+pure double irradiance::compute_taualpha_D(double K, double thickness, double theta_r, double theta_e_D) {
 	return compute_taualpha_B(K, thickness, theta_r, theta_e_D);
 }
 
 // Eq. 10n
-double compute_taualpha_n(double K, double thickness, double n_refraction_index) {
+double irradiance::compute_taualpha_n(double K, double thickness, double n_refraction_index) {
 	double fraction_n = pow((n_refraction_index - 1) / (n_refraction_index + 1), 2);
 	return exp(-1 * K * thickness) * (1 - fraction_n);
 }
 
 //Eq. 11n
-double compute_K_theta_B(double taualpha_B, double taualpha_N) {
+double irradiance::compute_K_theta_B(double taualpha_B, double taualpha_N) {
 	return taualpha_B / taualpha_N;
 }
 
-double compute_K_theta_D(double taualpha_D, double taualpha_N) {
+double irradiance::compute_K_theta_D(double taualpha_D, double taualpha_N) {
 	return taualpha_D / taualpha_N;
 }
 

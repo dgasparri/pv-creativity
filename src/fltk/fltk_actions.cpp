@@ -41,18 +41,19 @@ void fltk_actions::calcola(
 
 
     double L_rad = l_L_deg * M_PI / 180;
+
 	
     //std::cout << " SIZE VERTEXS DENTRO A CALCOLIAMUS: " << vertices.size();
 	//definisco il file di testo  
-	ofstream myfile;
-	nf = "";
+	std::ofstream myfile;
+	std::string nf = "";
 	myfile.open("buffer-data.txt");
 
-
+	std::vector<geometry::vertex *> vertices = fltk_window->panel->get_vertices();
 	std::vector<geometry::triangle> triangles;
 	triangles.reserve(vertices.size() / 3 + 1);
 	//Checks for 3 available vertices
-	for (int i = 0; i + 2 < vertices.size(); i += 3) {
+	for (int i = 0; i + 2 < (int) vertices.size(); i += 3) {
 		triangles.emplace_back(geometry::triangle(*vertices[i], *vertices[i + 1], *vertices[i + 2]));
 		geometry::plane pl = geometry::fplane(*vertices[i], *vertices[i + 1], *vertices[i + 2]);
 	}
@@ -64,8 +65,6 @@ void fltk_actions::calcola(
 		for (int j = 0; j < 24; j++)
 		{
 			//definisco posizione sole
-
-			L_rad = L->value();
 
 			int h = 720 - j * 60;
 			const pv_sun::position_in_sky* pos = pv_sun::sun(

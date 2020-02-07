@@ -19,6 +19,7 @@ public:
 
 	fltk_3dpanel(int x, int y, int w, int h, const char* l = 0);
 	void set_vertices(const std::vector<geometry::vertex *>& vertices);
+	std::vector<geometry::vertex *>& get_vertices();
 };
 
 

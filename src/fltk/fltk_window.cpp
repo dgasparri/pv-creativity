@@ -26,23 +26,23 @@
 
 
 
-void fltk_window::cb_compute(Fl_Button* o, void* v) 
+void fltk_window_t::cb_compute(Fl_Button* o, void* v) 
 {
 	fltk_actions::calcola(
-		  L->value(), //Lat degrees
-		  K_->value(), 
-		  n->value(), //Refraction index
-		  thickness_L->value(), 
-		  buff);
+		  fltk_window->L->value(), //Lat degrees
+		  fltk_window->K_->value(), 
+		  fltk_window->n->value(), //Refraction index
+		  fltk_window->thickness_L->value(), 
+		  fltk_window->buff);
   //((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);
 }
-void fltk_window::cb_plot(Fl_Button* o, void* v) {
-	PlotIT();
+void fltk_window_t::cb_plot(Fl_Button* o, void* v) {
+	fltk_actions::PlotIT();
 	//((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_plot(o, v);
 }
 
  
-fltk_window::fltk_window() {
+fltk_window_t::fltk_window_t() {
   { 
 		//double taualpha_n, double M, double G_B, double R_B, double K_theta_B
 
@@ -58,11 +58,11 @@ fltk_window::fltk_window() {
 			} // Fl_Value_Input* beta
 			{ 
 			  compute = new Fl_Button(660, 590, 195, 20, "Compute");
-			  compute->callback((Fl_Callback*)fltk_actions::cb_compute);
+			  compute->callback((Fl_Callback*)fltk_window_t::cb_compute);
 			}
 			{
 				compute = new Fl_Button(660, 550, 195, 20, "Plot It");
-				compute->callback((Fl_Callback*)fltk_actions::cb_plot);
+				compute->callback((Fl_Callback*)fltk_window_t::cb_plot);
 			}
 			{ 
 				thickness_L = new Fl_Value_Input(760, 150, 95, 23, "Glass Thickness");
@@ -108,7 +108,7 @@ fltk_window::fltk_window() {
   } 
 }
 
-void fltk_window::show(int argc, char **argv) {
+void fltk_window_t::show(int argc, char **argv) {
   this->window->show(argc,argv);
   // nomeFile = "C:/Users/andre/source/repos/Progetto/geometries/trianglesCirc2.csv";
   // panel->vertices = panel_io::load_vertices(nomeFile);
