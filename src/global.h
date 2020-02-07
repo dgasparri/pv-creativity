@@ -16,11 +16,6 @@
 #define G_SC_CONSTANT 1366.1  //W/m^2 
 #endif
 
-#include "fltk/PVCreativityUI.h"
-
-//FLTK
-PVCreativityUI* fltk_window;
-
 
 const double K = 4; // m^-1
 const double thickness = 0.002; 

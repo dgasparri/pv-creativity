@@ -1,15 +1,18 @@
+
+
 #include <windows.h>
 #include <FL/Fl.H>
-#include <FL/Fl_Double_Window.H>
+#include "global.h"
+/*#include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Text_Buffer.H>
 #define _USE_MATH_DEFINES
 #include <algorithm>
-
-#include "fltk/PanelView.h"
+*/
+// #include "fltk/PanelView.h"
 #include "fltk/PVCreativityUI.h"
 
 
-
+PVCreativityUI* fltk_window;
 
 
 void idle_cb(void*)
