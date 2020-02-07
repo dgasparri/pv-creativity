@@ -2,7 +2,7 @@
 #include "../lib/panel_io.h"
 
 
-PanelView::PanelView(int x, int y, int w, int h, const char* l) 
+fltk_3dpanel::fltk_3dpanel(int x, int y, int w, int h, const char* l) 
 	: Fl_Gl_Window(x, y, w, h, l) {
 		box(FL_EMBOSSED_BOX);
     	color(FL_BACKGROUND_COLOR);
@@ -16,7 +16,13 @@ PanelView::PanelView(int x, int y, int w, int h, const char* l)
 }
 
 
-void PanelView::setVertices(const std::vector<geometry::vertex *>& v) {
+void fltk_3dpanel::set_vertices(const std::vector<geometry::vertex *>& v) {
+    if(!vertices.empty()) {
+        std::for_each(vertices.begin(), vertices.end(), [](geometry::vertex *v){ delete v;});
+        std::for_each(triangles.begin(), triangles.end(), [](geometry::triangle *t){ delete t;});
+        vertices.clear();
+        triangles.clear();
+    }
 	std::cout << "Numero vertici: " << v.size() << std::endl;
 	vertices = v;
 }
@@ -26,7 +32,7 @@ void PanelView::setVertices(const std::vector<geometry::vertex *>& v) {
 
 
 
-void PanelView::draw() {
+void fltk_3dpanel::draw() {
 	if (!valid()) {
 
 		glClearColor(0.0, 0.0, 0.0, 1);                        // Turn the background color black

@@ -11,13 +11,14 @@
 
 
 
-class PanelView : public Fl_Gl_Window {
+class fltk_3dpanel : public Fl_Gl_Window {
 	void draw();
 	std::vector<geometry::vertex *> vertices;
+	std::vector<geometry::triangle *> triangles;
 public:
 
-	PanelView(int x, int y, int w, int h, const char* l = 0);
-	void setVertices(const std::vector<geometry::vertex *>& vertices);
+	fltk_3dpanel(int x, int y, int w, int h, const char* l = 0);
+	void set_vertices(const std::vector<geometry::vertex *>& vertices);
 };
 
 

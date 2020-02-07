@@ -22,9 +22,11 @@ void idle_cb(void*)
 }
 
 
+//IF IT WORKS, IT SHOULB BE ERASED - NOT CALLED ANYMORE
+//MAYBE IT MISSES THE Fl::add_idle
 void init(std::vector<geometry::vertex*> vertices)
 {
-	fltk_window->panel->setVertices(vertices);
+	fltk_window->panel->set_vertices(vertices);
 	Fl::add_idle(idle_cb, 0);
 }
 

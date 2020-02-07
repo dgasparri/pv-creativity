@@ -2,15 +2,18 @@
 #include <windows.h>
 #include <FL/Fl.H>
 #include "fltk_window.h"
-#include "fltk_3dpanel.h"
+
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Text_Buffer.H>
 #include <Fl/Fl_Text_Editor.H>
 #include <FL/Fl_File_Chooser.H>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <math.h>
+
+#include "../global.h"
+
+
+
+#include "fltk_3dpanel.h"
+
 
 #include "../lib/panel_io.h"
 #include "../lib/sun_fp.h"
@@ -19,23 +22,13 @@
 #include "../lib/panel_irradiance.h"
 #include "fltk_actions.h"
 
-using namespace std;
 
 std::string nf = "";
-double refraction_holder = 1.526;
-double thickness_holder  = 0.002;
-double K_holder          = 4;
-double L_rad             = 44 / 180 * M_PI;
 
-
-
-Fl_Value_Input* L_T;
-Fl_Value_Input* K_;
-Fl_Value_Input* n;
-Fl_Value_Input* L;
-
-std::vector<geometry::vertex*> vertices;
 std::string nomeFile;
+
+
+
 
 namespace patch
 {
@@ -46,18 +39,25 @@ namespace patch
 		return stm.str();
 	}
 }
-void PVCreativityUI::cb_compute(Fl_Button* o, void* v) {
-  
-  calcola(refraction_holder, thickness_holder, K_holder, buff, L_T, K_, n, L);
+
+
+void fltk_window::cb_compute(Fl_Button* o, void* v) 
+{
+	fltk_actions::calcola(
+		  L->value(), //Lat degrees
+		  K_->value(), 
+		  n->value(), //Refraction index
+		  thickness_L->value(), 
+		  buff);
   //((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);
 }
-void PVCreativityUI::cb_computePlot(Fl_Button* o, void* v) {
+void fltk_window::cb_plot(Fl_Button* o, void* v) {
 	PlotIT();
 	//((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_plot(o, v);
 }
 
  
-PVCreativityUI::PVCreativityUI() {
+fltk_window::fltk_window() {
   { 
 		//double taualpha_n, double M, double G_B, double R_B, double K_theta_B
 
@@ -68,38 +68,37 @@ PVCreativityUI::PVCreativityUI() {
             o->box(FL_THIN_UP_BOX);
 	        { 
 			  openfile = new Fl_Button(660, 50, 195, 20, "Segli File");
-			  openfile->callback((Fl_Callback*)open_input_file);
+			  openfile->callback((Fl_Callback*)fltk_actions::open_input_file);
 
 			} // Fl_Value_Input* beta
 			{ 
 			  compute = new Fl_Button(660, 590, 195, 20, "Compute");
-			  compute->callback((Fl_Callback*)cb_compute);
+			  compute->callback((Fl_Callback*)fltk_actions::cb_compute);
 			}
 			{
 				compute = new Fl_Button(660, 550, 195, 20, "Plot It");
-				compute->callback((Fl_Callback*)cb_computePlot);
+				compute->callback((Fl_Callback*)fltk_actions::cb_plot);
 			}
 			{ 
-				L_T = new Fl_Value_Input(760, 150, 95, 23, "Glass Thickness");
-				L_T->value(0.002);
+				thickness_L = new Fl_Value_Input(760, 150, 95, 23, "Glass Thickness");
+				thickness_L->value(global::thickness_L);
 				
 			}
 			{ 
-				K_ = new Fl_Value_Input(760, 210, 95, 23, "Fattore Kappa (K)");
+				K_ = new Fl_Value_Input(760, 210, 95, 23, "K");
 				K_->maximum(100);
-				K_->value(4);
+				K_->value(global::K);
 				
 			} 
 			{ 
 				n = new Fl_Value_Input(760, 180, 95, 23, "Refraction index");
 				n->maximum(10);
-				n->value(1.526);
+				n->value(global::n_refraction_index);
 				
 			}
 			{
 				L = new Fl_Value_Input(760, 240, 95, 23, "Latitude");
-				double lat = (44 / 180 * M_PI);
-				L->value(lat);
+				L->value(global::UniBo_Lat_deg);
 
 			}
 
@@ -108,7 +107,7 @@ PVCreativityUI::PVCreativityUI() {
 		 } // Fl_Group* o
 		{
 			
-		   panel = new PanelView(25, 25, 600, 600, "pframe");
+		   panel = new fltk_3dpanel(25, 25, 600, 600, "pframe");
       
 		 } // PanelView* panel
 		 {
@@ -124,8 +123,8 @@ PVCreativityUI::PVCreativityUI() {
   } 
 }
 
-void PVCreativityUI::show(int argc, char **argv) {
+void fltk_window::show(int argc, char **argv) {
   this->window->show(argc,argv);
-  nomeFile = "C:/Users/andre/source/repos/Progetto/geometries/trianglesCirc2.csv";
-  vertices = panel_io::load_vertices(nomeFile);
+  // nomeFile = "C:/Users/andre/source/repos/Progetto/geometries/trianglesCirc2.csv";
+  // panel->vertices = panel_io::load_vertices(nomeFile);
 }
