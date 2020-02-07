@@ -1,5 +1,5 @@
 #pragma once
-#include "../config.h"
+#include "../global.h"
 #include <functional>
 #include <cmath>
 #include <iostream>

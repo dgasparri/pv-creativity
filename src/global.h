@@ -4,15 +4,27 @@
 #define pure
 #endif
 
+#ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
-#define EQUAL_COORDINATES_EPSILON 0.00001
+#endif
 
+#ifndef EQUAL_COORDINATES_EPSILON
+#define EQUAL_COORDINATES_EPSILON 0.00001
+#endif
+
+#ifndef G_SC_CONSTANT
 #define G_SC_CONSTANT 1366.1  //W/m^2 
+#endif
+
+#include "fltk/PVCreativityUI.h"
+
+//FLTK
+PVCreativityUI* fltk_window;
+
 
 const double K = 4; // m^-1
-const double thickness = 0.002; // m la chiama L
+const double thickness = 0.002; 
 const double n_refraction_index = 1.526;
-//Monocristallino Tabella pg. 514
 const double alpha_0 = 0.935823;
 const double alpha_1 = 0.054289;
 const double alpha_2 = -0.008677;

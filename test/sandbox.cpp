@@ -1,4 +1,4 @@
-// #include "../src/config.h"
+// #include "../src/global.h"
 // #include "../src/lib/geometry_fp.h"
 
 #include <functional>

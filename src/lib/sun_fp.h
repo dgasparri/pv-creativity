@@ -1,7 +1,7 @@
 #pragma once
 #define pure
 
-#include "../config.h"
+#include "../global.h"
 
 #include <cmath>
 

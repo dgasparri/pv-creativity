@@ -5,8 +5,8 @@
 #include <FL/gl.h>
 #include <GL/glu.h>
 #include <functional>
-#include "../lib/geometry_fp.h"
-#include "panel_opengl.h"
+// #include "../lib/geometry_fp.h"
+// #include "panel_opengl.h"
 
 
 

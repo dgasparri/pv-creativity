@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "../src/config.h"
+#include "../src/global.h"
 #include "../src/lib/sun_fp.h"
 #include "../src/lib/panel_irradiance.h"
 

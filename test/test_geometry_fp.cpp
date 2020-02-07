@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../src/lib/geometry_fp.h"
-#include "../src/config.h"
+#include "../src/global.h"
 
 
 
