@@ -9,8 +9,8 @@
 #include <FL/Fl_Text_Display.H>
 #include "fltk_3dpanel.h"
 
-extern int  arg;
-extern char** args;
+// extern int  arg;
+// extern char** args; 
 
 
 class fltk_window_t {

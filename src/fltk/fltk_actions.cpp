@@ -1,17 +1,6 @@
 #include "fltk_actions.h"
 
 
-namespace patch
-{
-	template < typename T > std::string to_string(const T& n)
-	{
-		std::ostringstream stm;
-		stm << n;
-		return stm.str();
-	}
-}
-
-
 void fltk_actions::assign_file(Fl_File_Chooser* w, void* userdata)
 {
     auto filename = w->value();
@@ -97,7 +86,13 @@ void fltk_actions::calcola(
 				S += (S_temp / 3600);
 			}
 			//stampa informazioni
-			nf += std::string("GIORNO:") + patch::to_string(i)  + std::string(" ORA: ") + patch::to_string(j)  + std::string(" Rendimento: ")  + patch::to_string(S) + "\n";
+			nf += "GIORNO: ";
+			nf += std::to_string(i);
+			nf += " ORA: ";
+			nf += std::to_string(j);  
+			nf += " Rendimento: " ;
+			nf += std::to_string(S);
+			nf += "\n";
 			
 			char* chr = strdup(nf.c_str());
 			buff->text(chr);
