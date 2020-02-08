@@ -10,7 +10,7 @@ void fltk_actions::assign_file(Fl_File_Chooser* w, void* userdata)
 	fltk_window->panel->set_vertices(v); 
 
 	// init(vertices); 
-	panel_opengl::draw(v);
+	fltk_3dpanel_opengl::draw(v);
 }
 
 void fltk_actions::open_input_file()

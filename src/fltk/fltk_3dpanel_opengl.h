@@ -9,9 +9,8 @@
 #define CARTESIO  1
 #define PANEL  2
 
-//extern std::vector<geometry::vertex> vertices;
 
-namespace panel_opengl {
+namespace fltk_3dpanel_opengl {
     void draw(const std::vector<geometry::vertex *> &vertices);
     void update();
 }

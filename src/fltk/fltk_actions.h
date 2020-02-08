@@ -14,7 +14,7 @@
 #include "../lib/geometry_fp.h"
 #include "../lib/sun_fp.h"
 #include "../lib/panel_irradiance.h"
-#include "panel_opengl.h"
+#include "fltk_3dpanel_opengl.h"
 
 #include "../../pv-creativity/gnuplot.h"
 

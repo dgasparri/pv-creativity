@@ -42,7 +42,8 @@ std::vector<geometry::vertex *>& fltk_3dpanel::get_vertices() {
 void fltk_3dpanel::draw() {
 	if (!valid()) {
 
-		glClearColor(0.0, 0.0, 0.0, 1);                        // Turn the background color black
+		//glClearColor(0.0, 0.0, 0.0, 1);                        // Turn the background color black
+		glClearColor(1.0, 1.0, 1.0, 1);   //Agg. 8.2.2020 - background color white opaque
 		glViewport(0, 0, w(), h());                               // Make our viewport the whole window
 		glMatrixMode(GL_PROJECTION);                           // Select The Projection Matrix
 		glLoadIdentity();                                      // Reset The Projection Matrix
@@ -54,13 +55,15 @@ void fltk_3dpanel::draw() {
 		glLoadIdentity();                                      // Reset The View
 		//0,0, 10, 0, 0, 0, 0, 1, 0
 		gluLookAt(0, -15, 0, 0, 0, 0, 0, 0, 1);        // Position - View  - Up Vector
-		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST); //Agg. 8.2.2020
+		glDepthFunc(GL_LEQUAL);  //Agg. 8.2.2020
+		glShadeModel(GL_SMOOTH);
 
-		panel_opengl::draw(vertices);
+		fltk_3dpanel_opengl::draw(vertices);
 		valid(1);
 	}
 
-	panel_opengl::update();
+	fltk_3dpanel_opengl::update();
 }
 
 

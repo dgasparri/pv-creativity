@@ -1,4 +1,4 @@
-#include "panel_opengl.h"
+#include "fltk_3dpanel_opengl.h"
 #include "../lib/geometry_fp.h"
 #include <GL/glut.h>
 #include <FL/Fl.H>
@@ -17,7 +17,7 @@ using namespace std;
 //per gluLookAt
 
 
-namespace panel_opengl {
+namespace fltk_3dpanel_opengl {
 
 	// Enable lighting
 	
@@ -59,7 +59,7 @@ namespace panel_opengl {
 	   glEnable(GL_LIGHT0); //Enable light #0
 	   //glEnable(GL_LIGHT1); //Enable light #1
 	   glEnable(GL_NORMALIZE); //Automatically normalize normals
-	   //glShadeModel(GL_SMOOTH); //Enable smooth shading
+	   glShadeModel(GL_SMOOTH); //Enable smooth shading
 
 	   //Add ambient light
 	   GLfloat ambientColor[] = { 0.2f, 0.2f, 0.2f, 1.0f }; //Color (0.2, 0.2, 0.2)
@@ -82,12 +82,12 @@ namespace panel_opengl {
 	   glColor3f(1.0f, 1.0f, 0.0f);
 
 
-	   glBegin(GL_QUADS);
-       //std::vector<geometry::vertex> vertices = test_load_vertex();
+	   // glBegin(GL_QUADS); // Commentato 8.2.2020
+      //std::vector<geometry::vertex> vertices = test_load_vertex();
       // std::cout<<"Vertices size: "<<vertices.size()<<std::endl;
 
       glNewList(CARTESIO, GL_COMPILE);
-         glColor3d(1.0, 1.0, 1.0);
+         glColor3d(1.0, 0.0, 0.0);
          glBegin(GL_LINES);
             glVertex3f(-5.0f, 0.0f, 0.0f);
             glVertex3f(+5.0f, 0.0f, 0.0f);
@@ -103,23 +103,29 @@ namespace panel_opengl {
       glNewList(PANEL, GL_COMPILE);
          //glBegin(GL_LINE_LOOP);
          glBegin(GL_TRIANGLES);
+            // Colors da RGB
+            // glColor3f(16.0/255.0, 28.0/255.0, 133.0/255.0);
             // glColor3f(1.0, 1.0, 1.0);
-            
+            const float baseRed = 16.0/255.0;
+            const float baseGreen = 28.0/255.0;
+            const float baseBlue = 133.0/255.0;
             float t = 0.05;
             float dt = 0.05;
             // cambiato il 7.2.2020, prima era:
             // float t = 0.5;
             // float dt = 0.2; //(era 0.05)
-            float color;
+            float colorRed, colorGreen, colorBlue;
             
 			
             for(geometry::vertex *v: vertices) {
                std::cout<<"x--: "<<v->x<<"Y: "<<v->y<<"Z: "<<v->z<<std::endl;
                t+=dt;
-               color = 0.5 + 0.3 * sin(t);
-               glColor3f(color, color, color);
-			   glNormal3f(1.0f, 0.0f, 0.0f);
-			   glVertex3f(v->x, v->y, v->z);             
+               colorRed = baseRed + 0.3 * sin(t);
+               colorGreen = baseGreen + 0.3 * sin(t);
+               colorBlue = baseBlue + 0.3 * sin(t);
+               glColor3f(colorRed, colorGreen, colorBlue);
+			      glNormal3f(1.0f, 0.0f, 0.0f);
+			      glVertex3f(v->x, v->y, v->z);             
             }
 			
 		
@@ -167,8 +173,6 @@ namespace panel_opengl {
             glVertex3f(vertices[22].x, vertices[22].y, vertices[22].z);
             glVertex3f(vertices[23].x, vertices[23].y, vertices[23].z);
             */
-
-            glColor3f(1.0, 1.0, 1.0);
          glEnd();
       glEndList(); 
 

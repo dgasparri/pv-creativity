@@ -20,9 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\fltk\fltk_3dpanel.h" />
+    <ClInclude Include="..\src\fltk\fltk_3dpanel_opengl.h" />
     <ClInclude Include="..\src\fltk\fltk_actions.h" />
     <ClInclude Include="..\src\fltk\fltk_window.h" />
-    <ClInclude Include="..\src\fltk\panel_opengl.h" />
     <ClInclude Include="..\src\lib\geometry_fp.h" />
     <ClInclude Include="..\src\lib\irradiance_fp.h" />
     <ClInclude Include="..\src\lib\panel_io.h" />
@@ -32,9 +32,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\fltk\fltk_3dpanel.cpp" />
+    <ClCompile Include="..\src\fltk\fltk_3dpanel_opengl.cpp" />
     <ClCompile Include="..\src\fltk\fltk_actions.cpp" />
     <ClCompile Include="..\src\fltk\fltk_window.cpp" />
-    <ClCompile Include="..\src\fltk\panel_opengl.cpp" />
     <ClCompile Include="..\src\lib\geometry_fp.cpp" />
     <ClCompile Include="..\src\lib\irradiance_fp.cpp" />
     <ClCompile Include="..\src\lib\panel_io.cpp" />

@@ -7,7 +7,7 @@
 #include <functional>
 #include "vector"
 #include "../lib/geometry_fp.h"
-#include "panel_opengl.h"
+#include "fltk_3dpanel_opengl.h"
 
 
 
