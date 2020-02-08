@@ -22,7 +22,7 @@ namespace fltk_3dpanel_opengl {
 	// Enable lighting
 	
 
-	void normalize(float* v)
+	void fltk_3dpanel_opengl::normalize(float* v)
 	{
 		float length =  sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 
@@ -32,27 +32,26 @@ namespace fltk_3dpanel_opengl {
 		}
 	}
 
-	float* crossP(float* a, float* b)
+	float* fltk_3dpanel_opengl::crossP(float* a, float* b)
 	{
 		float result[] = { a[1] * b[2] - a[2] * b[1], -(a[0] * b[2] - a[2] * b[0]), a[0] * b[1] - a[1] * b[0] };
 
-		normalize(result);
+		fltk_3dpanel_opengl::normalize(result);
 
 		return result;
 	}
-	float* calcu_normal(float* a, float* b, float* c)
+	float* fltk_3dpanel_opengl::calcu_normal(float* a, float* b, float* c)
 	{
 		float x[] = {b[0]-a[0], b[1]-a[1], b[2]-a[2]};
 		float y[] = {c[0] - a[0], c[1] - a[1], c[2] - a[2] };
 
-		float* result = crossP(x, y);
+		float* result = fltk_3dpanel_opengl::crossP(x, y);
 		return result;
 	}
 
-	int l = 0;
-   void draw(const std::vector<geometry::vertex *>& vertices)
+   void fltk_3dpanel_opengl::draw(const std::vector<geometry::vertex *>& vertices)
    { 
-	   l = vertices.size();
+	   int l = vertices.size(); // 8.2.2020 was global
 	   glEnable(GL_DEPTH_TEST);
 	   glEnable(GL_COLOR_MATERIAL);
 	   glEnable(GL_LIGHTING); //Enable lighting
@@ -82,10 +81,6 @@ namespace fltk_3dpanel_opengl {
 	   glColor3f(1.0f, 1.0f, 0.0f);
 
 
-	   // glBegin(GL_QUADS); // Commentato 8.2.2020
-      //std::vector<geometry::vertex> vertices = test_load_vertex();
-      // std::cout<<"Vertices size: "<<vertices.size()<<std::endl;
-
       glNewList(CARTESIO, GL_COMPILE);
          glColor3d(1.0, 0.0, 0.0);
          glBegin(GL_LINES);
@@ -101,7 +96,6 @@ namespace fltk_3dpanel_opengl {
 
       //Disegna i poligoni
       glNewList(PANEL, GL_COMPILE);
-         //glBegin(GL_LINE_LOOP);
          glBegin(GL_TRIANGLES);
             // Colors da RGB
             // glColor3f(16.0/255.0, 28.0/255.0, 133.0/255.0);
@@ -129,50 +123,6 @@ namespace fltk_3dpanel_opengl {
             }
 			
 		
-            /*
-            glColor3f(1.0, 0.0, 0.0);
-            float t= 0.5;
-            
-            t+=0.05; glColor3f(t, t, t);
-            glVertex3f(vertices[0].x, vertices[0].y, vertices[0].z);
-            glVertex3f(vertices[1].x, vertices[1].y, vertices[1].z);
-            glVertex3f(vertices[2].x, vertices[2].y, vertices[2].z);
-            glColor3f(0.0, 1.0, 0.0);
-            t+=0.05; glColor3f(t, t, t);
-            glVertex3f(vertices[3].x, vertices[3].y, vertices[3].z);
-            glVertex3f(vertices[4].x, vertices[4].y, vertices[4].z);
-            glVertex3f(vertices[5].x, vertices[5].y, vertices[5].z);
-            glColor3f(0.0, 0.0, 1.0);
-            t+=0.05; glColor3f(t, t, t);
-            glVertex3f(vertices[6].x, vertices[6].y, vertices[6].z);
-            glVertex3f(vertices[7].x, vertices[7].y, vertices[7].z);
-            glVertex3f(vertices[8].x, vertices[8].y, vertices[8].z);
-            glColor3f(1.0, 1.0, 0.0);
-            t+=0.05; glColor3f(t, t, t);
-            glVertex3f(vertices[9].x, vertices[9].y, vertices[9].z);
-            glVertex3f(vertices[10].x, vertices[10].y, vertices[10].z);
-            glVertex3f(vertices[11].x, vertices[11].y, vertices[11].z);
-            glColor3f(1.0, 0.0, 0.0);
-            t+=0.05; glColor3f(t, t, t);
-            glVertex3f(vertices[12].x, vertices[12].y, vertices[12].z);
-            glVertex3f(vertices[13].x, vertices[13].y, vertices[13].z);
-            glVertex3f(vertices[14].x, vertices[14].y, vertices[14].z);
-            glColor3f(0.0, 1.0, 0.0);
-            t+=0.05; glColor3f(t, t, t);
-            glVertex3f(vertices[15].x, vertices[15].y, vertices[15].z);
-            glVertex3f(vertices[16].x, vertices[16].y, vertices[16].z);
-            glVertex3f(vertices[17].x, vertices[17].y, vertices[17].z);
-            glColor3f(0.0, 0.0, 1.0);
-            t+=0.05; glColor3f(t, t, t);
-            glVertex3f(vertices[18].x, vertices[18].y, vertices[18].z);
-            glVertex3f(vertices[19].x, vertices[19].y, vertices[19].z);
-            glVertex3f(vertices[20].x, vertices[20].y, vertices[20].z);
-            //glColor3f(1.0, 1.0, 0.0);
-            t+=0.05; glColor3f(t, t, t);
-            glVertex3f(vertices[21].x, vertices[21].y, vertices[21].z);
-            glVertex3f(vertices[22].x, vertices[22].y, vertices[22].z);
-            glVertex3f(vertices[23].x, vertices[23].y, vertices[23].z);
-            */
          glEnd();
       glEndList(); 
 
@@ -181,7 +131,7 @@ namespace fltk_3dpanel_opengl {
 
    }
 
-   void update(void)
+   void fltk_3dpanel_opengl::update(void)
    {
 
 	 
