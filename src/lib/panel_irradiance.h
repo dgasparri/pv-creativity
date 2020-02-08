@@ -52,7 +52,7 @@ namespace panel_irradiance {
         double a2,
         double a3,
         double a4,
-        s_debug *debug_output = NULL
+        s_debug *debug_output = nullptr
     );
 
 }

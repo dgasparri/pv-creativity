@@ -21,7 +21,7 @@ void fltk_actions::open_input_file()
 }
 
 
-void fltk_actions::calcola(
+void fltk_actions::run_simulation(
     double l_L_deg,
 	double K, 
 	double n_refraction_index, 
@@ -37,6 +37,8 @@ void fltk_actions::calcola(
 	std::ofstream myfile;
 	std::string nf = "";
 	myfile.open("buffer-data.txt");
+	std::ofstream tempfile;
+	tempfile.open("debug-data.txt");
 
 	std::vector<geometry::vertex *> vertices = fltk_window->panel->get_vertices();
 	std::vector<geometry::triangle> triangles;
@@ -44,32 +46,33 @@ void fltk_actions::calcola(
 	//Checks for 3 available vertices
 	for (int i = 0; i + 2 < (int) vertices.size(); i += 3) {
 		triangles.emplace_back(geometry::triangle(*vertices[i], *vertices[i + 1], *vertices[i + 2]));
-		geometry::plane pl = geometry::fplane(*vertices[i], *vertices[i + 1], *vertices[i + 2]);
+		// geometry::plane pl = geometry::fplane(*vertices[i], *vertices[i + 1], *vertices[i + 2]);
 	}
 	
 	//giorno
-	for (int i = 1; i <= 365; i++)
+	for (int day = 1; day <= 365; day++)
 	{
 		//ora
-		for (int j = 0; j < 24; j++)
+		for (int hour = 9; hour < 18; hour++)
 		{
 			//definisco posizione sole
 
-			int h = 720 - j * 60;
+			int h = 720 - hour * 60;
 			const pv_sun::position_in_sky* pos = pv_sun::sun(
-				i,
+				day,
 				h,
 				L_rad
 			);
 
 			//risultato S
 			double S = 0;
+			double S_temp;
 			//triangolo
 			for (geometry::triangle t : triangles) {
 
-				double S_temp = panel_irradiance::compute_S(
+				S_temp = panel_irradiance::compute_S(
 					pos,
-					i,
+					day,
 					L_rad,
 					t.mbeta_rad,
 					t.mZ_S_rad,
@@ -83,27 +86,44 @@ void fltk_actions::calcola(
 					global::alpha_4
 
 				);
-				S += (S_temp / 3600);
+				S += t.marea * S_temp / 3600.0;
+				tempfile <<"d: " << day << " h: " << h << " beta: " << t.mbeta_rad << " Z_S: " << t.mZ_S_rad << " Area: " << t.marea << " S_temp: " << S_temp/3600 <<std::endl;
+				if (S_temp/3600.0 > 1000.0) {
+					tempfile 
+		            << "pos: L_rad: " << L_rad
+					<< "pos: alpha_rad: " << pos->alpha_rad
+		            << " z_rad(z_rad): " << pos->z_rad
+        		    << " h_rad(h_rad): " << pos->h_rad
+            		<< " h_ss_rad: " << pos->h_ss_rad
+            		<< " delta_rad: " << pos->delta_rad
+            		<< " cos_Phi: " << pos->cos_Phi
+            		<< " m: " << pos->m
+            		<< " valid: " << pos->valid
+					<< std::endl;
+
+				}
 			}
 			//stampa informazioni
+			
 			nf += "GIORNO: ";
-			nf += std::to_string(i);
+			nf += std::to_string(day);
 			nf += " ORA: ";
-			nf += std::to_string(j);  
+			nf += std::to_string(hour);  
 			nf += " Rendimento: " ;
 			nf += std::to_string(S);
 			nf += "\n";
 			
 			char* chr = strdup(nf.c_str());
 			buff->text(chr);
-			myfile << i << " " << j << " " << S << "\n";
+			myfile << day << " " << hour << " " << S << "\n";
 			free(chr);
 		}
-		//stampa riga vuota
+		//stampa riga vuota per cambio giorno
 		myfile << "\n";
 	}
 
 	myfile.close();
+	tempfile.close();
 	std::cout << " FILE CREATO NELLA CARTELLA DEL PROGETTO: " << "";
 
 }
@@ -131,7 +151,7 @@ void fltk_actions::PlotIT()
 			"set yrange[9:18] \n"
 			"set palette\n "
 			"set pm3d at s \n"
-			"splot 'C:\\Users\\andre\\source\\repos\\pv-creativity\\pv-creativity\\outputS.txt' with lines \n"
+			"splot 'buffer-data.txt' with lines \n"
 			);
 
 }

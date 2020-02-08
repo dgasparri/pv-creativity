@@ -23,6 +23,6 @@ extern fltk_window_t* fltk_window;
 namespace fltk_actions {
     void assign_file(Fl_File_Chooser* w, void* userdata);
     void open_input_file();
-    void calcola(double l_L_deg,	double K, 	double n_refraction_index, 	double thickness, Fl_Text_Buffer* buff);
+    void run_simulation(double l_L_deg,	double K, 	double n_refraction_index, 	double thickness, Fl_Text_Buffer* buff);
     void PlotIT();
 }

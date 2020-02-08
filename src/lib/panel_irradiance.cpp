@@ -14,12 +14,9 @@ const double panel_irradiance::compute_S(
 	double a2,
 	double a3,
 	double a4,
-    s_debug *debug_output
+    s_debug *debug_output 
 ) {
 
-    if (debug_output == nullptr) {
-        debug_output = new panel_irradiance::s_debug;
-    }
 
     double G_on = irradiance::compute_G_on(N, G_SC_CONSTANT); 
     double G_oH = irradiance::compute_G_oH(G_on, pos->cos_Phi);
@@ -48,31 +45,31 @@ const double panel_irradiance::compute_S(
     double S_D = taualpha_n * M *  G_D * K_theta_D * ((1-cos(beta_rad))/2);
     double S = S_B + S_D;
     
-
-    debug_output->G_on = G_on;
-    debug_output->G_oH = G_oH;
-    debug_output->H_o_rad = H_o_rad;
-    debug_output->H_o = H_o;
-    debug_output->r_ground = r_ground;
-    debug_output->H = H;
-    debug_output->r = r;
-    debug_output->G = G;
-    debug_output->G_B = G_B;
-    debug_output->G_D = G_D;
-    debug_output->cos_theta = cos_theta;
-    debug_output->R_B = R_B;
-    debug_output->M = M;
-    debug_output->theta_r = theta_r;
-    debug_output->theta_e_D = theta_e_D;
-    debug_output->taualpha_B = taualpha_B;
-    debug_output->taualpha_D = taualpha_D;
-    debug_output->taualpha_n = taualpha_n;
-    debug_output->K_theta_B = K_theta_B;
-    debug_output->K_theta_D = K_theta_D;
-    debug_output->S_B = S_B;
-    debug_output->S_D = S_D;
-    debug_output->S = S;
-
+    if (debug_output != nullptr) {
+        debug_output->G_on = G_on;
+        debug_output->G_oH = G_oH;
+        debug_output->H_o_rad = H_o_rad;
+        debug_output->H_o = H_o;
+        debug_output->r_ground = r_ground;
+        debug_output->H = H;
+        debug_output->r = r;
+        debug_output->G = G;
+        debug_output->G_B = G_B;
+        debug_output->G_D = G_D;
+        debug_output->cos_theta = cos_theta;
+        debug_output->R_B = R_B;
+        debug_output->M = M;
+        debug_output->theta_r = theta_r;
+        debug_output->theta_e_D = theta_e_D;
+        debug_output->taualpha_B = taualpha_B;
+        debug_output->taualpha_D = taualpha_D;
+        debug_output->taualpha_n = taualpha_n;
+        debug_output->K_theta_B = K_theta_B;
+        debug_output->K_theta_D = K_theta_D;
+        debug_output->S_B = S_B;
+        debug_output->S_D = S_D;
+        debug_output->S = S;
+    }
     return S;
 
 }

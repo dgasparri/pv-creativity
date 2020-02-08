@@ -28,7 +28,7 @@
 
 void fltk_window_t::cb_compute(Fl_Button* o, void* v) 
 {
-	fltk_actions::calcola(
+	fltk_actions::run_simulation(
 		  fltk_window->L->value(), //Lat degrees
 		  fltk_window->K_->value(), 
 		  fltk_window->n->value(), //Refraction index
