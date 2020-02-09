@@ -24,5 +24,5 @@ namespace fltk_actions {
     void assign_file(Fl_File_Chooser* w, void* userdata);
     void open_input_file();
     void run_simulation(double l_L_deg,	double K, 	double n_refraction_index, 	double thickness, Fl_Text_Buffer* buff);
-    void PlotIT();
+    void plot_yearly();
 }

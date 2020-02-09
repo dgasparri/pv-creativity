@@ -37,7 +37,7 @@ void fltk_window_t::cb_compute(Fl_Button* o, void* v)
   //((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);
 }
 void fltk_window_t::cb_plot(Fl_Button* o, void* v) {
-	fltk_actions::PlotIT();
+	fltk_actions::plot_yearly();
 	//((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_plot(o, v);
 }
 

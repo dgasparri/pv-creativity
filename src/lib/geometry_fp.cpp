@@ -56,6 +56,7 @@ namespace geometry {
         mplane_normal(fnormal(fplane(a, b, c))),
         mbeta_rad(fbeta_rad(a, b, c, fZ_S_rad(fplane(a, b, c), a.direction)))
 	{
+        
     }
 
 
@@ -124,18 +125,43 @@ namespace geometry {
     }
 
     // X è ovest-est, con negativi è ovest
-    pure double fZ_S_rad(const plane pl) 
+    pure double fZ_S_rad(const plane pl, const double direction) 
     {
 		// y/x
 		if (are_double_equal(pl.a_y, 0.0, 3)) {
-			if (pl.a_x > 0)
+			return direction * M_PI / 2; // + points to east, negative points to west
+            
+            /*
+            if (pl.a_x > 0)
 				return -M_PI / 2; //Points from est to west
 			else
-				return M_PI / 2; //Points from west to east
+			    return M_PI / 2; //Points from west to east
+            */
 		}
 
-		return atan(pl.a_x / pl.a_y);
-        
+
+
+        double Z_S_rad = atan(pl.a_x / pl.a_y);
+        if ( Z_S_rad > 0 && direction > 0) {
+            // I Quadrant (0; PI/2) 
+            // Biggest value PI/2 is close to the X axis (+)
+            // Add PI and subtract Z_S_rad (close to the Y axis + it gets close to +PI)
+            // (PI/2; PI) by definition
+            Z_S_rad = M_PI - Z_S_rad; 
+        } else if ( Z_S_rad < 0 && direction < 0) {
+            // II Quad
+            // Same as before, but in II quadrant
+            // Z_S_rad is negative
+            // (-PI/2; -PI)
+            Z_S_rad = -M_PI - Z_S_rad; 
+        } else if (Z_S_rad > 0 && direction < 0) {
+            // III Quad
+            Z_S_rad = - Z_S_rad;
+        } else if (Z_S_rad < 0 &&  direction > 0) {
+            // IV Quad
+            Z_S_rad = - Z_S_rad;
+        }
+        return Z_S_rad;
     }
 
     pure double fnorm(const vertex pl)

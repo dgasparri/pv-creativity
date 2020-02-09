@@ -8,6 +8,34 @@ void fltk_actions::assign_file(Fl_File_Chooser* w, void* userdata)
 	
     std::vector<geometry::vertex *> v = panel_io::load_vertices(filename);
 	fltk_window->panel->set_vertices(v); 
+	
+	std::vector<geometry::triangle *> triangles = fltk_window->panel->get_triangles();
+	triangles.clear();
+	triangles.reserve(v.size() / 3 + 1);
+	
+	std::ofstream fout;
+	fout.open(global::workdir_path("panel-geometry.csv"));
+
+	fout << "#tr\tv1,v2,v3,direction\tplane\tbeta(rad)\tZ_S(rad)\tArea(m^2)"<<std::endl;
+	int num_triangles = 0;
+	for (int i = 0; i + 2 < (int) v.size(); i += 3) {
+		triangles.emplace_back(new geometry::triangle(*v[i], *v[i + 1], *v[i + 2]));		
+
+		fout 
+			<< num_triangles << "\t"
+			<< *v[i]  << ","
+			<< *v[i+1] << ","
+			<< *v[i+2] << ","
+			<< (*v[i]).direction << "\t"
+			<< triangles.back()->mplane_normal << "\t"
+			<< triangles.back()->mbeta_rad << "\t"
+			<< triangles.back()->mZ_S_rad << "\t"
+			<< triangles.back()->marea << std::endl;
+			
+		num_triangles ++;
+	}
+
+	fout.close();
 
 	// init(vertices); 
 	fltk_3dpanel_opengl::draw(v);
@@ -15,7 +43,7 @@ void fltk_actions::assign_file(Fl_File_Chooser* w, void* userdata)
 
 void fltk_actions::open_input_file()
 {
-	Fl_File_Chooser *fc = new Fl_File_Chooser(".", NULL, 0, "Input File");
+	Fl_File_Chooser *fc = new Fl_File_Chooser(".", NULL, 0, "Panel Geometry");
 	fc->callback(fltk_actions::assign_file);
 	fc->show();
 }
@@ -32,26 +60,31 @@ void fltk_actions::run_simulation(
     double L_rad = l_L_deg * M_PI / 180;
 
 	
-    //std::cout << " SIZE VERTEXS DENTRO A CALCOLIAMUS: " << vertices.size();
-	//definisco il file di testo  
-	std::ofstream myfile;
+
 	std::string nf = "";
-	myfile.open("buffer-data.txt");
-	std::ofstream tempfile;
-	tempfile.open("debug-data.txt");
+
+	std::ofstream daily;
+	std::ofstream yearly;
+
+	yearly.open(global::workdir_path("simulation-data-yearly.txt"));
+
 
 	std::vector<geometry::vertex *> vertices = fltk_window->panel->get_vertices();
-	std::vector<geometry::triangle> triangles;
-	triangles.reserve(vertices.size() / 3 + 1);
-	//Checks for 3 available vertices
-	for (int i = 0; i + 2 < (int) vertices.size(); i += 3) {
-		triangles.emplace_back(geometry::triangle(*vertices[i], *vertices[i + 1], *vertices[i + 2]));
-		// geometry::plane pl = geometry::fplane(*vertices[i], *vertices[i + 1], *vertices[i + 2]);
-	}
-	
+	std::vector<geometry::triangle *> triangles = fltk_window->panel->get_triangles();
+	std::cout <<"Ci sono " << triangles.size() << "triangoli " << std::endl;
+
+	char day_str_buf[10];
+
 	//giorno
 	for (int day = 1; day <= 365; day++)
 	{
+		std::string daily_name = "simulation-data-day-";
+		snprintf(day_str_buf, 10, "3%d", day);
+		daily_name += day_str_buf;
+		daily_name += ".txt";
+
+		daily.open(global::workdir_path(daily_name));
+
 		//ora
 		for (int hour = 9; hour < 18; hour++)
 		{
@@ -68,14 +101,18 @@ void fltk_actions::run_simulation(
 			double S = 0;
 			double S_temp;
 			//triangolo
-			for (geometry::triangle t : triangles) {
+			const int ntr = triangles.size();
+			for (int j=0; j <ntr; j++) {
+				geometry::triangle *t = triangles[j];
+
+			//for (geometry::triangle t : triangles) {
 
 				S_temp = panel_irradiance::compute_S(
 					pos,
 					day,
 					L_rad,
-					t.mbeta_rad,
-					t.mZ_S_rad,
+					t->mbeta_rad,
+					t->mZ_S_rad,
 					n_refraction_index,
 					thickness,
 					K,
@@ -86,9 +123,17 @@ void fltk_actions::run_simulation(
 					global::alpha_4
 
 				);
-				S += t.marea * S_temp / 3600.0;
-				tempfile <<"d: " << day << " h: " << h << " beta: " << t.mbeta_rad << " Z_S: " << t.mZ_S_rad << " Area: " << t.marea << " S_temp: " << S_temp/3600 <<std::endl;
+				S += t->marea * S_temp / 3600.0;
+				
+				/*
+				debuggeometry << "triangolo n: "<< j << " beta_rad " <<  t.mbeta_rad << " Z_S: " << t.mZ_S_rad << " Area: " << t.marea << std::endl
+						<< "  v1: " << (*vertices[j*3]) << std::endl
+						<< "  v2: " << (*vertices[j*3 + 1]) << std::endl
+						<< "  v3: " << (*vertices[j*3 + 2]) << std::endl;
+
+
 				if (S_temp/3600.0 > 1000.0) {
+					tempfile <<"d: " << day << " h: " << h << " beta: " << t.mbeta_rad << " Z_S: " << t.mZ_S_rad << " Area: " << t.marea << " S_temp: " << S_temp/3600 <<std::endl;
 					tempfile 
 		            << "pos: L_rad: " << L_rad
 					<< "pos: alpha_rad: " << pos->alpha_rad
@@ -100,9 +145,17 @@ void fltk_actions::run_simulation(
             		<< " m: " << pos->m
             		<< " valid: " << pos->valid
 					<< std::endl;
+					tempfile <<"triangolo n: "<< j 
+						<< " v1: " << (*vertices[j*3]) << std::endl
+						<< " v2: " << (*vertices[j*3 + 1]) << std::endl
+						<< " v3: " << (*vertices[j*3 + 2]) << std::endl;
 
 				}
+				*/
+				daily << hour << " " << S << "\n";
 			}
+
+			daily.close();
 			//stampa informazioni
 			
 			nf += "GIORNO: ";
@@ -115,20 +168,20 @@ void fltk_actions::run_simulation(
 			
 			char* chr = strdup(nf.c_str());
 			buff->text(chr);
-			myfile << day << " " << hour << " " << S << "\n";
 			free(chr);
+
+			yearly << day << " " << hour << " " << S << "\n";
+			
 		}
 		//stampa riga vuota per cambio giorno
-		myfile << "\n";
+		yearly << "\n";
 	}
 
-	myfile.close();
-	tempfile.close();
-	std::cout << " FILE CREATO NELLA CARTELLA DEL PROGETTO: " << "";
+	yearly.close();
 
 }
 
-void fltk_actions::PlotIT()
+void fltk_actions::plot_yearly()
 {
 
 	/*
@@ -142,6 +195,21 @@ void fltk_actions::PlotIT()
 			"splot 'C:\\Users\\andre\\source\\repos\\pv-creativity\\pv-creativity\\outputS.txt' with lines "
 	
 	*/
+	std::string plot_line = "set terminal wxt size 800,800 \n";
+			plot_line += "set title 'Solar Absorption' \n";
+			plot_line += "set xlabel 'Day of year' \n";
+			plot_line += "set ylabel 'Hour' \n";
+			plot_line += "set xrange[1:36] \n";
+			plot_line += "set yrange[9:18] \n";
+			plot_line += "set palette\n ";
+			plot_line += "set pm3d at s \n";
+			plot_line += "splot '";
+				plot_line += global::workdir_path("simulation-data-yearly.txt").string();
+				plot_line += "' with lines \n";
+			
+	GnuplotPipe gp;	
+	gp.sendLine(plot_line);
+		/*
 		GnuplotPipe gp;	
 		gp.sendLine("set terminal wxt size 800,800 \n"
 			"set title 'Solar Absorption' \n"
@@ -153,5 +221,6 @@ void fltk_actions::PlotIT()
 			"set pm3d at s \n"
 			"splot 'buffer-data.txt' with lines \n"
 			);
+			*/
 
 }

@@ -16,17 +16,28 @@ fltk_3dpanel::fltk_3dpanel(int x, int y, int w, int h, const char* l)
 }
 
 
-void fltk_3dpanel::set_vertices(const std::vector<geometry::vertex *>& v) {
+void fltk_3dpanel::clear_vertices()
+{
     if(!vertices.empty()) {
 		for(geometry::vertex *v : vertices) {
 			delete v;
 		}
-        //std::for_each(vertices.begin(), vertices.end(), [](){ });
-        //std::for_each(triangles.begin(), triangles.end(), [](geometry::triangle *t){ delete t;});
         vertices.clear();
-        //triangles.clear();
     }
-	std::cout << "Numero vertici: " << v.size() << std::endl;
+}
+
+void fltk_3dpanel::clear_triangles()
+{
+    if(!triangles.empty()) {
+		for(geometry::triangle *t : triangles) {
+			delete t;
+		}
+        triangles.clear();
+    }
+}
+
+
+void fltk_3dpanel::set_vertices(const std::vector<geometry::vertex *>& v) {
 	vertices = v;
 }
 
@@ -34,6 +45,9 @@ std::vector<geometry::vertex *>& fltk_3dpanel::get_vertices() {
 	return vertices;
 }
 
+std::vector<geometry::triangle *>& fltk_3dpanel::get_triangles() {
+	return triangles;
+}
 
 
 

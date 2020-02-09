@@ -46,7 +46,7 @@ namespace geometry {
 
     pure plane fplane(const vertex a, const vertex b, const vertex d);
     pure plane_normal_vector fnormal(const plane pl);
-    pure Z_S_rad fZ_S_rad(const plane pl);
+    pure Z_S_rad fZ_S_rad(const plane pl, const double direction);
     pure beta_rad fbeta_rad(const vertex a, const vertex b, const vertex d, const Z_S_rad Z_S);
     pure m_squared farea(const vertex a, const vertex b, const vertex d);
 
