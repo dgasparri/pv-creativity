@@ -12,7 +12,8 @@ namespace geometry {
         const double x;
         const double y;
         const double z;
-        vertex(double x, double y, double z);
+        const double direction;
+        vertex(double x, double y, double z, double direction);
 
         vertex operator-(const vertex& other) const;
         bool operator==(const vertex& other) const;

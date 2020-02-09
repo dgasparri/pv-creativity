@@ -16,11 +16,11 @@ pure bool are_double_equal(double x, double y, int ulp)
 namespace geometry {
 
     
-    vertex::vertex(double x, double y, double z):
-            x(x), y(y), z(z) {}
+    vertex::vertex(double x, double y, double z, double direction):
+            x(x), y(y), z(z), direction(direction) {}
 
     vertex vertex::operator-(const vertex& other) const {
-        return vertex(x-other.x, y-other.y, z-other.z);
+        return vertex(x-other.x, y-other.y, z-other.z, other.direction);
     }
 
     bool vertex::operator==(const vertex& other) const {
@@ -51,10 +51,10 @@ namespace geometry {
 
     //Serve plane horizon?
     triangle::triangle(const vertex a, const vertex b, const vertex c):
-		mZ_S_rad(fZ_S_rad(fplane(a, b, c))),
+		mZ_S_rad(fZ_S_rad(fplane(a, b, c), a.direction)),
 		marea(farea(a, b, c)),
         mplane_normal(fnormal(fplane(a, b, c))),
-        mbeta_rad(fbeta_rad(a, b, c, fZ_S_rad(fplane(a, b, c))))
+        mbeta_rad(fbeta_rad(a, b, c, fZ_S_rad(fplane(a, b, c), a.direction)))
 	{
     }
 
@@ -78,7 +78,7 @@ namespace geometry {
 
     pure vertex fnormal(const plane pl) 
     {
-        return vertex(pl.a_x, pl.a_y, pl.a_z);
+        return vertex(pl.a_x, pl.a_y, pl.a_z, 1);
     }
 
     pure vertex rotate_vertex_zaxis(const vertex v, const double angle_rad)
@@ -86,7 +86,8 @@ namespace geometry {
         return vertex(
 				v.x * cos(angle_rad) - v.y * sin(angle_rad),
 				v.x * sin(angle_rad) + v.y * cos(angle_rad),
-				v.z
+				v.z,
+                v.direction
 			);
     }
 
