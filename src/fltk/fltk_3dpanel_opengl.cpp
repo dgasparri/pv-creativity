@@ -89,8 +89,8 @@ void fltk_3dpanel_opengl::draw(const std::vector<geometry::vertex *>& vertices)
       
       glEnd();
       glBegin(GL_LINES);
-         glVertex3f(0.0f, -5.0f, 0.0f);
-         glVertex3f(0.0f, +5.0f, 0.0f);
+         glVertex3f(0.0f, 0.0f, -5.0f);
+         glVertex3f(0.0f, 0.0f, +5.0f);
       glEnd();
    glEndList();
 
