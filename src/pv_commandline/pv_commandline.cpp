@@ -142,15 +142,15 @@ int main(int argc, char **argv) {
     		);
 
 			std::cout << "Sun position_in_sky:" << std::endl;
-			std::cout << " alpha_rad  : " << pos->alpha_rad << " (" << (pos->alpha_rad / M_PI * 180) << " degree)" std::endl;  
-			std::cout << " z_rad      : " << pos->z_rad << " (" << (pos->z_rad / M_PI * 180) << " degree)" std::endl;  
-			std::cout << " h_rad      : " << pos->h_rad << " (" << (pos->h_rad / M_PI * 180) << " degree)" std::endl;  
-			std::cout << " h_ss_rad   : " << pos->h_ss_rad << " (" << (pos->h_ss_rad / M_PI * 180) << " degree)" std::endl;  
-			std::cout << " delta_rad  : " << pos->delta_rad << " (" << (pos->delta_rad / M_PI * 180) << " degree)" std::endl;  
+			std::cout << " alpha_rad  : " << pos->alpha_rad << " (" << (pos->alpha_rad / M_PI * 180) << " degree)" << std::endl;  
+			std::cout << " z_rad      : " << pos->z_rad << " (" << (pos->z_rad / M_PI * 180) << " degree)" << std::endl;  
+			std::cout << " h_rad      : " << pos->h_rad << " (" << (pos->h_rad / M_PI * 180) << " degree)" << std::endl;  
+			std::cout << " h_ss_rad   : " << pos->h_ss_rad << " (" << (pos->h_ss_rad / M_PI * 180) << " degree)" << std::endl;  
+			std::cout << " delta_rad  : " << pos->delta_rad << " (" << (pos->delta_rad / M_PI * 180) << " degree)" << std::endl;  
 			std::cout << " cos_Phi    : " << pos->cos_Phi << std::endl;  
 			std::cout << " m          : " << pos->m << std::endl; 
-			std::cout << " pm_beta_rad: " << (M_PI /2 - post->alpha_rad) << " (" << ((M_PI /2 - post->alpha_rad) / M_PI * 180) << " degree)" std::endl;  
-			std::cout << " pm_Z_S_rad : " << (M_PI /2 - post->z_rad) << " (" << (post->z_rad / M_PI * 180) << " degree)" std::endl;  
+			std::cout << " pm_beta_rad: " << (M_PI /2 - pos->alpha_rad) << " (" << ((M_PI /2 - pos->alpha_rad) / M_PI * 180) << " degree)" << std::endl;  
+			std::cout << " pm_Z_S_rad : " << (M_PI /2 - pos->z_rad) << " (" << (pos->z_rad / M_PI * 180) << " degree)" << std::endl;  
 			std::cout << " valid      : " << pos->valid << std::endl;  
 		}
 
@@ -164,14 +164,14 @@ int main(int argc, char **argv) {
 			pvstate.Z_s = 0;
 			pvstate.Z_s_rad = 0;
 			pvstate.area = 1.0;
-			pvstate.n_refraction_index = n_refraction_index;
-			pvstate.K = K; 
-			pvstate.thickness = thickness; 
-			pvstate.a0 = alpha_0;
-			pvstate.a1 = alpha_1;
-			pvstate.a2 = alpha_2;
-			pvstate.a3 = alpha_3;
-			pvstate.a4 = alpha_4;
+			pvstate.n_refraction_index = global::n_refraction_index;
+			pvstate.K = global::K; 
+			pvstate.thickness = global::thickness_L; 
+			pvstate.a0 = global::alpha_0;
+			pvstate.a1 = global::alpha_1;
+			pvstate.a2 = global::alpha_2;
+			pvstate.a3 = global::alpha_3;
+			pvstate.a4 = global::alpha_4;
 
 			update_h_rad = true;
 		}
