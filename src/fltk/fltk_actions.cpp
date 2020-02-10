@@ -6,7 +6,7 @@ void fltk_actions::assign_file(Fl_File_Chooser* w, void* userdata)
     auto filename = w->value();
     std::cout << "FILE: " << filename <<std::endl;
 	
-	//std::vector<geometry::vertex *> *v = new std::vector<geometry::vertex *>;
+
 	fltk_window->panel->clear_vertices();
 	std::vector<geometry::vertex *> *v = fltk_window->panel->get_vertices_ptr();
 	if(!panel_io::load_vertices(filename, v)) {
@@ -15,19 +15,14 @@ void fltk_actions::assign_file(Fl_File_Chooser* w, void* userdata)
 	
 	
 	std::cout << "Ci sono " << v->size() << " vertici "<<std::endl;
-	// std::cout << "In fltk ci sono " << fltk_window->panel->get_vertices(v).size() << " vertici "<<std::endl;
 
-	// fltk_window->panel->set_vertices(v);
 	std::cout << "In panel ci sono " << fltk_window->panel->get_vertices().size() << " vertici "<<std::endl;
 
 
 
 	fltk_window->panel->clear_triangles();
-	// std::vector<geometry::triangle *> *triangles = new std::vector<geometry::triangle *>;
 	std::vector<geometry::triangle *> *triangles = fltk_window->panel->get_triangles_ptr();
 
-	//std::vector<geometry::triangle *> *triangles = fltk_window->panel->get_triangles();
-	//triangles.clear();
 
 	triangles->reserve(v->size() / 3 + 1);
 	std::ofstream fout;
@@ -79,9 +74,6 @@ void fltk_actions::assign_file(Fl_File_Chooser* w, void* userdata)
 	}
 
 	fout.close();
-	// fltk_window->panel->set_triangles(triangles);
-
-	// init(vertices); 
 	fltk_3dpanel_opengl::draw(v);
 }
 
@@ -117,9 +109,9 @@ void fltk_actions::run_simulation(
 	std::vector<geometry::triangle *> triangles = fltk_window->panel->get_triangles();
 
 	nf += "Simulating geometry with  ";
-	nf += std::to_string(vertices->size());
+	nf += std::to_string(vertices.size());
 	nf += " vertices and  " ;
-	nf += std::to_string(triangles->size());
+	nf += std::to_string(triangles.size());
 	nf += " triangles\n";
 	
 	char* chr = strdup(nf.c_str());
@@ -174,7 +166,7 @@ void fltk_actions::run_simulation(
 					global::alpha_4);
 				S_hourly += t->marea * S_panel;
 				
-
+				
 				#ifdef PVCREATIVITY_DEBUG
 					daily <<"#: " << j << " h: " << h << " beta: " << t->mbeta_rad << " Z_S: " << t->mZ_S_rad << " Area: " << t->marea << " S_temp: " << S_panel/3600 <<std::endl;
 					daily 
@@ -209,7 +201,6 @@ void fltk_actions::run_simulation(
 		buff->text(chr);
 		free(chr);
 
-		//stampa riga vuota per cambio giorno
 	}
 
 	yearly.close();
@@ -223,6 +214,7 @@ void fltk_actions::plot_yearly()
 			plot_line += "set title 'Solar Absorption' \n";
 			plot_line += "set xlabel 'Day of year' \n";
 			plot_line += "set ylabel 'Hour' \n";
+			plot_line += "set zlabel 'Wh' \n";
 			plot_line += "set xrange[1:365] \n";
 			plot_line += "set yrange[9:18] \n";
 			plot_line += "set palette\n ";
@@ -243,19 +235,21 @@ void fltk_actions::plot_daily(double day) {
 	snprintf(day_str_buf, 10, "%03d", day_int);
 	daily_name += day_str_buf;
 	daily_name += ".txt";
+	std::string daily_data_file_paht = global::workdir_path(daily_name).string();
 
 
 	std::string plot_line = "set terminal wxt size 800,800 \n";
-			plot_line += "set title 'Daily Solar Absorption - Day "
-			plot_line += day_int;
+			plot_line += "set title 'Daily Solar Absorption - Day ";
+			plot_line += std::to_string(day_int);
 			plot_line += "' \n";
 			plot_line += "set xlabel 'Hour' \n";
 			plot_line += "set ylabel 'Wh' \n";
-			plot_line += "set xrange[1:365] \n";
-			plot_line += "set yrange[9:18] \n";
+			plot_line += "set xrange[9:18] \n";
 			plot_line += "set palette\n ";
 			plot_line += "set pm3d at s \n";
-			plot_line += "splot '"; plot_line += daily_name; plot_line += "' with lines \n";
+			plot_line += "set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 1.5 \n";
+			plot_line += "set pointintervalbox 3 \n";
+			plot_line += "plot '"; plot_line += daily_data_file_paht; plot_line += "' with linespoints ls 1 \n";
 			
 	GnuplotPipe gp;	
 	gp.sendLine(plot_line);

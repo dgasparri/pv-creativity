@@ -1,6 +1,7 @@
 
 #include "fltk_window.h"
 
+#include "fltk_actions.h"//Must stay here to avoid loop referencing
 
 
 void fltk_window_t::cb_run_simulation(Fl_Button* o, void* v) 
@@ -16,7 +17,7 @@ void fltk_window_t::cb_plot_year(Fl_Button* o, void* v) {
 	fltk_actions::plot_yearly();
 }
 
-void fltk_window_t::cb_plot_year(Fl_Button* o, void* v) {
+void fltk_window_t::cb_plot_day(Fl_Button* o, void* v) {
 
 	fltk_actions::plot_daily(fltk_window->day_to_plot->value());
 }
@@ -52,7 +53,7 @@ fltk_window_t::fltk_window_t() {
 			}
 			{
 				plot_day = new Fl_Button(700, 590, 155, 20, "Plot Day");
-				plot_year->callback((Fl_Callback*)fltk_window_t::cb_plot_day);
+				plot_day->callback((Fl_Callback*)fltk_window_t::cb_plot_day);
 			}
 
 			{ 

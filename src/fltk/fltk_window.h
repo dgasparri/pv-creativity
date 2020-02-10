@@ -14,9 +14,8 @@
 #include <FL/Fl_Text_Buffer.H>
 #include <Fl/Fl_Text_Editor.H>
 #include <FL/Fl_File_Chooser.H>
-#include "fltk_3dpanel.h"
-#include "fltk_actions.h"
 
+#include "fltk_3dpanel.h"
 
 
 class fltk_window_t {
@@ -49,3 +48,4 @@ public:
 };
 
 extern fltk_window_t* fltk_window;
+
