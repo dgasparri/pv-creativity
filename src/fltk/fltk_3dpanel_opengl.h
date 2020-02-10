@@ -14,6 +14,6 @@ namespace fltk_3dpanel_opengl {
     void normalize(float* v);
     float* crossP(float* a, float* b);
     float* calcu_normal(float* a, float* b, float* c);
-    void draw(const std::vector<geometry::vertex *> &vertices);
+    void draw(std::vector<geometry::vertex *> *vertices);
     void update();
 }

@@ -13,41 +13,57 @@ fltk_3dpanel::fltk_3dpanel(int x, int y, int w, int h, const char* l)
     	labelcolor(FL_FOREGROUND_COLOR);
     	align(Fl_Align(FL_ALIGN_CENTER));
     	when(FL_WHEN_RELEASE);
+
+		vertices = new std::vector<geometry::vertex *>;
+		triangles = new std::vector<geometry::triangle *>;
 }
 
 
 void fltk_3dpanel::clear_vertices()
 {
-    if(!vertices.empty()) {
-		for(geometry::vertex *v : vertices) {
+    if(!vertices->empty()) {
+		for(geometry::vertex *v : (*vertices)) {
 			delete v;
 		}
-        vertices.clear();
+        vertices->clear();
     }
 }
 
 void fltk_3dpanel::clear_triangles()
 {
-    if(!triangles.empty()) {
-		for(geometry::triangle *t : triangles) {
+    if(!triangles->empty()) {
+		for(geometry::triangle *t : (*triangles)) {
 			delete t;
 		}
-        triangles.clear();
+        triangles->clear();
     }
 }
 
 
-void fltk_3dpanel::set_vertices(const std::vector<geometry::vertex *>& v) {
+void fltk_3dpanel::set_vertices(std::vector<geometry::vertex *> *v) {
 	vertices = v;
 }
 
-std::vector<geometry::vertex *>& fltk_3dpanel::get_vertices() {
+void fltk_3dpanel::set_triangles(std::vector<geometry::triangle *> *t) {
+	triangles = t;
+}
+
+std::vector<geometry::vertex *> &fltk_3dpanel::get_vertices() {
+	return (*vertices);
+}
+
+std::vector<geometry::triangle *> &fltk_3dpanel::get_triangles() {
+	return (*triangles);
+}
+
+std::vector<geometry::vertex *> *fltk_3dpanel::get_vertices_ptr() {
 	return vertices;
 }
 
-std::vector<geometry::triangle *>& fltk_3dpanel::get_triangles() {
+std::vector<geometry::triangle *> *fltk_3dpanel::get_triangles_ptr() {
 	return triangles;
 }
+
 
 
 
@@ -73,7 +89,7 @@ void fltk_3dpanel::draw() {
 		glDepthFunc(GL_LEQUAL);  //Agg. 8.2.2020
 		glShadeModel(GL_SMOOTH);
 
-		fltk_3dpanel_opengl::draw(vertices);
+		fltk_3dpanel_opengl::draw(get_vertices_ptr());
 		valid(1);
 	}
 

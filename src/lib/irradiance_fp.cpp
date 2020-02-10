@@ -40,13 +40,25 @@ pure double irradiance::compute_theta_e_D(double beta_rad) {
 
 //Eq. 9n
 double irradiance::compute_taualpha_B(double K, double thickness, double theta_r, double theta) {
+	//Outside of (-PI/2;PI/2), there is no direct beam
+	if(theta > 1.55 || theta < -1.55) {
+		return 0;
+	}
+	if(theta < 0.1 && theta > -0.1) {
+		return 1;
+	}
 	double theta_diff = theta_r - theta;
 	double theta_sum = theta_r + theta;
 	double inner_square_brakes = pow(sin(theta_diff) / sin(theta_sum), 2)
 		+ pow(tan(theta_diff) / tan(theta_sum), 2);
 	double curly_brakets = 1 - inner_square_brakes / 2;
 	double exponent = -(K * thickness / cos(theta_r));
-	return exp(exponent) * curly_brakets;
+	double ret_val = exp(exponent) * curly_brakets;
+	if (ret_val < 0 ) 
+		return 0;
+	if (ret_val > 1 )
+		return 1;
+	return ret_val;
 }
 
 pure double irradiance::compute_taualpha_D(double K, double thickness, double theta_r, double theta_e_D) {
@@ -72,7 +84,11 @@ pure double irradiance::compute_G_on(const int N, const double G_SC) {
 	return G_SC*(1+0.033 * cos(2 * M_PI * N /365)); //substituted 360 with 2PI
 }
 
+
 pure double irradiance::compute_G_oH(const double G_on, const double cos_Phi) {
+	if (cos_Phi < 0) {
+		return 0;
+	}
 	return G_on * cos_Phi;
 }
 
@@ -114,6 +130,9 @@ pure double irradiance::compute_r(const double h_rad, const double h_ss_rad) {
 		/ (sin(h_ss_rad)-h_ss_rad*cos(h_ss_rad)); 
 }
 pure double irradiance::compute_G(const double H, const double r) {
+	if (r < 0) {
+		return 0;
+	}
 	return H*r;
 }
 pure double irradiance::compute_G_B(const double G, const double h_rad, const double h_ss_rad) {

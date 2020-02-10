@@ -16,6 +16,15 @@
 #define G_SC_CONSTANT 1366.1  //W/m^2 
 #endif
 
+
+#ifndef DATA_PIPE_DIRECTORY
+#define DATA_PIPE_DIRECTORY "./.data-pipe"
+#endif
+
+#include <string>
+#include <filesystem>
+
+
 namespace global {
     const double K = 4; // m^-1
     const double thickness_L = 0.002; 
@@ -27,4 +36,7 @@ namespace global {
     const double alpha_4 = -0.000011;
 
     const double UniBo_Lat_deg = 44.498991;
+
+
+    pure std::filesystem::path workdir_path(std::string filename);
 }

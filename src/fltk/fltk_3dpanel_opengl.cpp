@@ -49,9 +49,9 @@ float* fltk_3dpanel_opengl::calcu_normal(float* a, float* b, float* c)
    return result;
 }
 
-void fltk_3dpanel_opengl::draw(const std::vector<geometry::vertex *>& vertices)
+void fltk_3dpanel_opengl::draw(std::vector<geometry::vertex *> *vertices)
 { 
-   int l = vertices.size(); // 8.2.2020 was global
+   int l = vertices->size(); // 8.2.2020 was global
    glEnable(GL_DEPTH_TEST);
    glEnable(GL_COLOR_MATERIAL);
    glEnable(GL_LIGHTING); //Enable lighting
@@ -111,7 +111,7 @@ void fltk_3dpanel_opengl::draw(const std::vector<geometry::vertex *>& vertices)
          float colorRed, colorGreen, colorBlue;
          
       
-         for(geometry::vertex *v: vertices) {
+         for(geometry::vertex *v: (*vertices)) {
             std::cout<<"x--: "<<v->x<<"Y: "<<v->y<<"Z: "<<v->z<<std::endl;
             t+=dt;
             colorRed = baseRed + 0.3 * sin(t);

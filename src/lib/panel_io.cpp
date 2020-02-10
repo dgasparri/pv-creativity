@@ -1,14 +1,14 @@
 #include "panel_io.h"
 
-const std::vector<geometry::vertex *> panel_io::load_vertices(const std::string filename)
+bool panel_io::load_vertices(const std::string filename, std::vector<geometry::vertex *> *v)
 {
-	std::vector<geometry::vertex *> v;
-	float v1x, v1y, v1z, v2x, v2y, v2z, v3x, v3y, v3z, direction;
 	FILE* fp;
 	if (0 != fopen_s(&fp, filename.c_str(), "r")) {
 		std::cout << "Unable to open file: " << filename << std::endl;
-		return v;
+		return false;
 	}
+
+	float v1x, v1y, v1z, v2x, v2y, v2z, v3x, v3y, v3z, direction;
 
 	int assigned;
 	do {
@@ -16,14 +16,14 @@ const std::vector<geometry::vertex *> panel_io::load_vertices(const std::string 
 		
 		if (assigned < 10 || assigned == EOF)
 			break;
-		v.emplace_back(new geometry::vertex(v1x, v1y, v1z, direction));
-		v.emplace_back(new geometry::vertex(v2x, v2y, v2z, direction));
-		v.emplace_back(new geometry::vertex(v3x, v3y, v3z, direction));
+		v->emplace_back(new geometry::vertex(v1x, v1y, v1z, direction));
+		v->emplace_back(new geometry::vertex(v2x, v2y, v2z, direction));
+		v->emplace_back(new geometry::vertex(v3x, v3y, v3z, direction));
 
 	} while (true);
 
 	fclose(fp);
-	return v;
+	return true;
 }
 
 
