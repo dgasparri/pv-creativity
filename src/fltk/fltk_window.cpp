@@ -1,32 +1,9 @@
-#define _CRT_NONSTDC_NO_DEPRECATE
-#include <windows.h>
-#include <FL/Fl.H>
+
 #include "fltk_window.h"
 
-#include <FL/Fl_Double_Window.H>
-#include <FL/Fl_Text_Buffer.H>
-#include <Fl/Fl_Text_Editor.H>
-#include <FL/Fl_File_Chooser.H>
-
-#include "../global.h"
 
 
-
-#include "fltk_3dpanel.h"
-
-
-#include "../lib/panel_io.h"
-#include "../lib/sun_fp.h"
-#include "../lib/geometry_fp.h"
-#include "../../pv-creativity/gnuplot.h"
-#include "../lib/panel_irradiance.h"
-#include "fltk_actions.h"
-
-
-
-
-
-void fltk_window_t::cb_compute(Fl_Button* o, void* v) 
+void fltk_window_t::cb_run_simulation(Fl_Button* o, void* v) 
 {
 	fltk_actions::run_simulation(
 		  fltk_window->L->value(), //Lat degrees
@@ -34,12 +11,16 @@ void fltk_window_t::cb_compute(Fl_Button* o, void* v)
 		  fltk_window->n->value(), //Refraction index
 		  fltk_window->thickness_L->value(), 
 		  fltk_window->buff);
-  //((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_i(o,v);
 }
-void fltk_window_t::cb_plot(Fl_Button* o, void* v) {
+void fltk_window_t::cb_plot_year(Fl_Button* o, void* v) {
 	fltk_actions::plot_yearly();
-	//((PVCreativityUI*)(o->parent()->parent()->user_data()))->cb_compute_plot(o, v);
 }
+
+void fltk_window_t::cb_plot_year(Fl_Button* o, void* v) {
+
+	fltk_actions::plot_daily(fltk_window->day_to_plot->value());
+}
+
 
  
 fltk_window_t::fltk_window_t() {
@@ -52,18 +33,28 @@ fltk_window_t::fltk_window_t() {
 			Fl_Group* o = new Fl_Group(640, 40, 230, 585, "Input Values");
             o->box(FL_THIN_UP_BOX);
 	        { 
-			  openfile = new Fl_Button(660, 50, 195, 20, "Segli File");
+			  openfile = new Fl_Button(660, 50, 195, 20, "Open File");
 			  openfile->callback((Fl_Callback*)fltk_actions::open_input_file);
 
 			} // Fl_Value_Input* beta
 			{ 
-			  compute = new Fl_Button(660, 590, 195, 20, "Compute");
-			  compute->callback((Fl_Callback*)fltk_window_t::cb_compute);
+			  run_simulation = new Fl_Button(660, 510, 195, 20, "Run Simulation");
+			  run_simulation->callback((Fl_Callback*)fltk_window_t::cb_run_simulation);
 			}
 			{
-				compute = new Fl_Button(660, 550, 195, 20, "Plot It");
-				compute->callback((Fl_Callback*)fltk_window_t::cb_plot);
+				plot_year = new Fl_Button(660, 550, 195, 20, "Plot Yearly Data");
+				plot_year->callback((Fl_Callback*)fltk_window_t::cb_plot_year);
 			}
+			{ 
+				day_to_plot = new Fl_Value_Input(660, 590, 30, 20);
+				day_to_plot->value(180);
+				
+			}
+			{
+				plot_day = new Fl_Button(700, 590, 155, 20, "Plot Day");
+				plot_year->callback((Fl_Callback*)fltk_window_t::cb_plot_day);
+			}
+
 			{ 
 				thickness_L = new Fl_Value_Input(760, 150, 95, 23, "Glass Thickness");
 				thickness_L->value(global::thickness_L);
@@ -110,6 +101,4 @@ fltk_window_t::fltk_window_t() {
 
 void fltk_window_t::show(int argc, char **argv) {
   this->window->show(argc,argv);
-  // nomeFile = "C:/Users/andre/source/repos/Progetto/geometries/trianglesCirc2.csv";
-  // panel->vertices = panel_io::load_vertices(nomeFile);
 }

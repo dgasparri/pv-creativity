@@ -115,41 +115,50 @@ void fltk_actions::run_simulation(
 
 	std::vector<geometry::vertex *> vertices = fltk_window->panel->get_vertices();
 	std::vector<geometry::triangle *> triangles = fltk_window->panel->get_triangles();
-	std::cout <<"Ci sono " << triangles.size() << "triangoli " << std::endl;
+
+	nf += "Simulating geometry with  ";
+	nf += std::to_string(vertices->size());
+	nf += " vertices and  " ;
+	nf += std::to_string(triangles->size());
+	nf += " triangles\n";
+	
+	char* chr = strdup(nf.c_str());
+	buff->text(chr);
+	free(chr);
+	Fl::check();
 
 	char day_str_buf[10];
+	double S_daily, S_hourly, S_panel;
 
 	//giorno
 	for (int day = 1; day <= 365; day++)
 	{
+		double S_daily = 0;
 		std::string daily_name = "simulation-data-day-";
 		snprintf(day_str_buf, 10, "%03d", day);
 		daily_name += day_str_buf;
 		daily_name += ".txt";
-
 		daily.open(global::workdir_path(daily_name));
 
 		//ora
 		for (int hour = 8; hour < 18; hour++)
 		{
 			//definisco posizione sole
-
+			S_hourly = 0;
 			int h = 720 - hour * 60;
 			const pv_sun::position_in_sky* pos = pv_sun::sun(
 				day,
 				h,
-				L_rad
-			);
+				L_rad);
 
-			//risultato S
-			double S = 0;
-			double S_temp;
+
+			
 			//triangolo
 			const int ntr = triangles.size();
 			for (int j=0; j <ntr; j++) {
 				geometry::triangle *t = triangles[j];
 
-				S_temp = panel_irradiance::compute_S(
+				S_panel = panel_irradiance::compute_S(
 					pos,
 					day,
 					L_rad,
@@ -162,58 +171,45 @@ void fltk_actions::run_simulation(
 					global::alpha_1,
 					global::alpha_2,
 					global::alpha_3,
-					global::alpha_4
-
-				);
-				S += t->marea * S_temp / 3600.0;
+					global::alpha_4);
+				S_hourly += t->marea * S_panel;
 				
-				
-				/* daily << "triangolo n: "<< j << " beta_rad " <<  t.mbeta_rad << " Z_S: " << t.mZ_S_rad << " Area: " << t.marea << std::endl
-						<< "  v1: " << (*vertices[j*3]) << std::endl
-						<< "  v2: " << (*vertices[j*3 + 1]) << std::endl
-						<< "  v3: " << (*vertices[j*3 + 2]) << std::endl;
-				*/
 
-				//if (S_temp/3600.0 > 1000.0) {
-					daily <<"#: " << j << " h: " << h << " beta: " << t->mbeta_rad << " Z_S: " << t->mZ_S_rad << " Area: " << t->marea << " S_temp: " << S_temp/3600 <<std::endl;
+				#ifdef PVCREATIVITY_DEBUG
+					daily <<"#: " << j << " h: " << h << " beta: " << t->mbeta_rad << " Z_S: " << t->mZ_S_rad << " Area: " << t->marea << " S_temp: " << S_panel/3600 <<std::endl;
 					daily 
-		            << "             pos: L_rad: " << L_rad
+					<< "             pos: L_rad: " << L_rad
 					<< "pos: alpha_rad: " << pos->alpha_rad
-		            << " z_rad(z_rad): " << pos->z_rad
-        		    << " h_rad(h_rad): " << pos->h_rad
-            		<< " h_ss_rad: " << pos->h_ss_rad
-            		<< " delta_rad: " << pos->delta_rad
-            		<< " cos_Phi: " << pos->cos_Phi
-            		<< " m: " << pos->m
-            		<< " valid: " << pos->valid
+					<< " z_rad(z_rad): " << pos->z_rad
+					<< " h_rad(h_rad): " << pos->h_rad
+					<< " h_ss_rad: " << pos->h_ss_rad
+					<< " delta_rad: " << pos->delta_rad
+					<< " cos_Phi: " << pos->cos_Phi
+					<< " m: " << pos->m
+					<< " valid: " << pos->valid
 					<< std::endl;
+				#endif
 
-				//}
-
-				//daily << j << " " << hour << " " << S_temp << " beeta " << t->mbeta_rad << " z_S " << t->mZ_S_rad <<  "\n";
 			}
-
-			
-			//stampa informazioni
-			
-			nf += "GIORNO: ";
-			nf += std::to_string(day);
-			nf += " ORA: ";
-			nf += std::to_string(hour);  
-			nf += " Rendimento: " ;
-			nf += std::to_string(S);
-			nf += "\n";
-			
-			char* chr = strdup(nf.c_str());
-			buff->text(chr);
-			free(chr);
-
-			yearly << day << " " << hour << " " << S << "\n";
-			
+			daily  << hour << " " << S_hourly/3600 << "\n";
+			yearly << day  << " " << hour << " " << S_hourly/3600 << "\n";
+			S_daily += S_hourly;
 		}
-		//stampa riga vuota per cambio giorno
+
 		daily.close();
 		yearly << "\n";
+
+		nf += "Giorno: ";
+		nf += std::to_string(day);
+		nf += " Rendimento: " ;
+		nf += std::to_string(S_daily/3600);
+		nf += " Wh\n";
+			
+		char* chr = strdup(nf.c_str());
+		buff->text(chr);
+		free(chr);
+
+		//stampa riga vuota per cambio giorno
 	}
 
 	yearly.close();
@@ -232,6 +228,34 @@ void fltk_actions::plot_yearly()
 			plot_line += "set palette\n ";
 			plot_line += "set pm3d at s \n";
 			plot_line += "splot '"; plot_line += global::workdir_path("simulation-data-yearly.txt").string(); plot_line += "' with lines \n";
+			
+	GnuplotPipe gp;	
+	gp.sendLine(plot_line);
+
+}
+
+
+void fltk_actions::plot_daily(double day) {
+	int day_int = (int) day;
+
+	char day_str_buf[10];
+	std::string daily_name = "simulation-data-day-";
+	snprintf(day_str_buf, 10, "%03d", day_int);
+	daily_name += day_str_buf;
+	daily_name += ".txt";
+
+
+	std::string plot_line = "set terminal wxt size 800,800 \n";
+			plot_line += "set title 'Daily Solar Absorption - Day "
+			plot_line += day_int;
+			plot_line += "' \n";
+			plot_line += "set xlabel 'Hour' \n";
+			plot_line += "set ylabel 'Wh' \n";
+			plot_line += "set xrange[1:365] \n";
+			plot_line += "set yrange[9:18] \n";
+			plot_line += "set palette\n ";
+			plot_line += "set pm3d at s \n";
+			plot_line += "splot '"; plot_line += daily_name; plot_line += "' with lines \n";
 			
 	GnuplotPipe gp;	
 	gp.sendLine(plot_line);
