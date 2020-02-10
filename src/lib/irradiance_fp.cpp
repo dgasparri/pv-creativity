@@ -20,6 +20,8 @@ double irradiance::compute_R_B(double cos_theta, double cos_Phi) {
 
 //Eq. 7n
 double irradiance::compute_M(double m, double a0, double a1, double a2, double a3, double a4) {
+	if (m > 2.85 || m < -2.85)
+		return 1.02624;
 	return a0
 		+ a1 * m
 		+ a2 * pow(m, 2)
